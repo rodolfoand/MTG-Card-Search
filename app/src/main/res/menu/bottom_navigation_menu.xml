@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_mydecks"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_filter_none_24"
+        android:title="@string/mydecks"/>
+    <item
+        android:id="@+id/nav_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/search"/>
+    <item
+        android:id="@+id/nav_wishlist"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_favorite_border_24"
+        android:title="@string/wishlist"/>
+</menu>
