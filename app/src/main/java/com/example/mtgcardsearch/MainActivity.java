@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,6 +28,7 @@ public class MainActivity
     private ActivityMainBinding binding;
 
     private MenuItem searchMenuItem;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,23 +48,18 @@ public class MainActivity
                 , R.id.nav_gallery
                 , R.id.nav_slideshow
                 , R.id.nav_mydecks
-                , R.id.nav_wishlist)
+                , R.id.nav_wishlist
+                , R.id.nav_cardslist)
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
         BottomNavigationView navView = findViewById(R.id.bottom_navigation);
         NavigationUI.setupWithNavController(navView, navController);
 
-//        binding.appBarMain.fab.setOnClickListener(view -> navController.navigate(R.id.nav_home));
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                searchMenuItem.expandActionView();
-            }
-        });
-
+        binding.appBarMain.fab.setOnClickListener(view -> searchMenuItem.expandActionView());
     }
 
     @Override
@@ -72,6 +68,23 @@ public class MainActivity
         getMenuInflater().inflate(R.menu.main, menu);
 
         searchMenuItem = menu.findItem( R.id.action_search );
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Bundle bundle = new Bundle();
+                bundle.putString("query", query);
+                navController.navigate(R.id.nav_cardslist, bundle);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         return true;
     }
@@ -82,7 +95,6 @@ public class MainActivity
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

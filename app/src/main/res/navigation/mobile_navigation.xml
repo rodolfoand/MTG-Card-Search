@@ -34,4 +34,10 @@
         android:name="com.example.mtgcardsearch.ui.mydecks.MydecksFragment"
         android:label="@string/mydecks"
         tools:layout="@layout/fragment_mydecks" />
+
+    <fragment
+        android:id="@+id/nav_cardslist"
+        android:name="com.example.mtgcardsearch.ui.cardslist.CardslistFragment"
+        android:label="@string/cardslist"
+        tools:layout="@layout/fragment_cardslist" />
 </navigation>
