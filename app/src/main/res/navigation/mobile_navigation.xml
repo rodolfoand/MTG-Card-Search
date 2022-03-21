@@ -36,8 +36,8 @@
         tools:layout="@layout/fragment_mydecks" />
 
     <fragment
-        android:id="@+id/nav_cardslist"
-        android:name="com.example.mtgcardsearch.ui.cardslist.CardslistFragment"
-        android:label="@string/cardslist"
-        tools:layout="@layout/fragment_cardslist" />
+        android:id="@+id/nav_cardlist"
+        android:name="com.example.mtgcardsearch.ui.cardlist.CardlistFragment"
+        android:label="@string/cardlist"
+        tools:layout="@layout/fragment_cardlist" />
 </navigation>

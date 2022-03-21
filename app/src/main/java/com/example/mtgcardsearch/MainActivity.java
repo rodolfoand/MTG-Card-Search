@@ -3,23 +3,20 @@ package com.example.mtgcardsearch;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Toast;
 
+import com.example.mtgcardsearch.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.view.MenuItemCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.mtgcardsearch.databinding.ActivityMainBinding;
 
 public class MainActivity
         extends AppCompatActivity{
@@ -49,9 +46,10 @@ public class MainActivity
                 , R.id.nav_slideshow
                 , R.id.nav_mydecks
                 , R.id.nav_wishlist
-                , R.id.nav_cardslist)
+                , R.id.nav_cardlist)
                 .setOpenableLayout(drawer)
                 .build();
+
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -75,7 +73,7 @@ public class MainActivity
             public boolean onQueryTextSubmit(String query) {
                 Bundle bundle = new Bundle();
                 bundle.putString("query", query);
-                navController.navigate(R.id.nav_cardslist, bundle);
+                navController.navigate(R.id.nav_cardlist, bundle);
 
                 return false;
             }

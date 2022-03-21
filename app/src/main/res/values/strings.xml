@@ -15,5 +15,8 @@
     <string name="wishlist">Wishlist</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="cardslist">Cards List</string>
+    <string name="cardlist">Card List</string>
+    <string name="cardimage">Card Image</string>
+    <string name="flip">Flip</string>
+    <string name="share">Share</string>
 </resources>
