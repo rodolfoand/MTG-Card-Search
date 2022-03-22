@@ -22,11 +22,13 @@ public class ListRepository {
 
     private ScryfallService scryfallService;
     private MutableLiveData<List<Card>> listResponseLiveData;
+    private MutableLiveData<ListSearchResult> mld_listSearchResult;
 
     public ListRepository() {
         listResponseLiveData = new MutableLiveData<>();
+        mld_listSearchResult = new MutableLiveData<>();
     }
-    public MutableLiveData<List<Card>> getList(String query){
+    public MutableLiveData<List<Card>> getCards(String query){
 
         scryfallService = RetrofitService.getInterface();
 
@@ -48,5 +50,49 @@ public class ListRepository {
             }
         });
         return listResponseLiveData;
+    }
+
+    public MutableLiveData<ListSearchResult> getList(String query){
+
+        scryfallService = RetrofitService.getInterface();
+
+        Call<ListSearchResult> call = scryfallService.getCards(query);
+        call.enqueue(new Callback<ListSearchResult>() {
+            @Override
+            public void onResponse(Call<ListSearchResult> call, Response<ListSearchResult> response) {
+                if (response.isSuccessful()) {
+                    mld_listSearchResult.setValue(response.body());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListSearchResult> call, Throwable t) {
+
+            }
+        });
+        return mld_listSearchResult;
+    }
+
+    public MutableLiveData<ListSearchResult> getNextList(String query){
+
+        scryfallService = RetrofitService.getInterface();
+
+        Call<ListSearchResult> call = scryfallService.getCards(query);
+        call.enqueue(new Callback<ListSearchResult>() {
+            @Override
+            public void onResponse(Call<ListSearchResult> call, Response<ListSearchResult> response) {
+                if (response.isSuccessful()) {
+                    mld_listSearchResult.setValue(response.body());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListSearchResult> call, Throwable t) {
+
+            }
+        });
+        return mld_listSearchResult;
     }
 }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.card.MaterialCardView
@@ -17,7 +19,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
                 <!-- Media -->
                 <ImageView
                     android:id="@+id/iv_cardimage"
@@ -43,7 +45,8 @@
                     android:contentDescription="@string/flip"
                     app:layout_constraintEnd_toEndOf="@+id/iv_cardimage"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_baseline_flip_camera_android_24" />
+                    app:srcCompat="@drawable/ic_baseline_flip_camera_android_24"
+                    tools:visibility="gone" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <!--
             <LinearLayout
@@ -96,23 +99,26 @@
                     android:text="@string/share"
                     style="?attr/borderlessButtonStyle"
                     />
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/wishlist"
-                    style="?attr/borderlessButtonStyle"
-                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="0dp"
                     app:icon="@drawable/ic_baseline_favorite_border_24"
-                    app:iconPadding="0dp" />
+                    android:contentDescription="@string/wishlist"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_search_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/more"
+        android:text="@string/more"
+        android:visibility="gone" />
 </LinearLayout>
