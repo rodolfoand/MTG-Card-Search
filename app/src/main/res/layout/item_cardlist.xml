@@ -112,13 +112,4 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_search_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="@string/more"
-        android:text="@string/more"
-        android:visibility="gone" />
 </LinearLayout>

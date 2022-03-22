@@ -1,12 +1,10 @@
 package com.example.mtgcardsearch.model;
 
-import android.util.Log;
-import android.view.View;
+import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 
 public class Card {
@@ -87,7 +85,10 @@ public class Card {
     }
 
     public boolean hasImageInCardFaces() {
-        return (this.getCard_faces() != null);
+        return (this.getCard_faces() != null
+                && this.getCard_faces()
+                .get(this.getFace_position())
+                .getImage_uris() != null);
     }
 
     @Override
@@ -103,6 +104,7 @@ public class Card {
         return Objects.hash(name);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Card{" +

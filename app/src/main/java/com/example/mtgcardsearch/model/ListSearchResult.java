@@ -18,13 +18,6 @@ public class ListSearchResult {
     @SerializedName("data")
     private List<Card> data;
 
-    public ListSearchResult(int total_cards, boolean has_more, String next_page, List<Card> data) {
-        this.total_cards = total_cards;
-        this.has_more = has_more;
-        this.next_page = next_page;
-        this.data = data;
-    }
-
     public int getTotal_cards() {
         return total_cards;
     }
@@ -56,4 +49,5 @@ public class ListSearchResult {
     public void setData(List<Card> data) {
         this.data = data;
     }
+
 }

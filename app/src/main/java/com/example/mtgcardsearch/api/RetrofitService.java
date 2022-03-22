@@ -1,7 +1,5 @@
 package com.example.mtgcardsearch.api;
 
-import com.example.mtgcardsearch.api.ScryfallService;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
