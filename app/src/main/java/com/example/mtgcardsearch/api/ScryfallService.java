@@ -19,4 +19,14 @@ public interface ScryfallService {
             , @Query("page") String page
             , @Query("unique") String unique
             , @Query("q") String query);
+
+    @GET("/cards/search?json")
+    Call<ListSearchResult> getList(
+            @Query("include_extras")String include_extras
+            , @Query("include_multilingual") String include_multilingual
+            , @Query("order") String order
+            , @Query("page") String page
+            , @Query("unique") String unique
+            , @Query("dir") String dir
+            , @Query("q") String query);
 }

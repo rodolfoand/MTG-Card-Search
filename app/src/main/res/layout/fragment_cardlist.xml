@@ -13,6 +13,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/spinner_unique"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/unique"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tx_search_result" />
+
+    <Spinner
+        android:id="@+id/spinner_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/order"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toEndOf="@+id/spinner_unique"
+        app:layout_constraintTop_toBottomOf="@id/tx_search_result" />
+
+    <Spinner
+        android:id="@+id/spinner_dir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/dir"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toEndOf="@+id/spinner_order"
+        app:layout_constraintTop_toBottomOf="@id/tx_search_result" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_cardlist"
         android:layout_width="match_parent"
@@ -22,7 +49,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bt_search_more"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tx_search_result" />
+        app:layout_constraintTop_toBottomOf="@id/spinner_unique" />
 
 
     <androidx.appcompat.widget.AppCompatButton

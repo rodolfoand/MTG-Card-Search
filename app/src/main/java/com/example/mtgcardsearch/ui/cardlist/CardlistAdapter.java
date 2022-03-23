@@ -25,10 +25,8 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
     List<Card> cardList;
     OnBottomReachedListener onBottomReachedListener;
 
-    public CardlistAdapter(Context mCtx, ListSearchResult listSearchResult) {
+    public CardlistAdapter(Context mCtx) {
         this.mCtx = mCtx;
-        this.cardList = listSearchResult.getData();
-        this.listSearchResult = listSearchResult;
     }
 
     public void setListSearchResult(ListSearchResult listSearchResult){
@@ -76,7 +74,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
 
     @Override
     public int getItemCount() {
-        return cardList.size();
+        return (cardList == null) ? 0 : cardList.size();
     }
 
     public void setCardImage(ImageView iv_cardimage, String url_image){

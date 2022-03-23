@@ -39,4 +39,22 @@ public class CardlistViewModel extends ViewModel {
                 , unique
                 , query);
     }
+
+    public MutableLiveData<ListSearchResult> getList(
+            String include_extras
+            , String include_multilingual
+            , String order
+            , String page
+            , String unique
+            , String dir
+            , String query){
+
+        return listRepository.getList(include_extras
+                , include_multilingual
+                , order
+                , page
+                , unique
+                , dir
+                , query);
+    }
 }

@@ -13,8 +13,6 @@
     <string name="search">Search</string>
     <string name="mydecks">My Decks</string>
     <string name="wishlist">Wishlist</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cardlist">Card List</string>
     <string name="cardimage">Card Image</string>
     <string name="flip">Flip</string>
@@ -22,4 +20,36 @@
     <string name="more">More</string>
     <string name="result">Result</string>
     <string name="of">of</string>
+    <string name="unique">unique</string>
+    <string name="order">order</string>
+    <string name="dir">dir</string>
+
+    <string-array name="array_unique">
+        <item>cards</item>
+        <item>art</item>
+        <item>prints</item>
+    </string-array>
+
+    <string-array name="array_order">
+        <item>name</item>
+        <item>set</item>
+        <item>released</item>
+        <item>rarity</item>
+        <item>color</item>
+        <item>usd</item>
+        <item>tix</item>
+        <item>eur</item>
+        <item>cmc</item>
+        <item>power</item>
+        <item>toughness</item>
+        <item>edhrec</item>
+        <item>artist</item>
+        <item>review</item>
+    </string-array>
+
+    <string-array name="array_dir">
+        <item>auto</item>
+        <item>asc</item>
+        <item>desc</item>
+    </string-array>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.mtgcardsearch;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
@@ -45,8 +46,7 @@ public class MainActivity
                 , R.id.nav_gallery
                 , R.id.nav_slideshow
                 , R.id.nav_mydecks
-                , R.id.nav_wishlist
-                , R.id.nav_cardlist)
+                , R.id.nav_wishlist)
                 .setOpenableLayout(drawer)
                 .build();
 
@@ -54,10 +54,11 @@ public class MainActivity
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        BottomNavigationView navView = findViewById(R.id.bottom_navigation);
+        BottomNavigationView navView = binding.appBarMain.bottomNavigation;
         NavigationUI.setupWithNavController(navView, navController);
 
         binding.appBarMain.fab.setOnClickListener(view -> searchMenuItem.expandActionView());
+
     }
 
     @Override
@@ -73,6 +74,7 @@ public class MainActivity
             public boolean onQueryTextSubmit(String query) {
                 Bundle bundle = new Bundle();
                 bundle.putString("query", query);
+
                 navController.navigate(R.id.nav_cardlist, bundle);
 
                 return false;
@@ -94,9 +96,4 @@ public class MainActivity
                 || super.onSupportNavigateUp();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Toast.makeText(this, "onOptionsItemSelected", Toast.LENGTH_SHORT).show();
-        return super.onOptionsItemSelected(item);
-    }
 }
