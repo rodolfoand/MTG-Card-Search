@@ -1,5 +1,7 @@
 package com.example.mtgcardsearch.data;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mtgcardsearch.api.RetrofitService;
@@ -20,60 +22,7 @@ public class ListRepository {
         mld_listSearchResult = new MutableLiveData<>();
     }
 
-    public MutableLiveData<ListSearchResult> getList(String query){
-
-        scryfallService = RetrofitService.getInterface();
-
-        Call<ListSearchResult> call = scryfallService.getCards(query);
-        call.enqueue(new Callback<ListSearchResult>() {
-            @Override
-            public void onResponse(Call<ListSearchResult> call, Response<ListSearchResult> response) {
-                if (response.isSuccessful()) {
-                    mld_listSearchResult.setValue(response.body());
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ListSearchResult> call, Throwable t) {
-
-            }
-        });
-        return mld_listSearchResult;
-    }
-
-    public MutableLiveData<ListSearchResult> getNextList(
-            String include_extras
-            , String include_multilingual
-            , String order
-            , String page
-            , String unique
-            , String query){
-
-        scryfallService = RetrofitService.getInterface();
-
-        Call<ListSearchResult> call = scryfallService.getNextPage(
-                include_extras
-                , include_multilingual
-                , order
-                , page
-                , unique
-                , query);
-        call.enqueue(new Callback<ListSearchResult>() {
-            @Override
-            public void onResponse(Call<ListSearchResult> call, Response<ListSearchResult> response) {
-                mld_listSearchResult.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ListSearchResult> call, Throwable t) {
-
-            }
-        });
-        return mld_listSearchResult;
-    }
-
-    public MutableLiveData<ListSearchResult> getList(
+    public MutableLiveData<ListSearchResult> getCards(
             String include_extras
             , String include_multilingual
             , String order
@@ -95,12 +44,15 @@ public class ListRepository {
         call.enqueue(new Callback<ListSearchResult>() {
             @Override
             public void onResponse(Call<ListSearchResult> call, Response<ListSearchResult> response) {
-                mld_listSearchResult.setValue(response.body());
+                if (response.isSuccessful())
+                    mld_listSearchResult.setValue(response.body());
+                else
+                    mld_listSearchResult.setValue(new ListSearchResult("error", response.message()));
             }
 
             @Override
             public void onFailure(Call<ListSearchResult> call, Throwable t) {
-
+                Log.d("SEARCH_RESULT", t.getMessage());
             }
         });
         return mld_listSearchResult;

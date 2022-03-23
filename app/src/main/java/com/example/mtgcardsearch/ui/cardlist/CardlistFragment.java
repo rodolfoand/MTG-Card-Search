@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -18,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +52,8 @@ public class CardlistFragment extends Fragment {
     private String parm_page;
     private String parm_include_multilingual;
     private String parm_include_extras;
+    private ProgressBar pb_cardlist;
+    private TextView tx_search_not_found;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -65,9 +67,8 @@ public class CardlistFragment extends Fragment {
         mCtx = container.getContext();
         tx_search_result = binding.txSearchResult;
         bt_search_more = binding.btSearchMore;
-
-        this.setSpinner();
-        this.setParms();
+        pb_cardlist = binding.pbCardlist;
+        tx_search_not_found = binding.txSearchNotFound;
 
         rv_cardlist = binding.rvCardlist;
         rv_cardlist.setHasFixedSize(true);
@@ -75,12 +76,17 @@ public class CardlistFragment extends Fragment {
 
         parm_query = getArguments().getString("query");
 
+        this.setSpinner();
+        this.setParms();
         this.setListAdapter();
         this.setDataList();
+        this.setLoading(true);
 
         bt_search_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setLoading(true);
+
                 Uri uri_next_page = Uri.parse(dataList.getNext_page());
                 parm_include_extras = uri_next_page.getQueryParameter("include_extras");
                 parm_include_multilingual = uri_next_page.getQueryParameter("include_multilingual");
@@ -124,7 +130,6 @@ public class CardlistFragment extends Fragment {
                 Toast.makeText(mCtx, "onBottomReached", Toast.LENGTH_SHORT).show();
                 if (dataList.isHas_more())
                     bt_search_more.setVisibility(View.VISIBLE);
-
             }
         });
     }
@@ -145,6 +150,7 @@ public class CardlistFragment extends Fragment {
                     parm_unique = getResources().getStringArray(R.array.array_unique)[i];
                     parm_page = "1";
                     setDataList();
+                    setLoading(true);
                 }
 
             }
@@ -170,6 +176,7 @@ public class CardlistFragment extends Fragment {
                     parm_order = getResources().getStringArray(R.array.array_order)[i];
                     parm_page = "1";
                     setDataList();
+                    setLoading(true);
                 }
             }
 
@@ -191,9 +198,10 @@ public class CardlistFragment extends Fragment {
                 String new_dir = getResources().getStringArray(R.array.array_dir)[i];
 
                 if (!new_dir.equals(parm_dir)) {
-                    parm_order = getResources().getStringArray(R.array.array_dir)[i];
+                    parm_dir = getResources().getStringArray(R.array.array_dir)[i];
                     parm_page = "1";
                     setDataList();
+                    setLoading(true);
                 }
             }
 
@@ -214,7 +222,7 @@ public class CardlistFragment extends Fragment {
     }
 
     private void setDataList() {
-        cardlistViewModel.getList(
+        cardlistViewModel.getCards(
                 parm_include_extras
                 , parm_include_multilingual
                 , parm_order
@@ -225,20 +233,50 @@ public class CardlistFragment extends Fragment {
                 .observe(getViewLifecycleOwner(), new Observer<ListSearchResult>() {
                     @Override
                     public void onChanged(ListSearchResult listSearchResult) {
-                        dataList = listSearchResult;
-                        bt_search_more.setVisibility(View.GONE);
 
-                        count_cards = listSearchResult.getData().size()
-                                + (Integer.parseInt(parm_page) - 1)
-                                * 175;
+                        if (listSearchResult.getObject().equals("list")) {
+                            setLoading(false);
 
-                        tx_search_result.setText(getStringResult(listSearchResult.getData().size()));
+                            dataList = listSearchResult;
+                            bt_search_more.setVisibility(View.GONE);
 
-                        adapter_cardlist.setListSearchResult(dataList);
-                        adapter_cardlist.notifyDataSetChanged();
-                        rv_cardlist.scrollToPosition(0);
+                            count_cards = listSearchResult.getData().size()
+                                    + (Integer.parseInt(parm_page) - 1)
+                                    * 175;
 
+                            tx_search_result.setText(getStringResult(listSearchResult.getData().size()));
+
+                            adapter_cardlist.setListSearchResult(dataList);
+                            adapter_cardlist.notifyDataSetChanged();
+                            rv_cardlist.scrollToPosition(0);
+                        }
+                        if (listSearchResult.getObject().equals("error")) {
+                            setNotFound();
+                        }
                     }
                 });
+
+    }
+
+    private void setLoading(boolean loading){
+        if (loading){
+            pb_cardlist.setVisibility(View.VISIBLE);
+            spinner_dir.setVisibility(View.GONE);
+            spinner_order.setVisibility(View.GONE);
+            spinner_unique.setVisibility(View.GONE);
+            rv_cardlist.setVisibility(View.GONE);
+        } else {
+            pb_cardlist.setVisibility(View.GONE);
+            spinner_dir.setVisibility(View.VISIBLE);
+            spinner_order.setVisibility(View.VISIBLE);
+            spinner_unique.setVisibility(View.VISIBLE);
+            rv_cardlist.setVisibility(View.VISIBLE);
+        }
+        tx_search_not_found.setVisibility(View.GONE);
+    }
+
+    private void setNotFound(){
+        pb_cardlist.setVisibility(View.GONE);
+        tx_search_not_found.setVisibility(View.VISIBLE);
     }
 }

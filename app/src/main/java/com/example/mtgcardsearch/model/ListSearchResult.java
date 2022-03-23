@@ -6,6 +6,9 @@ import java.util.List;
 
 public class ListSearchResult {
 
+    @SerializedName("object")
+    private String object;
+
     @SerializedName("total_cards")
     private int total_cards;
 
@@ -17,6 +20,22 @@ public class ListSearchResult {
 
     @SerializedName("data")
     private List<Card> data;
+
+    @SerializedName("message")
+    private String message;
+
+    public ListSearchResult(String object, String message) {
+        this.object = object;
+        this.message = message;
+    }
+
+    public String getObject() {
+        return object;
+    }
+
+    public void setObject(String object) {
+        this.object = object;
+    }
 
     public int getTotal_cards() {
         return total_cards;
@@ -50,4 +69,11 @@ public class ListSearchResult {
         this.data = data;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

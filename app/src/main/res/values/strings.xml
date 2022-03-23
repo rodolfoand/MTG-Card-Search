@@ -23,6 +23,7 @@
     <string name="unique">unique</string>
     <string name="order">order</string>
     <string name="dir">dir</string>
+    <string name="msg_not_found">Your query didn’t match any cards. Adjust your search terms or refer to the syntax guide at https://scryfall.com/docs/reference</string>
 
     <string-array name="array_unique">
         <item>cards</item>
