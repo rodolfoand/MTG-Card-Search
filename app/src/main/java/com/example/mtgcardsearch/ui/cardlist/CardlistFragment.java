@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +25,7 @@ import android.widget.Toast;
 
 import com.example.mtgcardsearch.R;
 import com.example.mtgcardsearch.databinding.FragmentCardlistBinding;
-import com.example.mtgcardsearch.model.ListSearchResult;
+import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.OnBottomReachedListener;
 
 import java.util.Locale;
@@ -37,13 +38,14 @@ public class CardlistFragment extends Fragment {
     private RecyclerView rv_cardlist;
     private CardlistAdapter adapter_cardlist;
     private Context mCtx;
-    private ListSearchResult dataList;
+    private CardSearchResult dataList;
     private TextView tx_search_result;
     private Button bt_search_more;
     private int count_cards;
     private Spinner spinner_unique;
     private Spinner spinner_order;
     private Spinner spinner_dir;
+    private Spinner spinner_grid;
     private CardlistViewModel cardlistViewModel;
     private String parm_unique;
     private String parm_order;
@@ -54,6 +56,8 @@ public class CardlistFragment extends Fragment {
     private String parm_include_extras;
     private ProgressBar pb_cardlist;
     private TextView tx_search_not_found;
+    private final int LAYOUT_LINEAR = 0;
+    private final int LAYOUT_GRID = 1;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -71,13 +75,12 @@ public class CardlistFragment extends Fragment {
         tx_search_not_found = binding.txSearchNotFound;
 
         rv_cardlist = binding.rvCardlist;
-        rv_cardlist.setHasFixedSize(true);
-        rv_cardlist.setLayoutManager(new LinearLayoutManager(getContext()));
 
         parm_query = getArguments().getString("query");
 
         this.setSpinner();
         this.setParms();
+        this.setLayoutRecycler(this.LAYOUT_LINEAR);
         this.setListAdapter();
         this.setDataList();
         this.setLoading(true);
@@ -117,6 +120,20 @@ public class CardlistFragment extends Fragment {
                 + count_cards
                 + " " + getString(R.string.of) + " "
                 + dataList.getTotal_cards();
+    }
+
+    private void setLayoutRecycler(int layout){
+        rv_cardlist.setHasFixedSize(true);
+
+        if (layout == this.LAYOUT_GRID) {
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+            rv_cardlist.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
+        }
+        if (layout == this.LAYOUT_LINEAR) {
+            rv_cardlist.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+        if (adapter_cardlist != null) rv_cardlist.setAdapter(adapter_cardlist);
+
     }
 
     private void setListAdapter(){
@@ -210,6 +227,37 @@ public class CardlistFragment extends Fragment {
 
             }
         });
+
+
+        spinner_grid = binding.spinnerGrid;
+        ArrayAdapter<CharSequence> adapter_sp_grid = ArrayAdapter.createFromResource(mCtx,
+                R.array.array_grid, android.R.layout.simple_spinner_item);
+        adapter_sp_grid.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_grid.setAdapter(adapter_sp_grid);
+
+        spinner_grid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                String new_grid = getResources().getStringArray(R.array.array_grid)[i];
+
+//                Toast.makeText(mCtx, new_grid, Toast.LENGTH_SHORT).show();
+
+                if (i == LAYOUT_LINEAR){
+                    setLayoutRecycler(LAYOUT_LINEAR);
+                }
+                if (i == LAYOUT_GRID){
+                    setLayoutRecycler(LAYOUT_GRID);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
     }
 
     private void setParms(){
@@ -230,27 +278,27 @@ public class CardlistFragment extends Fragment {
                 , parm_unique
                 , parm_dir
                 , parm_query)
-                .observe(getViewLifecycleOwner(), new Observer<ListSearchResult>() {
+                .observe(getViewLifecycleOwner(), new Observer<CardSearchResult>() {
                     @Override
-                    public void onChanged(ListSearchResult listSearchResult) {
+                    public void onChanged(CardSearchResult cardSearchResult) {
 
-                        if (listSearchResult.getObject().equals("list")) {
+                        if (cardSearchResult.getObject().equals("list")) {
                             setLoading(false);
 
-                            dataList = listSearchResult;
+                            dataList = cardSearchResult;
                             bt_search_more.setVisibility(View.GONE);
 
-                            count_cards = listSearchResult.getData().size()
+                            count_cards = cardSearchResult.getData().size()
                                     + (Integer.parseInt(parm_page) - 1)
                                     * 175;
 
-                            tx_search_result.setText(getStringResult(listSearchResult.getData().size()));
+                            tx_search_result.setText(getStringResult(cardSearchResult.getData().size()));
 
-                            adapter_cardlist.setListSearchResult(dataList);
+                            adapter_cardlist.setCardSearchResult(dataList);
                             adapter_cardlist.notifyDataSetChanged();
                             rv_cardlist.scrollToPosition(0);
                         }
-                        if (listSearchResult.getObject().equals("error")) {
+                        if (cardSearchResult.getObject().equals("error")) {
                             setNotFound();
                         }
                     }
@@ -264,12 +312,14 @@ public class CardlistFragment extends Fragment {
             spinner_dir.setVisibility(View.GONE);
             spinner_order.setVisibility(View.GONE);
             spinner_unique.setVisibility(View.GONE);
+            spinner_grid.setVisibility(View.GONE);
             rv_cardlist.setVisibility(View.GONE);
         } else {
             pb_cardlist.setVisibility(View.GONE);
             spinner_dir.setVisibility(View.VISIBLE);
             spinner_order.setVisibility(View.VISIBLE);
             spinner_unique.setVisibility(View.VISIBLE);
+            spinner_grid.setVisibility(View.VISIBLE);
             rv_cardlist.setVisibility(View.VISIBLE);
         }
         tx_search_not_found.setVisibility(View.GONE);

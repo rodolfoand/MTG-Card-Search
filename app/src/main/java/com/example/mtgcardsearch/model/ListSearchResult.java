@@ -2,24 +2,16 @@ package com.example.mtgcardsearch.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class ListSearchResult {
+public abstract class ListSearchResult {
 
     @SerializedName("object")
     private String object;
-
-    @SerializedName("total_cards")
-    private int total_cards;
 
     @SerializedName("has_more")
     private boolean has_more;
 
     @SerializedName("next_page")
     private String next_page;
-
-    @SerializedName("data")
-    private List<Card> data;
 
     @SerializedName("message")
     private String message;
@@ -35,14 +27,6 @@ public class ListSearchResult {
 
     public void setObject(String object) {
         this.object = object;
-    }
-
-    public int getTotal_cards() {
-        return total_cards;
-    }
-
-    public void setTotal_cards(int total_cards) {
-        this.total_cards = total_cards;
     }
 
     public boolean isHas_more() {
@@ -61,14 +45,6 @@ public class ListSearchResult {
         this.next_page = next_page;
     }
 
-    public List<Card> getData() {
-        return data;
-    }
-
-    public void setData(List<Card> data) {
-        this.data = data;
-    }
-
     public String getMessage() {
         return message;
     }
@@ -76,4 +52,5 @@ public class ListSearchResult {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

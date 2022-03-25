@@ -15,7 +15,7 @@
 
     <Spinner
         android:id="@+id/spinner_unique"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/unique"
         android:minHeight="48dp"
@@ -24,7 +24,7 @@
 
     <Spinner
         android:id="@+id/spinner_order"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/order"
         android:minHeight="48dp"
@@ -33,11 +33,20 @@
 
     <Spinner
         android:id="@+id/spinner_dir"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/dir"
         android:minHeight="48dp"
         app:layout_constraintStart_toEndOf="@+id/spinner_order"
+        app:layout_constraintTop_toBottomOf="@id/tx_search_result" />
+
+    <Spinner
+        android:id="@+id/spinner_grid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/grid"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toEndOf="@+id/spinner_dir"
         app:layout_constraintTop_toBottomOf="@id/tx_search_result" />
 
 

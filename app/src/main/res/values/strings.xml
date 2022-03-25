@@ -24,6 +24,8 @@
     <string name="order">order</string>
     <string name="dir">dir</string>
     <string name="msg_not_found">Your query didn’t match any cards. Adjust your search terms or refer to the syntax guide at https://scryfall.com/docs/reference</string>
+    <string name="image">Image</string>
+    <string name="name">Name</string>
 
     <string-array name="array_unique">
         <item>cards</item>
@@ -53,4 +55,16 @@
         <item>asc</item>
         <item>desc</item>
     </string-array>
+
+    <string-array name="array_grid">
+        <item>1 col</item>
+        <item>2 col</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_set">Sets</string>
+    <string name="setlist">Set List</string>
+    <string name="grid">Grid</string>
+    <string name="sets">Sets</string>
 </resources>

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mtgcardsearch.R;
 import com.example.mtgcardsearch.model.Card;
-import com.example.mtgcardsearch.model.ListSearchResult;
+import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.OnBottomReachedListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -21,7 +21,7 @@ import java.util.List;
 public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.CardlistViewHolder> {
 
     Context mCtx;
-    ListSearchResult listSearchResult;
+    CardSearchResult cardSearchResult;
     List<Card> cardList;
     OnBottomReachedListener onBottomReachedListener;
 
@@ -29,9 +29,9 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         this.mCtx = mCtx;
     }
 
-    public void setListSearchResult(ListSearchResult listSearchResult){
-        this.cardList = listSearchResult.getData();
-        this.listSearchResult = listSearchResult;
+    public void setCardSearchResult(CardSearchResult cardSearchResult){
+        this.cardList = cardSearchResult.getData();
+        this.cardSearchResult = cardSearchResult;
     }
 
     public void setOnBottomReachedListener(OnBottomReachedListener onBottomReachedListener){

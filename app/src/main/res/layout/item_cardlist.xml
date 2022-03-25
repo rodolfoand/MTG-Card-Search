@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:textAlignment="center">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_item_cardlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:checkable="true"
+        android:clickable="true"
+        android:focusable="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,10 +29,6 @@
                     android:id="@+id/iv_cardimage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="4dp"
                     android:contentDescription="@string/cardimage"
                     android:scaleType="fitCenter"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -55,8 +55,8 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 -->
-                <!-- Title, secondary and supporting text -->
-                <!--
+            <!-- Title, secondary and supporting text -->
+            <!--
                 <TextView
                     android:id="@+id/text_cardname"
                     android:layout_width="wrap_content"
@@ -88,23 +88,28 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="horizontal"
-                android:layout_gravity="end">
+                android:layout_gravity="end"
+                android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/share"
                     style="?attr/borderlessButtonStyle"
-                    />
-
-                <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/share"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    app:icon="@drawable/ic_baseline_share_24"
+                    app:iconPadding="0dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/wishlist"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
                     app:icon="@drawable/ic_baseline_favorite_border_24"
-                    android:contentDescription="@string/wishlist"/>
+                    app:iconPadding="0dp" />
 
             </LinearLayout>
 

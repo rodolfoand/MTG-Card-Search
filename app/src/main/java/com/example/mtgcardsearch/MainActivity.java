@@ -1,16 +1,13 @@
 package com.example.mtgcardsearch;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
-import android.widget.Toast;
 
 import com.example.mtgcardsearch.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -43,10 +40,9 @@ public class MainActivity
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home
-                , R.id.nav_gallery
-                , R.id.nav_slideshow
                 , R.id.nav_mydecks
-                , R.id.nav_wishlist)
+                , R.id.nav_wishlist
+                , R.id.nav_setlist)
                 .setOpenableLayout(drawer)
                 .build();
 

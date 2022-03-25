@@ -6,7 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.mtgcardsearch.api.RetrofitService;
 import com.example.mtgcardsearch.api.ScryfallService;
-import com.example.mtgcardsearch.model.ListSearchResult;
+import com.example.mtgcardsearch.model.CardSearchResult;
+import com.example.mtgcardsearch.model.SetSearchResult;
 
 
 import retrofit2.Call;
@@ -16,13 +17,15 @@ import retrofit2.Response;
 public class ListRepository {
 
     private ScryfallService scryfallService;
-    private MutableLiveData<ListSearchResult> mld_listSearchResult;
+    private MutableLiveData<CardSearchResult> mld_cardSearchResult;
+    private MutableLiveData<SetSearchResult> mld_setSearchResult;
 
     public ListRepository() {
-        mld_listSearchResult = new MutableLiveData<>();
+        mld_cardSearchResult = new MutableLiveData<>();
+        mld_setSearchResult = new MutableLiveData<>();
     }
 
-    public MutableLiveData<ListSearchResult> getCards(
+    public MutableLiveData<CardSearchResult> getCards(
             String include_extras
             , String include_multilingual
             , String order
@@ -33,7 +36,7 @@ public class ListRepository {
 
         scryfallService = RetrofitService.getInterface();
 
-        Call<ListSearchResult> call = scryfallService.getList(
+        Call<CardSearchResult> call = scryfallService.getCards(
                 include_extras
                 , include_multilingual
                 , order
@@ -41,20 +44,43 @@ public class ListRepository {
                 , unique
                 , dir
                 , query);
-        call.enqueue(new Callback<ListSearchResult>() {
+        call.enqueue(new Callback<CardSearchResult>() {
             @Override
-            public void onResponse(Call<ListSearchResult> call, Response<ListSearchResult> response) {
+            public void onResponse(Call<CardSearchResult> call, Response<CardSearchResult> response) {
                 if (response.isSuccessful())
-                    mld_listSearchResult.setValue(response.body());
+                    mld_cardSearchResult.setValue(response.body());
                 else
-                    mld_listSearchResult.setValue(new ListSearchResult("error", response.message()));
+                    mld_cardSearchResult.setValue(new CardSearchResult("error", response.message()));
             }
 
             @Override
-            public void onFailure(Call<ListSearchResult> call, Throwable t) {
+            public void onFailure(Call<CardSearchResult> call, Throwable t) {
                 Log.d("SEARCH_RESULT", t.getMessage());
             }
         });
-        return mld_listSearchResult;
+        return mld_cardSearchResult;
+    }
+
+    public MutableLiveData<SetSearchResult> getSets(String set){
+        scryfallService = RetrofitService.getInterface();
+
+        Call<SetSearchResult> call = scryfallService.getSets(set);
+
+        call.enqueue(new Callback<SetSearchResult>() {
+            @Override
+            public void onResponse(Call<SetSearchResult> call, Response<SetSearchResult> response) {
+                if (response.isSuccessful())
+                    mld_setSearchResult.setValue(response.body());
+                else
+                    mld_setSearchResult.setValue(new SetSearchResult("error", response.message()));
+            }
+
+            @Override
+            public void onFailure(Call<SetSearchResult> call, Throwable t) {
+                Log.d("MTG_SET", t.getMessage());
+            }
+        });
+
+        return mld_setSearchResult;
     }
 }

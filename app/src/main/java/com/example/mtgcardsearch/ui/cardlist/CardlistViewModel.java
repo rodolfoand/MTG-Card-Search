@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mtgcardsearch.data.ListRepository;
-import com.example.mtgcardsearch.model.ListSearchResult;
+import com.example.mtgcardsearch.model.CardSearchResult;
 
 public class CardlistViewModel extends ViewModel {
 
@@ -14,7 +14,7 @@ public class CardlistViewModel extends ViewModel {
         listRepository = new ListRepository();
     }
 
-    public MutableLiveData<ListSearchResult> getCards(
+    public MutableLiveData<CardSearchResult> getCards(
             String include_extras
             , String include_multilingual
             , String order
