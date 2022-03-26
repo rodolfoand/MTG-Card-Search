@@ -2,6 +2,8 @@ package com.example.mtgcardsearch.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Set {
 
     @SerializedName("name")
@@ -17,6 +19,9 @@ public class Set {
 
     @SerializedName("icon_svg_uri")
     private String icon_svg_uri;
+
+    @SerializedName("released_at")
+    private Date released_at;
 
     public String getName() {
         return name;
@@ -56,5 +61,13 @@ public class Set {
 
     public void setIcon_svg_uri(String icon_svg_uri) {
         this.icon_svg_uri = icon_svg_uri;
+    }
+
+    public Date getReleased_at() {
+        return released_at;
+    }
+
+    public void setReleased_at(Date released_at) {
+        this.released_at = released_at;
     }
 }

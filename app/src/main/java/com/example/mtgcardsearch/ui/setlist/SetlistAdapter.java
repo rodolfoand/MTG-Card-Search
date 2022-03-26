@@ -63,6 +63,7 @@ public class SetlistAdapter extends RecyclerView.Adapter<SetlistAdapter.SetlistV
     public void onBindViewHolder(@NonNull SetlistAdapter.SetlistViewHolder holder, int position) {
         Set set = setList.get(position);
         holder.tv_name_setlist.setText(set.getName());
+        holder.tv_setlist_release.setText("Released at: " + set.getReleased_at().toString());
 
         Uri uri = Uri.parse(set.getIcon_svg_uri());
         holder.requestBuilder.load(uri).into(holder.iv_item_setlist);
@@ -91,12 +92,14 @@ public class SetlistAdapter extends RecyclerView.Adapter<SetlistAdapter.SetlistV
         ImageView iv_item_setlist;
         RequestBuilder<PictureDrawable> requestBuilder;
         MaterialCardView card_item_setlist;
+        TextView tv_setlist_release;
 
         public SetlistViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_name_setlist = itemView.findViewById(R.id.tv_name_setlist);
+            tv_name_setlist = itemView.findViewById(R.id.tv_setlist_name);
             iv_item_setlist = itemView.findViewById(R.id.iv_item_setlist);
             card_item_setlist = itemView.findViewById(R.id.card_item_setlist);
+            tv_setlist_release = itemView.findViewById(R.id.tv_setlist_release);
 
             requestBuilder =
                     GlideApp.with(mCtx)

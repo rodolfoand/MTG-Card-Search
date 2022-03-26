@@ -61,10 +61,672 @@
         <item>2 col</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="array_language">
+        <item>en</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>it</item>
+        <item>pt</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>ru</item>
+        <item>zhs</item>
+        <item>zht</item>
+        <item>he</item>
+        <item>la</item>
+        <item>grc</item>
+        <item>ar</item>
+        <item>sa</item>
+        <item>ph</item>
+    </string-array>
+
+
+    <string-array name="array_type_line">
+        <item>Artifact</item>
+        <item>Conspiracy</item>
+        <item>Creature</item>
+        <item>Emblem</item>
+        <item>Enchantment</item>
+        <item>Hero</item>
+        <item>Instant</item>
+        <item>Land</item>
+        <item>Phenomenon</item>
+        <item>Plane</item>
+        <item>Planeswalker</item>
+        <item>Scheme</item>
+        <item>Sorcery</item>
+        <item>Tribal</item>
+        <item>Vanguard</item>
+        <item>Basic</item>
+        <item>Elite</item>
+        <item>Legendary</item>
+        <item>Ongoing</item>
+        <item>Snow</item>
+        <item>Token</item>
+        <item>World</item>
+        <item>Blood</item>
+        <item>Clue</item>
+        <item>Contraption</item>
+        <item>Equipment</item>
+        <item>Food</item>
+        <item>Fortification</item>
+        <item>Gold</item>
+        <item>Treasure</item>
+        <item>Vehicle</item>
+        <item>Aura</item>
+        <item>Cartouche</item>
+        <item>Class</item>
+        <item>Curse</item>
+        <item>Rune</item>
+        <item>Saga</item>
+        <item>Shard</item>
+        <item>Shrine</item>
+        <item>Desert</item>
+        <item>Forest</item>
+        <item>Gate</item>
+        <item>Island</item>
+        <item>Lair</item>
+        <item>Locus</item>
+        <item>Mine</item>
+        <item>Mountain</item>
+        <item>Plains</item>
+        <item>Power-Plant</item>
+        <item>Swamp</item>
+        <item>Tower</item>
+        <item>Urza’s</item>
+        <item>Adventure</item>
+        <item>Arcane</item>
+        <item>Lesson</item>
+        <item>Trap</item>
+        <item>Abian</item>
+        <item>Ajani</item>
+        <item>Aminatou</item>
+        <item>Angrath</item>
+        <item>Arlinn</item>
+        <item>Ashiok</item>
+        <item>B.O.B.</item>
+        <item>Bahamut</item>
+        <item>Basri</item>
+        <item>Bolas</item>
+        <item>Calix</item>
+        <item>Chandra</item>
+        <item>Dack</item>
+        <item>Dakkon</item>
+        <item>Daretti</item>
+        <item>Davriel</item>
+        <item>Dihada</item>
+        <item>Domri</item>
+        <item>Dovin</item>
+        <item>Duck</item>
+        <item>Dungeon</item>
+        <item>Ellywick</item>
+        <item>Elspeth</item>
+        <item>Estrid</item>
+        <item>Freyalise</item>
+        <item>Garruk</item>
+        <item>Gideon</item>
+        <item>Grist</item>
+        <item>Huatli</item>
+        <item>Inzerva</item>
+        <item>Jace</item>
+        <item>Jaya</item>
+        <item>Jeska</item>
+        <item>Kaito</item>
+        <item>Karn</item>
+        <item>Kasmina</item>
+        <item>Kaya</item>
+        <item>Kiora</item>
+        <item>Koth</item>
+        <item>Liliana</item>
+        <item>Lolth</item>
+        <item>Lukka</item>
+        <item>Master</item>
+        <item>Minsc</item>
+        <item>Mordenkainen</item>
+        <item>Nahiri</item>
+        <item>Narset</item>
+        <item>Niko</item>
+        <item>Nissa</item>
+        <item>Nixilis</item>
+        <item>Oko</item>
+        <item>Ral</item>
+        <item>Rowan</item>
+        <item>Saheeli</item>
+        <item>Samut</item>
+        <item>Sarkhan</item>
+        <item>Serra</item>
+        <item>Sorin</item>
+        <item>Szat</item>
+        <item>Tamiyo</item>
+        <item>Teferi</item>
+        <item>Teyo</item>
+        <item>Tezzeret</item>
+        <item>Tibalt</item>
+        <item>Tyvar</item>
+        <item>Ugin</item>
+        <item>Urza</item>
+        <item>Venser</item>
+        <item>Vivien</item>
+        <item>Vraska</item>
+        <item>Will</item>
+        <item>Windgrace</item>
+        <item>Wrenn</item>
+        <item>Xenagos</item>
+        <item>Yanggu</item>
+        <item>Yanling</item>
+        <item>Zariel</item>
+        <item>Advisor</item>
+        <item>Aetherborn</item>
+        <item>Alicorn</item>
+        <item>Alien</item>
+        <item>Ally</item>
+        <item>Angel</item>
+        <item>Antelope</item>
+        <item>Ape</item>
+        <item>Archer</item>
+        <item>Archon</item>
+        <item>Army</item>
+        <item>Art</item>
+        <item>Artificer</item>
+        <item>Assassin</item>
+        <item>Assembly-Worker</item>
+        <item>Atog</item>
+        <item>Aurochs</item>
+        <item>Autobot</item>
+        <item>Avatar</item>
+        <item>Azra</item>
+        <item>Baddest,</item>
+        <item>Badger</item>
+        <item>Barbarian</item>
+        <item>Bard</item>
+        <item>Basilisk</item>
+        <item>Bat</item>
+        <item>Bear</item>
+        <item>Beast</item>
+        <item>Beaver</item>
+        <item>Beeble</item>
+        <item>Beholder</item>
+        <item>Berserker</item>
+        <item>Biggest,</item>
+        <item>Bird</item>
+        <item>Blinkmoth</item>
+        <item>Boar</item>
+        <item>Brainiac</item>
+        <item>Bringer</item>
+        <item>Brushwagg</item>
+        <item>Bureaucrat</item>
+        <item>Camarid</item>
+        <item>Camel</item>
+        <item>Caribou</item>
+        <item>Carrier</item>
+        <item>Cat</item>
+        <item>Centaur</item>
+        <item>Cephalid</item>
+        <item>Chameleon</item>
+        <item>Chicken</item>
+        <item>Child</item>
+        <item>Chimera</item>
+        <item>Citizen</item>
+        <item>Clamfolk</item>
+        <item>Cleric</item>
+        <item>Clown</item>
+        <item>Cockatrice</item>
+        <item>Construct</item>
+        <item>Cow</item>
+        <item>Coward</item>
+        <item>Crab</item>
+        <item>Crocodile</item>
+        <item>Cyborg</item>
+        <item>Cyclops</item>
+        <item>Dauthi</item>
+        <item>Deer</item>
+        <item>Demigod</item>
+        <item>Demon</item>
+        <item>Deserter</item>
+        <item>Designer</item>
+        <item>Devil</item>
+        <item>Dinosaur</item>
+        <item>Djinn</item>
+        <item>Dog</item>
+        <item>Donkey</item>
+        <item>Dragon</item>
+        <item>Drake</item>
+        <item>Dreadnought</item>
+        <item>Drone</item>
+        <item>Druid</item>
+        <item>Dryad</item>
+        <item>Dwarf</item>
+        <item>Efreet</item>
+        <item>Egg</item>
+        <item>Elder</item>
+        <item>Eldrazi</item>
+        <item>Elemental</item>
+        <item>Elemental?</item>
+        <item>Elephant</item>
+        <item>Elf</item>
+        <item>Elk</item>
+        <item>Elves</item>
+        <item>Etiquette</item>
+        <item>Eye</item>
+        <item>Faerie</item>
+        <item>Ferret</item>
+        <item>Fish</item>
+        <item>Flagbearer</item>
+        <item>Fox</item>
+        <item>Fractal</item>
+        <item>Frog</item>
+        <item>Fungus</item>
+        <item>Gamer</item>
+        <item>Gargoyle</item>
+        <item>Germ</item>
+        <item>Giant</item>
+        <item>Gnoll</item>
+        <item>Gnome</item>
+        <item>Goat</item>
+        <item>Goblin</item>
+        <item>God</item>
+        <item>Golem</item>
+        <item>Gorgon</item>
+        <item>Grandchild</item>
+        <item>Graveborn</item>
+        <item>Gremlin</item>
+        <item>Griffin</item>
+        <item>Guest</item>
+        <item>Gus</item>
+        <item>Hag</item>
+        <item>Halfling</item>
+        <item>Hamster</item>
+        <item>Harpy</item>
+        <item>Hatificer</item>
+        <item>Head</item>
+        <item>Hellion</item>
+        <item>Hero</item>
+        <item>Hippo</item>
+        <item>Hippogriff</item>
+        <item>Homarid</item>
+        <item>Homunculus</item>
+        <item>Hornet</item>
+        <item>Horror</item>
+        <item>Horse</item>
+        <item>Human</item>
+        <item>Hydra</item>
+        <item>Hyena</item>
+        <item>Illusion</item>
+        <item>Imp</item>
+        <item>Incarnation</item>
+        <item>Inkling</item>
+        <item>Insect</item>
+        <item>Jackal</item>
+        <item>Jellyfish</item>
+        <item>Juggernaut</item>
+        <item>Kangaroo</item>
+        <item>Kavu</item>
+        <item>Killbot</item>
+        <item>Kirin</item>
+        <item>Kithkin</item>
+        <item>Knight</item>
+        <item>Kobold</item>
+        <item>Kor</item>
+        <item>Kraken</item>
+        <item>Lady</item>
+        <item>Lamia</item>
+        <item>Lammasu</item>
+        <item>Leech</item>
+        <item>Leviathan</item>
+        <item>Lhurgoyf</item>
+        <item>Licid</item>
+        <item>Lizard</item>
+        <item>Lobster</item>
+        <item>Mammoth</item>
+        <item>Manticore</item>
+        <item>Masticore</item>
+        <item>Mercenary</item>
+        <item>Merfolk</item>
+        <item>Metathran</item>
+        <item>Mime</item>
+        <item>Minion</item>
+        <item>Minotaur</item>
+        <item>Mole</item>
+        <item>Monger</item>
+        <item>Mongoose</item>
+        <item>Monk</item>
+        <item>Monkey</item>
+        <item>Moonfolk</item>
+        <item>Mouse</item>
+        <item>Mummy</item>
+        <item>Mutant</item>
+        <item>Myr</item>
+        <item>Mystic</item>
+        <item>Naga</item>
+        <item>Nastiest,</item>
+        <item>Nautilus</item>
+        <item>Nephilim</item>
+        <item>Nightmare</item>
+        <item>Nightstalker</item>
+        <item>Ninja</item>
+        <item>Noble</item>
+        <item>Noggle</item>
+        <item>Nomad</item>
+        <item>Nymph</item>
+        <item>Octopus</item>
+        <item>Ogre</item>
+        <item>Ooze</item>
+        <item>Orb</item>
+        <item>Orc</item>
+        <item>Orgg</item>
+        <item>Otter</item>
+        <item>Ouphe</item>
+        <item>Ox</item>
+        <item>Oyster</item>
+        <item>Pangolin</item>
+        <item>Paratrooper</item>
+        <item>Peasant</item>
+        <item>Pegasus</item>
+        <item>Pentavite</item>
+        <item>Pest</item>
+        <item>Phelddagrif</item>
+        <item>Phoenix</item>
+        <item>Phyrexian</item>
+        <item>Pilot</item>
+        <item>Pincher</item>
+        <item>Pirate</item>
+        <item>Plant</item>
+        <item>Praetor</item>
+        <item>Prism</item>
+        <item>Processor</item>
+        <item>Proper</item>
+        <item>Rabbit</item>
+        <item>Raccoon</item>
+        <item>Ranger</item>
+        <item>Rat</item>
+        <item>Rebel</item>
+        <item>Reflection</item>
+        <item>Reveler</item>
+        <item>Rhino</item>
+        <item>Rigger</item>
+        <item>Robot</item>
+        <item>Rogue</item>
+        <item>Sable</item>
+        <item>Salamander</item>
+        <item>Samurai</item>
+        <item>Sand</item>
+        <item>Saproling</item>
+        <item>Satyr</item>
+        <item>Scarecrow</item>
+        <item>Scientist</item>
+        <item>Scion</item>
+        <item>Scorpion</item>
+        <item>Scout</item>
+        <item>Sculpture</item>
+        <item>Serf</item>
+        <item>Serpent</item>
+        <item>Servo</item>
+        <item>Shade</item>
+        <item>Shaman</item>
+        <item>Shapeshifter</item>
+        <item>Shark</item>
+        <item>Sheep</item>
+        <item>Ship</item>
+        <item>Siren</item>
+        <item>Skeleton</item>
+        <item>Slith</item>
+        <item>Sliver</item>
+        <item>Slug</item>
+        <item>Snake</item>
+        <item>Soldier</item>
+        <item>Soltari</item>
+        <item>Spawn</item>
+        <item>Specter</item>
+        <item>Spellshaper</item>
+        <item>Sphinx</item>
+        <item>Spider</item>
+        <item>Spike</item>
+        <item>Spirit</item>
+        <item>Splinter</item>
+        <item>Sponge</item>
+        <item>Spy</item>
+        <item>Squid</item>
+        <item>Squirrel</item>
+        <item>Starfish</item>
+        <item>Surrakar</item>
+        <item>Survivor</item>
+        <item>Teddy</item>
+        <item>Tentacle</item>
+        <item>Tetravite</item>
+        <item>Thalakos</item>
+        <item>The</item>
+        <item>Thopter</item>
+        <item>Thrull</item>
+        <item>Tiefling</item>
+        <item>Townsfolk</item>
+        <item>Treefolk</item>
+        <item>Trilobite</item>
+        <item>Triskelavite</item>
+        <item>Troll</item>
+        <item>Turtle</item>
+        <item>Unicorn</item>
+        <item>Vampire</item>
+        <item>Vampyre</item>
+        <item>Vedalken</item>
+        <item>Viashino</item>
+        <item>Villain</item>
+        <item>Volver</item>
+        <item>Waiter</item>
+        <item>Wall</item>
+        <item>Warlock</item>
+        <item>Warrior</item>
+        <item>Wasp</item>
+        <item>Weird</item>
+        <item>Werewolf</item>
+        <item>Whale</item>
+        <item>Wizard</item>
+        <item>Wolf</item>
+        <item>Wolverine</item>
+        <item>Wombat</item>
+        <item>Worm</item>
+        <item>Wraith</item>
+        <item>Wrestler</item>
+        <item>Wurm</item>
+        <item>Yeti</item>
+        <item>Zombie</item>
+        <item>Zubera</item>
+        <item>Alara</item>
+        <item>Arkhos</item>
+        <item>Azgol</item>
+        <item>Belenon</item>
+        <item>Bolas’s Meditation Realm</item>
+        <item>Dominaria</item>
+        <item>Equilor</item>
+        <item>Ergamon</item>
+        <item>Fabacin</item>
+        <item>Innistrad</item>
+        <item>Iquatana</item>
+        <item>Ir</item>
+        <item>Kaldheim</item>
+        <item>Kamigawa</item>
+        <item>Karsus</item>
+        <item>Kephalai</item>
+        <item>Kinshala</item>
+        <item>Kolbahan</item>
+        <item>Kyneth</item>
+        <item>Lorwyn</item>
+        <item>Luvion</item>
+        <item>Mercadia</item>
+        <item>Mirrodin</item>
+        <item>Moag</item>
+        <item>Mongseng</item>
+        <item>Muraganda</item>
+        <item>New Phyrexia</item>
+        <item>Phyrexia</item>
+        <item>Pyrulea</item>
+        <item>Rabiah</item>
+        <item>Rath</item>
+        <item>Ravnica</item>
+        <item>Regatha</item>
+        <item>Segovia</item>
+        <item>Serra’s Realm</item>
+        <item>Shadowmoor</item>
+        <item>Shandalar</item>
+        <item>Ulgrotha</item>
+        <item>Valla</item>
+        <item>Vryn</item>
+        <item>Wildfire</item>
+        <item>Xerex</item>
+        <item>Zendikar</item>
+    </string-array>
+
+    <string-array name="array_add_symbol">
+        <item>Add symbol</item>
+        <item>{W} – one white mana</item>
+        <item>{U} – one blue mana</item>
+        <item>{B} – one black mana</item>
+        <item>{R} – one red mana</item>
+        <item>{G} – one green mana</item>
+        <item>{C} – one colorless mana</item>
+        <item>{X} – X generic mana</item>
+        <item>{0} – zero mana</item>
+        <item>{1} – one generic mana</item>
+        <item>{2} – two generic mana</item>
+        <item>{3} – three generic mana</item>
+        <item>{4} – four generic mana</item>
+        <item>{5} – five generic mana</item>
+        <item>{6} – six generic mana</item>
+        <item>{7} – seven generic mana</item>
+        <item>{8} – eight generic mana</item>
+        <item>{9} – nine generic mana</item>
+        <item>{10} – ten generic mana</item>
+        <item>{11} – eleven generic mana</item>
+        <item>{12} – twelve generic mana</item>
+        <item>{13} – thirteen generic mana</item>
+        <item>{15} – fifteen generic mana</item>
+        <item>{16} – sixteen generic mana</item>
+        <item>{W/U} – one white or blue mana</item>
+        <item>{W/B} – one white or black mana</item>
+        <item>{B/R} – one black or red mana</item>
+        <item>{B/G} – one black or green mana</item>
+        <item>{U/B} – one blue or black mana</item>
+        <item>{U/R} – one blue or red mana</item>
+        <item>{R/G} – one red or green mana</item>
+        <item>{R/W} – one red or white mana</item>
+        <item>{G/W} – one green or white mana</item>
+        <item>{G/U} – one green or blue mana</item>
+        <item>{G/U/P} – one green mana, one blue mana, or 2 life</item>
+        <item>{2/W} – two generic mana or one white mana</item>
+        <item>{2/U} – two generic mana or one blue mana</item>
+        <item>{2/B} – two generic mana or one black mana</item>
+        <item>{2/R} – two generic mana or one red mana</item>
+        <item>{2/G} – two generic mana or one green mana</item>
+        <item>{W/P} – one white mana or two life</item>
+        <item>{U/P} – one blue mana or two life</item>
+        <item>{B/P} – one black mana or two life</item>
+        <item>{R/P} – one red mana or two life</item>
+        <item>{G/P} – one green mana or two life</item>
+        <item>{S} – one snow mana</item>
+    </string-array>
+
+    <string-array name="array_stats_att">
+        <item>cmc</item>
+        <item>pow</item>
+        <item>tou</item>
+        <item>loy</item>
+    </string-array>
+
+    <string-array name="array_stats_cond">
+        <item>=</item>
+        <item>\u003c</item>
+        <item>\u003e</item>
+        <item>\u003c=</item>
+        <item>\u003e=</item>
+        <item>!=</item>
+    </string-array>
+
+    <string-array name="array_prices_curr">
+        <item>usd</item>
+        <item>eur</item>
+        <item>tix</item>
+    </string-array>
+
+    <string-array name="array_prices_cond">
+        <item>\u003c</item>
+        <item>\u003e</item>
+        <item>\u003c=</item>
+        <item>\u003e=</item>
+    </string-array>
+
+    <string-array name="array_format_status">
+        <item>legal</item>
+        <item>restricted</item>
+        <item>banned</item>
+    </string-array>
+
+    <string-array name="array_formats">
+        <item></item>
+        <item>standard</item>
+        <item>future</item>
+        <item>historic</item>
+        <item>gladiator</item>
+        <item>pioneer</item>
+        <item>modern</item>
+        <item>legacy</item>
+        <item>pauper</item>
+        <item>vintage</item>
+        <item>penny</item>
+        <item>commander</item>
+        <item>brawl</item>
+        <item>historicbrawl</item>
+        <item>alchemy</item>
+        <item>paupercommander</item>
+        <item>duel</item>
+        <item>oldschool</item>
+        <item>premodern</item>
+    </string-array>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_set">Sets</string>
     <string name="setlist">Set List</string>
     <string name="grid">Grid</string>
     <string name="sets">Sets</string>
+    <string name="cardName">Card Name</string>
+    <string name="text">Text</string>
+    <string name="typeLine">Type Line</string>
+    <string name="colors">Colors</string>
+    <string name="commander">Commander</string>
+    <string name="manaCost">Mana Cost</string>
+    <string name="stats">Stats</string>
+    <string name="formats">Formats</string>
+    <string name="rarity">Rarity</string>
+    <string name="criteria">Criteria</string>
+    <string name="prices">Prices</string>
+    <string name="artist">Artist</string>
+    <string name="flavorText">Flavor Text</string>
+    <string name="language">Language</string>
+    <string name="hint_card_name">Any words in the name, e.g. “Fire”</string>
+    <string name="hint_text">Any text, e.g. “draw a card”</string>
+    <string name="white">White</string>
+    <string name="black">Black</string>
+    <string name="blue">Blue</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
+    <string name="colorless">Colorless</string>
+    <string name="common">Common</string>
+    <string name="uncommon">Uncommun</string>
+    <string name="rare">Rare</string>
+    <string name="mythicRare">Mythic Rare</string>
+    <string name="hint_mana">Any mana symbols, e.g. “{W}{W}”</string>
+    <string name="hint_artist">Any artist name, e.g. “Magali”</string>
+    <string name="advmagicsearch">Advanced Magic Search</string>
+    <string name="search_with_options">Search with options</string>
+    <string name="hint_type">Choose any card type, supertype, or subtypes to match.</string>
+    <string name="hint_stats_value">Any value, e.g. “2”</string>
+    <string name="hint_set_in">Enter a set name or choose from the list</string>
+    <string name="hint_set_out">Enter a block name or choose from the list</string>
+    <string name="hint_criteria">Enter a criterion or choose from the list</string>
+    <string name="symbol">Symbol</string>
+    <string name="cond">Conditional</string>
+    <string name="formats_status">Formats Status</string>
+    <string name="currency">Currency</string>
+    <string name="subtitle">Subtitle</string>
+    <string name="bt_advsearch">Search with these options</string>
 </resources>

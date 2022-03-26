@@ -1,26 +1,24 @@
 package com.example.mtgcardsearch.ui.home;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.navigation.Navigation;
 
 import com.example.mtgcardsearch.databinding.FragmentHomeBinding;
-import com.example.mtgcardsearch.model.SetSearchResult;
-import com.example.mtgcardsearch.ui.setlist.SetlistAdapter;
+import com.google.android.material.card.MaterialCardView;
+import com.example.mtgcardsearch.R;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+
+    private MaterialCardView home_card_advsearch;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,8 +28,15 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        home_card_advsearch = binding.homeCardAdvsearch;
+
+        home_card_advsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.nav_advsearch);
+            }
+        });
+
         return root;
     }
 

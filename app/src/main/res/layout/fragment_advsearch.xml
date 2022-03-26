@@ -1,0 +1,588 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.advsearch.AdvsearchFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/bt_adv_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ln_adv_lang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_adv_language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="@string/language"
+                    android:textAlignment="center" />
+
+                <Spinner
+                    android:id="@+id/sp_adv_lang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/language"
+                    android:minHeight="48dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="?colorSecondaryVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ln_adv_lang" />
+
+            <TextView
+                android:id="@+id/tv_adv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:text="@string/cardName"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ln_adv_lang" />
+
+            <EditText
+                android:id="@+id/et_adv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:hint="@string/hint_card_name"
+                android:inputType="textPersonName"
+                android:textColorHint="#78909C"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_name" />
+
+            <TextView
+                android:id="@+id/tv_adv_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/text"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_adv_name" />
+
+            <EditText
+                android:id="@+id/et_adv_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:hint="@string/hint_text"
+                android:inputType="textPersonName"
+                android:textColorHint="#78909C"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_text" />
+
+            <TextView
+                android:id="@+id/tv_adv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/typeLine"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_adv_text" />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/mactv_adv_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/hint_type"
+                android:textColorHint="#78909C"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_type" />
+
+            <TextView
+                android:id="@+id/tv_adv_colors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/colors"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mactv_adv_type" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_color_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/white"
+                app:layout_constraintEnd_toStartOf="@+id/cb_adv_color_blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_colors" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_color_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blue"
+                app:layout_constraintEnd_toStartOf="@+id/cb_adv_color_black"
+                app:layout_constraintStart_toEndOf="@+id/cb_adv_color_white"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_colors" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_color_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cb_adv_color_blue"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_colors" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_color_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/red"
+                app:layout_constraintStart_toStartOf="@+id/cb_adv_color_white"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_color_white" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_color_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/green"
+                app:layout_constraintStart_toStartOf="@+id/cb_adv_color_blue"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_color_white" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_color_colorless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/colorless"
+                app:layout_constraintStart_toStartOf="@+id/cb_adv_color_black"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_color_white" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="?colorSecondaryVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_color_red" />
+
+            <TextView
+                android:id="@+id/tv_adv_commander"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:text="@string/commander"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_color_red" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_comm_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/white"
+                app:layout_constraintEnd_toStartOf="@+id/cb_adv_comm_blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_commander" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_comm_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blue"
+                app:layout_constraintEnd_toStartOf="@+id/cb_adv_comm_black"
+                app:layout_constraintStart_toEndOf="@+id/cb_adv_comm_white"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_commander" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_comm_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cb_adv_comm_blue"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_commander" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_comm_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/red"
+                app:layout_constraintStart_toStartOf="@+id/cb_adv_comm_white"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_comm_white" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_comm_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/green"
+                app:layout_constraintStart_toStartOf="@+id/cb_adv_comm_blue"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_comm_white" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_comm_colorless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/colorless"
+                app:layout_constraintStart_toStartOf="@+id/cb_adv_comm_black"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_comm_white" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="?colorSecondaryVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_comm_colorless" />
+
+            <TextView
+                android:id="@+id/tv_adv_mana"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:text="@string/manaCost"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_comm_red" />
+
+            <EditText
+                android:id="@+id/et_adv_mana"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:autofillHints=""
+                android:hint="@string/hint_mana"
+                android:inputType="textPersonName"
+                android:textColorHint="#78909C"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_mana" />
+
+            <Spinner
+                android:id="@+id/sp_adv_add_symbol"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/symbol"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/et_adv_mana"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_mana" />
+
+            <TextView
+                android:id="@+id/tv_adv_stats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/stats"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_adv_mana" />
+
+            <Spinner
+                android:id="@+id/sp_adv_stats_att"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/stats"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_stats" />
+
+            <Spinner
+                android:id="@+id/sp_adv_stats_cond"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/cond"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toEndOf="@+id/sp_adv_stats_att"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_stats" />
+
+            <EditText
+                android:id="@+id/tv_adv_stats_value"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:hint="@string/hint_stats_value"
+                android:inputType="textPersonName"
+                android:textColorHint="#78909C"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sp_adv_stats_cond"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_stats" />
+
+            <TextView
+                android:id="@+id/tv_adv_formats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/formats"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sp_adv_stats_att" />
+
+            <Spinner
+                android:id="@+id/sp_adv_format_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/formats_status"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_formats" />
+
+            <Spinner
+                android:id="@+id/sp_adv_format_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/formats"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sp_adv_format_status"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_formats" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="?colorSecondaryVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sp_adv_format_status" />
+
+            <TextView
+                android:id="@+id/tv_adv_sets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:text="@string/sets"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sp_adv_format_status" />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/mactv_adv_sets_in"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/hint_set_in"
+                android:textColorHint="#78909C"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_sets" />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/mactv_adv_sets_out"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/hint_set_out"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mactv_adv_sets_in" />
+
+            <TextView
+                android:id="@+id/tv_adv_rarity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/rarity"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mactv_adv_sets_out" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_rar_common"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/common"
+                app:layout_constraintEnd_toStartOf="@+id/cb_adv_rar_uncommon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_adv_rarity" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_rar_uncommon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/uncommon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cb_adv_rar_common"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_rarity" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_rar_rare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rare"
+                app:layout_constraintStart_toStartOf="@+id/cb_adv_rar_common"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_rar_common" />
+
+            <CheckBox
+                android:id="@+id/cb_adv_rar_myth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mythicRare"
+                app:layout_constraintStart_toStartOf="@+id/cb_adv_rar_uncommon"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_rar_common" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="?colorSecondaryVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_rar_rare" />
+
+            <TextView
+                android:id="@+id/tv_adv_criteria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:text="@string/criteria"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cb_adv_rar_rare" />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/mactv_adv_criteria"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/hint_criteria"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_criteria" />
+
+            <TextView
+                android:id="@+id/tv_adv_prices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/prices"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mactv_adv_criteria" />
+
+            <Spinner
+                android:id="@+id/sp_adv_prices_curr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/currency"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_prices" />
+
+            <Spinner
+                android:id="@+id/sp_adv_prices_cond"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/cond"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toEndOf="@+id/sp_adv_prices_curr"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_prices" />
+
+            <EditText
+                android:id="@+id/tv_adv_prices_value"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:hint="@string/hint_stats_value"
+                android:inputType="textPersonName"
+                android:textColorHint="#78909C"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sp_adv_prices_cond"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_prices" />
+
+            <TextView
+                android:id="@+id/tv_adv_artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/artist"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sp_adv_prices_cond" />
+
+            <EditText
+                android:id="@+id/et_adv_artist"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:hint="@string/hint_artist"
+                android:inputType="textPersonName"
+                android:textColorHint="#78909C"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_artist" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_adv_search"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/bt_advsearch"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
