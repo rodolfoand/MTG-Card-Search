@@ -28,7 +28,6 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
-
 public class SetlistAdapter extends RecyclerView.Adapter<SetlistAdapter.SetlistViewHolder> {
 
 

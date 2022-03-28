@@ -62,6 +62,7 @@
     </string-array>
 
     <string-array name="array_language">
+        <item>System</item>
         <item>en</item>
         <item>es</item>
         <item>fr</item>
@@ -576,7 +577,58 @@
         <item>Zendikar</item>
     </string-array>
 
-    <string-array name="array_add_symbol">
+
+    <string-array name="array_add_symbol_values">
+        <item>Add symbol</item>
+        <item>{W}</item>
+        <item>{U}</item>
+        <item>{B}</item>
+        <item>{R}</item>
+        <item>{G}</item>
+        <item>{C}</item>
+        <item>{X}</item>
+        <item>{0}</item>
+        <item>{1}</item>
+        <item>{2}</item>
+        <item>{3}</item>
+        <item>{4}</item>
+        <item>{5}</item>
+        <item>{6}</item>
+        <item>{7}</item>
+        <item>{8}</item>
+        <item>{9}</item>
+        <item>{10}</item>
+        <item>{11}</item>
+        <item>{12}</item>
+        <item>{13}</item>
+        <item>{15}</item>
+        <item>{16}</item>
+        <item>{W/U}</item>
+        <item>{W/B}</item>
+        <item>{B/R}</item>
+        <item>{B/G}</item>
+        <item>{U/B}</item>
+        <item>{U/R}</item>
+        <item>{R/G}</item>
+        <item>{R/W}</item>
+        <item>{G/W}</item>
+        <item>{G/U}</item>
+        <item>{G/U/P}</item>
+        <item>{2/W}</item>
+        <item>{2/U}</item>
+        <item>{2/B}</item>
+        <item>{2/R}</item>
+        <item>{2/G}</item>
+        <item>{W/P}</item>
+        <item>{U/P}</item>
+        <item>{B/P}</item>
+        <item>{R/P}</item>
+        <item>{G/P}</item>
+        <item>{S}</item>
+
+    </string-array>
+
+    <string-array name="array_add_symbol_display">
         <item>Add symbol</item>
         <item>{W} – one white mana</item>
         <item>{U} – one blue mana</item>
@@ -680,6 +732,96 @@
         <item>duel</item>
         <item>oldschool</item>
         <item>premodern</item>
+    </string-array>
+
+    <string-array name="array_criteria">
+        <item>Adventure</item>
+        <item>Arena ID</item>
+        <item>Artist</item>
+        <item>Artist Misprint</item>
+        <item>Augment</item>
+        <item>Back</item>
+        <item>Bear</item>
+        <item>Booster</item>
+        <item>Brawl Commander</item>
+        <item>Buy-a-Box</item>
+        <item>Cardmarket ID</item>
+        <item>Class Layout</item>
+        <item>Color Indicator</item>
+        <item>Colorshifted</item>
+        <item>Commander</item>
+        <item>Companion</item>
+        <item>Covered</item>
+        <item>Creature Land</item>
+        <item>Datestamped</item>
+        <item>Digital</item>
+        <item>Double Sided</item>
+        <item>Duel Commander</item>
+        <item>E T B</item>
+        <item>English Art</item>
+        <item>Etched</item>
+        <item>Extra</item>
+        <item>First Printing</item>
+        <item>Flavor Name</item>
+        <item>Flavor Text</item>
+        <item>Flip</item>
+        <item>Foil</item>
+        <item>Foreign Black Border</item>
+        <item>Foreign White Border</item>
+        <item>French Vanilla</item>
+        <item>Full Art</item>
+        <item>Funny</item>
+        <item>Future</item>
+        <item>Game Day</item>
+        <item>Glossy</item>
+        <item>Highres</item>
+        <item>Historic</item>
+        <item>Hybrid Mana</item>
+        <item>Illustration</item>
+        <item>Intro Pack</item>
+        <item>Invitational Card</item>
+        <item>Leveler</item>
+        <item>Localized Name</item>
+        <item>MTGO ID</item>
+        <item>Masterpiece</item>
+        <item>Meld</item>
+        <item>Modal</item>
+        <item>Modal Double Faced</item>
+        <item>Modern</item>
+        <item>Multiverse ID</item>
+        <item>New</item>
+        <item>Nonfoil</item>
+        <item>Old</item>
+        <item>Oversized</item>
+        <item>Paper Art</item>
+        <item>Party</item>
+        <item>Permanent</item>
+        <item>Phyrexian Mana</item>
+        <item>Planeswalker Deck</item>
+        <item>Prerelease Promo</item>
+        <item>Printed Text</item>
+        <item>Promo</item>
+        <item>Release Promo</item>
+        <item>Reprint</item>
+        <item>Reserved List</item>
+        <item>Reversible</item>
+        <item>Security Stamp</item>
+        <item>Spell</item>
+        <item>Spellbook</item>
+        <item>Spikey</item>
+        <item>Split Card</item>
+        <item>Stamped</item>
+        <item>Starter Deck</item>
+        <item>Story Spotlight</item>
+        <item>TCGplayer ID</item>
+        <item>Textless</item>
+        <item>Token</item>
+        <item>Tombstone</item>
+        <item>Transform</item>
+        <item>Unique</item>
+        <item>Vanilla</item>
+        <item>Variation</item>
+        <item>Watermark</item>
     </string-array>
 
 

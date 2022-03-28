@@ -58,6 +58,7 @@ public class ListRepository {
                 Log.d("SEARCH_RESULT", t.getMessage());
             }
         });
+        Log.d("MagicQueury", call.request().url().toString());
         return mld_cardSearchResult;
     }
 

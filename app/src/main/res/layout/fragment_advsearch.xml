@@ -6,6 +6,7 @@
     tools:context=".ui.advsearch.AdvsearchFragment">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/bt_adv_search"
@@ -383,6 +384,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_adv_formats" />
 
             <View
+                android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginStart="10dp"
@@ -416,6 +418,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_adv_sets" />
 
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/pi_adv_sets_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:indicatorSize="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/mactv_adv_sets_in" />
+
             <MultiAutoCompleteTextView
                 android:id="@+id/mactv_adv_sets_out"
                 android:layout_width="0dp"
@@ -423,9 +436,21 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="@string/hint_set_out"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mactv_adv_sets_in" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/pi_adv_sets_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:indicatorSize="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/mactv_adv_sets_out" />
 
             <TextView
                 android:id="@+id/tv_adv_rarity"
@@ -490,6 +515,7 @@
                 android:padding="8dp"
                 android:text="@string/criteria"
                 android:textAlignment="center"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cb_adv_rar_rare" />
@@ -501,6 +527,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="@string/hint_criteria"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_adv_criteria" />
@@ -536,7 +563,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_adv_prices" />
 
             <EditText
-                android:id="@+id/tv_adv_prices_value"
+                android:id="@+id/et_adv_prices_value"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="8dp"
@@ -581,8 +608,10 @@
         android:id="@+id/bt_adv_search"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginBottom="2dp"
         android:text="@string/bt_advsearch"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

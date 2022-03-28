@@ -23,6 +23,9 @@ public class Set {
     @SerializedName("released_at")
     private Date released_at;
 
+    @SerializedName("code")
+    private String code;
+
     public String getName() {
         return name;
     }
@@ -69,5 +72,13 @@ public class Set {
 
     public void setReleased_at(Date released_at) {
         this.released_at = released_at;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
