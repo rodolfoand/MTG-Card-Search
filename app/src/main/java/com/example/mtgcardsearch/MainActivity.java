@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.view.Menu;
 
 import com.example.mtgcardsearch.databinding.ActivityMainBinding;
+import com.example.mtgcardsearch.data.PrefDataStore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,6 +25,8 @@ public class MainActivity
 
     private MenuItem searchMenuItem;
     private NavController navController;
+
+    private PrefDataStore dataStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,8 @@ public class MainActivity
 
         binding.appBarMain.fab.setOnClickListener(view -> searchMenuItem.expandActionView());
 
+        if (PrefDataStore.prefDataStore.dataStore == null)
+            PrefDataStore.prefDataStore.setContext(getApplicationContext());
     }
 
     @Override

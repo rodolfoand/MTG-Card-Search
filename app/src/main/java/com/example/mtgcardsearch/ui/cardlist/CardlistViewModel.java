@@ -5,13 +5,16 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.mtgcardsearch.data.ListRepository;
 import com.example.mtgcardsearch.model.CardSearchResult;
+import com.example.mtgcardsearch.data.PrefDataStore;
 
 public class CardlistViewModel extends ViewModel {
 
     private ListRepository listRepository;
+    private PrefDataStore prefDataStore;
 
     public CardlistViewModel() {
         listRepository = new ListRepository();
+        prefDataStore = PrefDataStore.prefDataStore;
     }
 
     public MutableLiveData<CardSearchResult> getCards(
@@ -30,5 +33,13 @@ public class CardlistViewModel extends ViewModel {
                 , unique
                 , dir
                 , query);
+    }
+
+    public int getPrefLayout(){
+        return prefDataStore.getPrefLayout().blockingFirst();
+    }
+
+    public void setPrefLayout(int layout){
+        prefDataStore.setPrefLayout(prefDataStore.PREF_CARDLIST_LAYOUT.getName(), layout);
     }
 }

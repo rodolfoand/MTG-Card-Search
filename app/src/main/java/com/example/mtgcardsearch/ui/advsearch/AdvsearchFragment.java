@@ -55,8 +55,6 @@ public class AdvsearchFragment extends Fragment {
     private List<String> arraySetNames;
     private List<String> arraySetIds;
     private ProgressBar pi_adv_sets_in;
-    private MultiAutoCompleteTextView mactv_adv_sets_out;
-    private ProgressBar pi_adv_sets_out;
     private MultiAutoCompleteTextView mactv_adv_criteria;
     private Button bt_adv_search;
     private EditText et_adv_name;
@@ -97,6 +95,11 @@ public class AdvsearchFragment extends Fragment {
 
         this.setSpinner();
         this.setMultiAutoComplete();
+
+        List<String> langList= Arrays.stream(getResources().getStringArray(R.array.array_language)).collect(Collectors.toList());
+        int langPos = langList.indexOf(advsearchViewModel.getPrefUserLang());
+
+        if (langPos >= 0) binding.spAdvLang.setSelection(langPos);
 
         bt_adv_search.setOnClickListener(new View.OnClickListener() {
             @Override

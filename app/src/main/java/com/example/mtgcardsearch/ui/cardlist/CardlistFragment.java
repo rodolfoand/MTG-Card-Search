@@ -10,17 +10,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mtgcardsearch.R;
@@ -28,25 +23,21 @@ import com.example.mtgcardsearch.databinding.FragmentCardlistBinding;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.OnBottomReachedListener;
 
+
 import java.util.Locale;
+
 
 
 public class CardlistFragment extends Fragment {
 
     private FragmentCardlistBinding binding;
+    private CardlistViewModel cardlistViewModel;
 
-    private RecyclerView rv_cardlist;
-    private CardlistAdapter adapter_cardlist;
     private Context mCtx;
     private CardSearchResult dataList;
-    private TextView tx_search_result;
-    private Button bt_search_more;
+    private CardlistAdapter adapter_cardlist;
     private int count_cards;
-    private Spinner spinner_unique;
-    private Spinner spinner_order;
-    private Spinner spinner_dir;
-    private Spinner spinner_grid;
-    private CardlistViewModel cardlistViewModel;
+
     private String parm_unique;
     private String parm_order;
     private String parm_dir;
@@ -54,11 +45,9 @@ public class CardlistFragment extends Fragment {
     private String parm_page;
     private String parm_include_multilingual;
     private String parm_include_extras;
-    private ProgressBar pb_cardlist;
-    private TextView tx_search_not_found;
+
     private final int LAYOUT_LINEAR = 0;
     private final int LAYOUT_GRID = 1;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,26 +58,19 @@ public class CardlistFragment extends Fragment {
         View root = binding.getRoot();
 
         mCtx = container.getContext();
-        tx_search_result = binding.txSearchResult;
-        bt_search_more = binding.btSearchMore;
-        pb_cardlist = binding.pbCardlist;
-        tx_search_not_found = binding.txSearchNotFound;
-
-        rv_cardlist = binding.rvCardlist;
 
         parm_query = getArguments().getString("query");
 
         this.setSpinner();
         this.setParms();
-        this.setLayoutRecycler(this.LAYOUT_LINEAR);
+        this.setLayoutRecycler(cardlistViewModel.getPrefLayout());
         this.setListAdapter();
         this.setDataList();
         this.setLoading(true);
 
-        bt_search_more.setOnClickListener(new View.OnClickListener() {
+        binding.btSearchMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setLoading(true);
 
                 Uri uri_next_page = Uri.parse(dataList.getNext_page());
                 parm_include_extras = uri_next_page.getQueryParameter("include_extras");
@@ -99,8 +81,23 @@ public class CardlistFragment extends Fragment {
                 parm_dir = uri_next_page.getQueryParameter("dir");
                 parm_query = uri_next_page.getQueryParameter("q");
 
+                setLoading(true);
                 setDataList();
 
+            }
+        });
+
+        binding.imCardlistCol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDataSourceLayout();
+            }
+        });
+
+        binding.imCardlistRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDataSourceLayout();
             }
         });
 
@@ -123,42 +120,46 @@ public class CardlistFragment extends Fragment {
     }
 
     private void setLayoutRecycler(int layout){
-        rv_cardlist.setHasFixedSize(true);
+        binding.rvCardlist.setHasFixedSize(true);
 
         if (layout == this.LAYOUT_GRID) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-            rv_cardlist.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
+            binding.rvCardlist.setLayoutManager(gridLayoutManager);
+
+            binding.imCardlistCol.setVisibility(View.GONE);
+            binding.imCardlistRow.setVisibility(View.VISIBLE);
         }
         if (layout == this.LAYOUT_LINEAR) {
-            rv_cardlist.setLayoutManager(new LinearLayoutManager(getContext()));
-        }
-        if (adapter_cardlist != null) rv_cardlist.setAdapter(adapter_cardlist);
+            binding.rvCardlist.setLayoutManager(new LinearLayoutManager(getContext()));
 
+            binding.imCardlistCol.setVisibility(View.VISIBLE);
+            binding.imCardlistRow.setVisibility(View.GONE);
+        }
+        if (adapter_cardlist != null) binding.rvCardlist.setAdapter(adapter_cardlist);
     }
 
     private void setListAdapter(){
 
         adapter_cardlist = new CardlistAdapter(mCtx);
-        rv_cardlist.setAdapter(adapter_cardlist);
+        binding.rvCardlist.setAdapter(adapter_cardlist);
 
         adapter_cardlist.setOnBottomReachedListener(new OnBottomReachedListener() {
             @Override
             public void onBottomReached(int position) {
                 Toast.makeText(mCtx, "onBottomReached", Toast.LENGTH_SHORT).show();
                 if (dataList.isHas_more())
-                    bt_search_more.setVisibility(View.VISIBLE);
+                    binding.btSearchMore.setVisibility(View.VISIBLE);
             }
         });
     }
 
     private void setSpinner(){
-        spinner_unique = binding.spinnerUnique;
         ArrayAdapter<CharSequence> adapter_sp_unique = ArrayAdapter.createFromResource(mCtx,
                 R.array.array_unique, android.R.layout.simple_spinner_item);
         adapter_sp_unique.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_unique.setAdapter(adapter_sp_unique);
+        binding.spinnerUnique.setAdapter(adapter_sp_unique);
 
-        spinner_unique.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spinnerUnique.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String new_unique = getResources().getStringArray(R.array.array_unique)[i];
@@ -178,13 +179,12 @@ public class CardlistFragment extends Fragment {
             }
         });
 
-        spinner_order = binding.spinnerOrder;
         ArrayAdapter<CharSequence> adapter_sp_order = ArrayAdapter.createFromResource(mCtx,
                 R.array.array_order, android.R.layout.simple_spinner_item);
         adapter_sp_order.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_order.setAdapter(adapter_sp_order);
+        binding.spinnerOrder.setAdapter(adapter_sp_order);
 
-        spinner_order.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spinnerOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String new_order = getResources().getStringArray(R.array.array_order)[i];
@@ -203,13 +203,12 @@ public class CardlistFragment extends Fragment {
             }
         });
 
-        spinner_dir = binding.spinnerDir;
         ArrayAdapter<CharSequence> adapter_sp_dir = ArrayAdapter.createFromResource(mCtx,
                 R.array.array_dir, android.R.layout.simple_spinner_item);
         adapter_sp_dir.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_dir.setAdapter(adapter_sp_dir);
+        binding.spinnerDir.setAdapter(adapter_sp_dir);
 
-        spinner_dir.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spinnerDir.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String new_dir = getResources().getStringArray(R.array.array_dir)[i];
@@ -227,37 +226,6 @@ public class CardlistFragment extends Fragment {
 
             }
         });
-
-
-        spinner_grid = binding.spinnerGrid;
-        ArrayAdapter<CharSequence> adapter_sp_grid = ArrayAdapter.createFromResource(mCtx,
-                R.array.array_grid, android.R.layout.simple_spinner_item);
-        adapter_sp_grid.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_grid.setAdapter(adapter_sp_grid);
-
-        spinner_grid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                String new_grid = getResources().getStringArray(R.array.array_grid)[i];
-
-//                Toast.makeText(mCtx, new_grid, Toast.LENGTH_SHORT).show();
-
-                if (i == LAYOUT_LINEAR){
-                    setLayoutRecycler(LAYOUT_LINEAR);
-                }
-                if (i == LAYOUT_GRID){
-                    setLayoutRecycler(LAYOUT_GRID);
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
     }
 
     private void setParms(){
@@ -283,50 +251,58 @@ public class CardlistFragment extends Fragment {
                     public void onChanged(CardSearchResult cardSearchResult) {
 
                         if (cardSearchResult.getObject().equals("list")) {
-                            setLoading(false);
-
                             dataList = cardSearchResult;
-                            bt_search_more.setVisibility(View.GONE);
+                            binding.btSearchMore.setVisibility(View.GONE);
 
                             count_cards = cardSearchResult.getData().size()
                                     + (Integer.parseInt(parm_page) - 1)
                                     * 175;
 
-                            tx_search_result.setText(getStringResult(cardSearchResult.getData().size()));
-
                             adapter_cardlist.setCardSearchResult(dataList);
                             adapter_cardlist.notifyDataSetChanged();
-                            rv_cardlist.scrollToPosition(0);
+                            binding.rvCardlist.scrollToPosition(0);
+
+                            binding.txSearchResult.setText(getStringResult(cardSearchResult.getData().size()));
+
+                            setLoading(false);
                         }
                         if (cardSearchResult.getObject().equals("error")) {
                             setNotFound();
                         }
                     }
                 });
-
     }
 
     private void setLoading(boolean loading){
         if (loading){
-            pb_cardlist.setVisibility(View.VISIBLE);
-            spinner_dir.setVisibility(View.GONE);
-            spinner_order.setVisibility(View.GONE);
-            spinner_unique.setVisibility(View.GONE);
-            spinner_grid.setVisibility(View.GONE);
-            rv_cardlist.setVisibility(View.GONE);
+            binding.pbCardlist.setVisibility(View.VISIBLE);
+            binding.spinnerDir.setVisibility(View.GONE);
+            binding.spinnerOrder.setVisibility(View.GONE);
+            binding.spinnerUnique.setVisibility(View.GONE);
+            binding.rvCardlist.setVisibility(View.GONE);
         } else {
-            pb_cardlist.setVisibility(View.GONE);
-            spinner_dir.setVisibility(View.VISIBLE);
-            spinner_order.setVisibility(View.VISIBLE);
-            spinner_unique.setVisibility(View.VISIBLE);
-            spinner_grid.setVisibility(View.VISIBLE);
-            rv_cardlist.setVisibility(View.VISIBLE);
+            binding.pbCardlist.setVisibility(View.GONE);
+            binding.spinnerDir.setVisibility(View.VISIBLE);
+            binding.spinnerOrder.setVisibility(View.VISIBLE);
+            binding.spinnerUnique.setVisibility(View.VISIBLE);
+            binding.rvCardlist.setVisibility(View.VISIBLE);
         }
-        tx_search_not_found.setVisibility(View.GONE);
+        binding.txSearchNotFound.setVisibility(View.GONE);
     }
 
     private void setNotFound(){
-        pb_cardlist.setVisibility(View.GONE);
-        tx_search_not_found.setVisibility(View.VISIBLE);
+        binding.pbCardlist.setVisibility(View.GONE);
+        binding.txSearchNotFound.setVisibility(View.VISIBLE);
     }
+
+    private void setDataSourceLayout(){
+        if (cardlistViewModel.getPrefLayout() == LAYOUT_GRID){
+            cardlistViewModel.setPrefLayout(LAYOUT_LINEAR);
+            setLayoutRecycler(LAYOUT_LINEAR);
+        } else {
+            cardlistViewModel.setPrefLayout(LAYOUT_GRID);
+            setLayoutRecycler(LAYOUT_GRID);
+        }
+    }
+
 }
