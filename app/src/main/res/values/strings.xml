@@ -62,7 +62,6 @@
     </string-array>
 
     <string-array name="array_language">
-        <item>System</item>
         <item>en</item>
         <item>es</item>
         <item>fr</item>
@@ -871,4 +870,5 @@
     <string name="currency">Currency</string>
     <string name="subtitle">Subtitle</string>
     <string name="bt_advsearch">Search with these options</string>
+    <string name="valid_set">Choose a valid set.</string>
 </resources>

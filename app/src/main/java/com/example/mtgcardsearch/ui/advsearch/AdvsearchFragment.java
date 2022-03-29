@@ -10,18 +10,22 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mtgcardsearch.R;
 import com.example.mtgcardsearch.databinding.FragmentAdvsearchBinding;
@@ -88,16 +92,20 @@ public class AdvsearchFragment extends Fragment {
         mCtx = container.getContext();
         bt_adv_search = binding.btAdvSearch;
 
+        if (arraySetNames == null) arraySetNames = new ArrayList<>();
+        if (arraySetNames == null) arraySetIds = new ArrayList<>();
+
         this.setSpinner();
         this.setMultiAutoComplete();
 
         bt_adv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Bundle bundle = new Bundle();
-                bundle.putString("query", getQuery());
-                Navigation.findNavController(view).navigate(R.id.nav_cardlist, bundle);
+                if (!getQuery().isEmpty()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("query", getQuery());
+                    Navigation.findNavController(view).navigate(R.id.nav_cardlist, bundle);
+                }
             }
         });
 
@@ -192,10 +200,8 @@ public class AdvsearchFragment extends Fragment {
         mactv_adv_criteria.setAdapter(adapter_adv_criteria);
         mactv_adv_criteria.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
-        arraySetNames = new ArrayList<>();
-        mactv_adv_sets_in = binding.mactvAdvSetsIn;
-        mactv_adv_sets_out = binding.mactvAdvSetsOut;
 
+        mactv_adv_sets_in = binding.mactvAdvSetsIn;
         pi_adv_sets_in = binding.piAdvSetsIn;
 
         mactv_adv_sets_in.setOnTouchListener(new View.OnTouchListener() {
@@ -208,8 +214,6 @@ public class AdvsearchFragment extends Fragment {
                 return false;
             }
         });
-
-
     }
 
     private void setSetlist(){
@@ -301,26 +305,33 @@ public class AdvsearchFragment extends Fragment {
         }
 
         if (sp_adv_format_value.getSelectedItemPosition() != 0){
-            q += " "
-                    + getResources().getStringArray(R.array.array_format_status)[sp_adv_format_status.getSelectedItemPosition()]
+            q += " " + getResources().getStringArray(R.array.array_format_status)[sp_adv_format_status.getSelectedItemPosition()]
                     + ":"
                     + getResources().getStringArray(R.array.array_formats)[sp_adv_format_value.getSelectedItemPosition()];
         }
 
         if (!mactv_adv_sets_in.getText().toString().isEmpty()) {
+
             List<String> sets = Arrays.stream(mactv_adv_sets_in.getText().toString()
                     .split(","))
                     .collect(Collectors.toList());
-            if (sets.size() > 0) {
+            if (sets.size() > 0 && arraySetNames.size() > 0 && arraySetIds.size() > 0) {
                 for (String set : sets) {
                     if (sets.indexOf(set) == 0) q += " (";
                     if (sets.indexOf(set) > 0) q += " OR ";
                     if (!set.trim().isEmpty())
-                        q += " set:" + arraySetIds.get(arraySetNames.indexOf(set.trim()));
+                        if (arraySetNames.indexOf(set.trim()) >= 0) {
+                            q += " set:" + arraySetIds.get(arraySetNames.indexOf(set.trim()));
+                        } else {
+                            mactv_adv_sets_in.setError(getString(R.string.valid_set));
+                            mactv_adv_sets_in.setFocusable(true);
+                            return "";
+                        }
                     if (sets.indexOf(set) == sets.size() - 1) q += ")";
                 }
             }
         }
+
         List<String> rares = new ArrayList<>();
         if (cb_adv_rar_common.isChecked()) rares.add("c");
         if (cb_adv_rar_uncommon.isChecked()) rares.add("u");
