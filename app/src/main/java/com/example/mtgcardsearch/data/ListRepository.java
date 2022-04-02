@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.mtgcardsearch.api.RetrofitService;
 import com.example.mtgcardsearch.api.ScryfallService;
+import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.SetSearchResult;
 
@@ -19,10 +20,12 @@ public class ListRepository {
     private ScryfallService scryfallService;
     private MutableLiveData<CardSearchResult> mld_cardSearchResult;
     private MutableLiveData<SetSearchResult> mld_setSearchResult;
+    private MutableLiveData<Card> mld_card;
 
     public ListRepository() {
         mld_cardSearchResult = new MutableLiveData<>();
         mld_setSearchResult = new MutableLiveData<>();
+        mld_card = new MutableLiveData<>();
     }
 
     public MutableLiveData<CardSearchResult> getCards(
@@ -83,5 +86,28 @@ public class ListRepository {
         });
 
         return mld_setSearchResult;
+    }
+
+    public MutableLiveData<Card> getCard(String id){
+        scryfallService = RetrofitService.getInterface();
+
+        Call<Card> call = scryfallService.getCard(id);
+
+        call.enqueue(new Callback<Card>() {
+            @Override
+            public void onResponse(Call<Card> call, Response<Card> response) {
+                if (response.isSuccessful())
+                    mld_card.setValue(response.body());
+//                else
+//                    mld_setSearchResult.setValue(new SetSearchResult("error", response.message()));
+            }
+
+            @Override
+            public void onFailure(Call<Card> call, Throwable t) {
+                Log.d("MTG_CARD", t.getMessage());
+            }
+        });
+
+        return mld_card;
     }
 }

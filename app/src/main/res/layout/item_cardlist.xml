@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content">
                 <!-- Media -->
                 <ImageView
-                    android:id="@+id/iv_cardimage"
+                    android:id="@+id/iv_item_cardlist_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/cardimage"
@@ -37,13 +37,13 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab_flip"
+                    android:id="@+id/fab_item_cardlist_flip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="128dp"
                     android:layout_marginEnd="16dp"
                     android:contentDescription="@string/flip"
-                    app:layout_constraintEnd_toEndOf="@+id/iv_cardimage"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_item_cardlist_image"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_baseline_flip_camera_android_24"
                     tools:visibility="gone" />

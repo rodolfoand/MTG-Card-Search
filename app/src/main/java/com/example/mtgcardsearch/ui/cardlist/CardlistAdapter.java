@@ -1,12 +1,14 @@
 package com.example.mtgcardsearch.ui.cardlist;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -70,6 +72,15 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
 
         if (position == cardList.size() - 1)
             onBottomReachedListener.onBottomReached(position);
+
+        holder.iv_cardimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("id", card.getId());
+                Navigation.findNavController(view).navigate(R.id.nav_card, bundle);
+            }
+        });
     }
 
     @Override
@@ -90,8 +101,8 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
 
         public CardlistViewHolder(@NonNull View itemView) {
             super(itemView);
-            iv_cardimage = itemView.findViewById(R.id.iv_cardimage);
-            fab_flip = itemView.findViewById(R.id.fab_flip);
+            iv_cardimage = itemView.findViewById(R.id.iv_item_cardlist_image);
+            fab_flip = itemView.findViewById(R.id.fab_item_cardlist_flip);
         }
     }
 }

@@ -871,4 +871,10 @@
     <string name="subtitle">Subtitle</string>
     <string name="bt_advsearch">Search with these options</string>
     <string name="valid_set">Choose a valid set.</string>
+    <string name="card">Card</string>
+    <string name="oracleText">Oracle Text</string>
+    <string name="loyalty">Loyalty</string>
+    <string name="cardArtist">Card Artist</string>
+    <string name="setName">Set Name</string>
+    <string name="setLine">Set Line</string>
 </resources>

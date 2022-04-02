@@ -63,10 +63,10 @@ public class CardlistFragment extends Fragment {
 
         this.setSpinner();
         this.setParms();
-        this.setLayoutRecycler(cardlistViewModel.getPrefLayout());
         this.setListAdapter();
         this.setDataList();
         this.setLoading(true);
+        this.setLayoutRecycler(cardlistViewModel.getPrefLayout());
 
         binding.btSearchMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,14 +126,18 @@ public class CardlistFragment extends Fragment {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
             binding.rvCardlist.setLayoutManager(gridLayoutManager);
 
-            binding.imCardlistCol.setVisibility(View.GONE);
-            binding.imCardlistRow.setVisibility(View.VISIBLE);
+            if (binding.imCardlistCol.getVisibility() == View.VISIBLE) {
+                binding.imCardlistCol.setVisibility(View.GONE);
+                binding.imCardlistRow.setVisibility(View.VISIBLE);
+            }
         }
         if (layout == this.LAYOUT_LINEAR) {
             binding.rvCardlist.setLayoutManager(new LinearLayoutManager(getContext()));
 
-            binding.imCardlistCol.setVisibility(View.VISIBLE);
-            binding.imCardlistRow.setVisibility(View.GONE);
+            if (binding.imCardlistRow.getVisibility() == View.VISIBLE) {
+                binding.imCardlistCol.setVisibility(View.VISIBLE);
+                binding.imCardlistRow.setVisibility(View.GONE);
+            }
         }
         if (adapter_cardlist != null) binding.rvCardlist.setAdapter(adapter_cardlist);
     }
@@ -280,12 +284,19 @@ public class CardlistFragment extends Fragment {
             binding.spinnerOrder.setVisibility(View.GONE);
             binding.spinnerUnique.setVisibility(View.GONE);
             binding.rvCardlist.setVisibility(View.GONE);
+            binding.imCardlistCol.setVisibility(View.GONE);
+            binding.imCardlistRow.setVisibility(View.GONE);
         } else {
             binding.pbCardlist.setVisibility(View.GONE);
             binding.spinnerDir.setVisibility(View.VISIBLE);
             binding.spinnerOrder.setVisibility(View.VISIBLE);
             binding.spinnerUnique.setVisibility(View.VISIBLE);
             binding.rvCardlist.setVisibility(View.VISIBLE);
+            if (cardlistViewModel.getPrefLayout() == LAYOUT_GRID){
+                binding.imCardlistRow.setVisibility(View.VISIBLE);
+            } else {
+                binding.imCardlistCol.setVisibility(View.VISIBLE);
+            }
         }
         binding.txSearchNotFound.setVisibility(View.GONE);
     }

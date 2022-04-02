@@ -3,9 +3,12 @@ package com.example.mtgcardsearch;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.mtgcardsearch.databinding.ActivityMainBinding;
 import com.example.mtgcardsearch.data.PrefDataStore;
+import com.example.mtgcardsearch.ui.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -58,8 +61,30 @@ public class MainActivity
 
         binding.appBarMain.fab.setOnClickListener(view -> searchMenuItem.expandActionView());
 
+//        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                searchMenuItem.expandActionView();
+//
+//                searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+//                    @Override
+//                    public boolean onMenuItemActionExpand(MenuItem menuItem) {
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+//                        Toast.makeText(MainActivity.this, "onMenuItemActionCollapse", Toast.LENGTH_SHORT).show();
+//                        menuItem.collapseActionView();
+//                        return false;
+//                    }
+//                });
+//            }
+//        });
+
         if (PrefDataStore.prefDataStore.dataStore == null)
             PrefDataStore.prefDataStore.setContext(getApplicationContext());
+
     }
 
     @Override
@@ -67,7 +92,7 @@ public class MainActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
-        searchMenuItem = menu.findItem( R.id.action_search );
+        searchMenuItem = menu.findItem( R.id.action_search);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -87,6 +112,19 @@ public class MainActivity
             }
         });
 
+        searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                if (getSupportFragmentManager().getFragments().size() > 1) onBackPressed();
+                return true;
+            }
+        });
+
         return true;
     }
 
@@ -97,4 +135,8 @@ public class MainActivity
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

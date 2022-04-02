@@ -1,5 +1,6 @@
 package com.example.mtgcardsearch.api;
 
+import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.SetSearchResult;
 
@@ -10,6 +11,10 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ScryfallService {
+
+    @GET("/cards/{id}")
+    Call<Card> getCard(
+            @Path("id")String id);
 
     @GET("/cards/search?json")
     Call<CardSearchResult> getCards(

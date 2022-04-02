@@ -40,4 +40,10 @@
         android:name="com.example.mtgcardsearch.ui.advsearch.AdvsearchFragment"
         android:label="@string/advmagicsearch"
         tools:layout="@layout/fragment_advsearch" />
+
+    <fragment
+        android:id="@+id/nav_card"
+        android:name="com.example.mtgcardsearch.ui.card.CardFragment"
+        android:label="@string/card"
+        tools:layout="@layout/fragment_card" />
 </navigation>

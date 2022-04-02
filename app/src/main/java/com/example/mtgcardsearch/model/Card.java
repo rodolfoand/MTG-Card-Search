@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public class Card {
@@ -24,6 +25,51 @@ public class Card {
 
     @SerializedName("card_faces")
     private ArrayList<CardFace> card_faces;
+
+    @SerializedName("uri")
+    private String uri;
+
+    @SerializedName("id")
+    private String id;
+
+    @SerializedName("type_line")
+    private String type_line;
+
+    @SerializedName("oracle_text")
+    private String oracle_text;
+
+    @SerializedName("loyalty")
+    private String loyalty;
+
+    @SerializedName("artist")
+    private String artist;
+
+    @SerializedName("legalities")
+    private Map<String, String> legalities;
+
+    @SerializedName("set_name")
+    private String set_name;
+
+    @SerializedName("set")
+    private String set;
+
+    @SerializedName("collector_number")
+    private String collector_number;
+
+    @SerializedName("rarity")
+    private String rarity;
+
+    @SerializedName("lang")
+    private String lang;
+
+    @SerializedName("set_search_uri")
+    private String set_search_uri;
+
+    @SerializedName("prints_search_uri")
+    private String prints_search_uri;
+
+
+
 
     public String getName() {
         return name;
@@ -84,11 +130,123 @@ public class Card {
         this.card_faces = card_faces;
     }
 
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getType_line() {
+        return type_line;
+    }
+
+    public void setType_line(String type_line) {
+        this.type_line = type_line;
+    }
+
+    public String getOracle_text() {
+        return oracle_text;
+    }
+
+    public void setOracle_text(String oracle_text) {
+        this.oracle_text = oracle_text;
+    }
+
+    public String getLoyalty() {
+        return loyalty;
+    }
+
+    public void setLoyalty(String loyalty) {
+        this.loyalty = loyalty;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public Map<String, String> getLegalities() {
+        return legalities;
+    }
+
+    public void setLegalities(Map<String, String> legalities) {
+        this.legalities = legalities;
+    }
+
+    public String getSet_name() {
+        return set_name;
+    }
+
+    public void setSet_name(String set_name) {
+        this.set_name = set_name;
+    }
+
+    public String getSet() {
+        return set;
+    }
+
+    public void setSet(String set) {
+        this.set = set;
+    }
+
+    public String getCollector_number() {
+        return collector_number;
+    }
+
+    public void setCollector_number(String collector_number) {
+        this.collector_number = collector_number;
+    }
+
+    public String getPrints_search_uri() {
+        return prints_search_uri;
+    }
+
+    public void setPrints_search_uri(String prints_search_uri) {
+        this.prints_search_uri = prints_search_uri;
+    }
+
     public boolean hasImageInCardFaces() {
         return (this.getCard_faces() != null
                 && this.getCard_faces()
                 .get(this.getFace_position())
                 .getImage_uris() != null);
+    }
+
+    public String getRarity() {
+        return rarity;
+    }
+
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    public String getSet_search_uri() {
+        return set_search_uri;
+    }
+
+    public void setSet_search_uri(String set_search_uri) {
+        this.set_search_uri = set_search_uri;
     }
 
     @Override
