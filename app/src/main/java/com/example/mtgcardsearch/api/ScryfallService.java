@@ -1,5 +1,6 @@
 package com.example.mtgcardsearch.api;
 
+import com.example.mtgcardsearch.model.AutocompSearchResult;
 import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.SetSearchResult;
@@ -29,4 +30,8 @@ public interface ScryfallService {
     @GET("/sets/{set}?json")
     Call<SetSearchResult> getSets(
             @Path("set")String set);
+
+    @GET("/cards/autocomplete")
+    Call<AutocompSearchResult> getNames(
+            @Query("q") String query);
 }

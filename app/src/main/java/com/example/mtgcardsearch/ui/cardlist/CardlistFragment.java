@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -150,7 +151,6 @@ public class CardlistFragment extends Fragment {
         adapter_cardlist.setOnBottomReachedListener(new OnBottomReachedListener() {
             @Override
             public void onBottomReached(int position) {
-                Toast.makeText(mCtx, "onBottomReached", Toast.LENGTH_SHORT).show();
                 if (dataList.isHas_more())
                     binding.btSearchMore.setVisibility(View.VISIBLE);
             }
@@ -253,22 +253,29 @@ public class CardlistFragment extends Fragment {
                 .observe(getViewLifecycleOwner(), new Observer<CardSearchResult>() {
                     @Override
                     public void onChanged(CardSearchResult cardSearchResult) {
-
                         if (cardSearchResult.getObject().equals("list")) {
                             dataList = cardSearchResult;
-                            binding.btSearchMore.setVisibility(View.GONE);
+                            if (dataList.getData().size() == 1){
+                                Navigation.findNavController(getView()).popBackStack();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("id", dataList.getData().get(0).getId());
+                                Navigation.findNavController(getView()).navigate(R.id.nav_card, bundle);
 
-                            count_cards = cardSearchResult.getData().size()
-                                    + (Integer.parseInt(parm_page) - 1)
-                                    * 175;
+                            } else {
+                                binding.btSearchMore.setVisibility(View.GONE);
 
-                            adapter_cardlist.setCardSearchResult(dataList);
-                            adapter_cardlist.notifyDataSetChanged();
-                            binding.rvCardlist.scrollToPosition(0);
+                                count_cards = cardSearchResult.getData().size()
+                                        + (Integer.parseInt(parm_page) - 1)
+                                        * 175;
 
-                            binding.txSearchResult.setText(getStringResult(cardSearchResult.getData().size()));
+                                adapter_cardlist.setCardSearchResult(dataList);
+                                adapter_cardlist.notifyDataSetChanged();
+                                binding.rvCardlist.scrollToPosition(0);
 
-                            setLoading(false);
+                                binding.txSearchResult.setText(getStringResult(cardSearchResult.getData().size()));
+
+                                setLoading(false);
+                            }
                         }
                         if (cardSearchResult.getObject().equals("error")) {
                             setNotFound();

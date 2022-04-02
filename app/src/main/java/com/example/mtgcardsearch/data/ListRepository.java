@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.mtgcardsearch.api.RetrofitService;
 import com.example.mtgcardsearch.api.ScryfallService;
+import com.example.mtgcardsearch.model.AutocompSearchResult;
 import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.SetSearchResult;
@@ -21,11 +22,13 @@ public class ListRepository {
     private MutableLiveData<CardSearchResult> mld_cardSearchResult;
     private MutableLiveData<SetSearchResult> mld_setSearchResult;
     private MutableLiveData<Card> mld_card;
+    private MutableLiveData<AutocompSearchResult> mld_autocompSearchResult;
 
     public ListRepository() {
         mld_cardSearchResult = new MutableLiveData<>();
         mld_setSearchResult = new MutableLiveData<>();
         mld_card = new MutableLiveData<>();
+        mld_autocompSearchResult = new MutableLiveData<>();
     }
 
     public MutableLiveData<CardSearchResult> getCards(
@@ -109,5 +112,29 @@ public class ListRepository {
         });
 
         return mld_card;
+    }
+
+
+    public MutableLiveData<AutocompSearchResult> getNames(String query){
+        scryfallService = RetrofitService.getInterface();
+
+        Call<AutocompSearchResult> call = scryfallService.getNames(query);
+
+        call.enqueue(new Callback<AutocompSearchResult>() {
+            @Override
+            public void onResponse(Call<AutocompSearchResult> call, Response<AutocompSearchResult> response) {
+                if (response.isSuccessful())
+                    mld_autocompSearchResult.setValue(response.body());
+                else
+                    mld_autocompSearchResult.setValue(new AutocompSearchResult("error", response.message()));
+            }
+
+            @Override
+            public void onFailure(Call<AutocompSearchResult> call, Throwable t) {
+                Log.d("MTG_CARD", t.getMessage());
+            }
+        });
+
+        return mld_autocompSearchResult;
     }
 }

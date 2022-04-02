@@ -1,24 +1,33 @@
 package com.example.mtgcardsearch;
 
+import android.app.SearchManager;
+import android.database.MatrixCursor;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.view.MenuItem;
 import android.view.Menu;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.mtgcardsearch.databinding.ActivityMainBinding;
 import com.example.mtgcardsearch.data.PrefDataStore;
-import com.example.mtgcardsearch.ui.home.HomeFragment;
+import com.example.mtgcardsearch.model.AutocompSearchResult;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.cursoradapter.widget.CursorAdapter;
+import androidx.cursoradapter.widget.SimpleCursorAdapter;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity
         extends AppCompatActivity{
@@ -28,8 +37,8 @@ public class MainActivity
 
     private MenuItem searchMenuItem;
     private NavController navController;
-
-    private PrefDataStore dataStore;
+    private MainViewModel mainViewModel;
+    private LifecycleOwner lifecycleOwner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,9 @@ public class MainActivity
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        lifecycleOwner = this;
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
@@ -61,30 +73,8 @@ public class MainActivity
 
         binding.appBarMain.fab.setOnClickListener(view -> searchMenuItem.expandActionView());
 
-//        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                searchMenuItem.expandActionView();
-//
-//                searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-//                    @Override
-//                    public boolean onMenuItemActionExpand(MenuItem menuItem) {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-//                        Toast.makeText(MainActivity.this, "onMenuItemActionCollapse", Toast.LENGTH_SHORT).show();
-//                        menuItem.collapseActionView();
-//                        return false;
-//                    }
-//                });
-//            }
-//        });
-
         if (PrefDataStore.prefDataStore.dataStore == null)
             PrefDataStore.prefDataStore.setContext(getApplicationContext());
-
     }
 
     @Override
@@ -95,22 +85,67 @@ public class MainActivity
         searchMenuItem = menu.findItem( R.id.action_search);
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
 
+        final CursorAdapter suggestionAdapter = new SimpleCursorAdapter(this,
+                R.layout.item_list_suggestion,
+                null,
+                new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1},
+                new int[]{android.R.id.text1},
+                0);
+
+        final List<String> suggestions = new ArrayList<>();
+
+        searchView.setSuggestionsAdapter(suggestionAdapter);
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                return false;
+            }
+
+            @Override
+            public boolean onSuggestionClick(int position) {
+                searchView.setQuery(suggestions.get(position), false);
+                searchView.clearFocus();
+                doSearch(suggestions.get(position));
+                return true;
+            }
+        });
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Bundle bundle = new Bundle();
-                bundle.putString("query", query);
-
-                navController.navigate(R.id.nav_cardlist, bundle);
-
+                doSearch(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
+                mainViewModel.getNames(newText).observe(lifecycleOwner, new Observer<AutocompSearchResult>() {
+                    @Override
+                    public void onChanged(AutocompSearchResult autocompSearchResult) {
+                        suggestions.clear();
+                        suggestions.addAll(autocompSearchResult.getData());
+
+
+                        String[] columns = {
+                                BaseColumns._ID,
+                                SearchManager.SUGGEST_COLUMN_TEXT_1,
+                                SearchManager.SUGGEST_COLUMN_INTENT_DATA
+                        };
+                        MatrixCursor cursor = new MatrixCursor(columns);
+
+                        for (int i = 0; i < autocompSearchResult.getData().size(); i++) {
+                            String[] tmp = {Integer.toString(i), autocompSearchResult.getData().get(i), autocompSearchResult.getData().get(i)};
+                            cursor.addRow(tmp);
+                        }
+                        suggestionAdapter.swapCursor(cursor);
+                    }
+                });
                 return false;
             }
+
         });
+
 
         searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
@@ -138,5 +173,12 @@ public class MainActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    private void doSearch(String query){
+        Bundle bundle = new Bundle();
+        bundle.putString("query", query);
+
+        navController.navigate(R.id.nav_cardlist, bundle);
     }
 }

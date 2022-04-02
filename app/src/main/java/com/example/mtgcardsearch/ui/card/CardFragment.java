@@ -9,11 +9,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,7 +24,6 @@ import com.example.mtgcardsearch.model.CardSearchResult;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 
@@ -81,7 +78,7 @@ public class CardFragment extends Fragment {
                 for (Map.Entry<String, String> entry : card.getLegalities().entrySet()) {
                     addTextView(entry.hashCode()
                             , entry.getKey().toUpperCase(Locale.ROOT) + ": " + entry.getValue().toUpperCase(Locale.ROOT)
-                            , binding.llCardDet
+                            , binding.llCardInfo
                             , View.FOCUS_LEFT);
                 }
 
