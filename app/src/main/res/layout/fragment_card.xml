@@ -28,14 +28,13 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:checkable="true"
-                android:clickable="true"
                 android:focusable="true">
 
                 <LinearLayout
                     android:id="@+id/ll_card_det"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="8dp"
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,6 +123,12 @@
                             android:text="@string/cardName"
                             android:textAppearance="?attr/textAppearanceHeadline6" />
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:background="?colorSecondaryVariant" />
+
                         <TextView
                             android:id="@+id/tx_card_type_line"
                             android:layout_width="wrap_content"
@@ -132,6 +137,12 @@
                             android:text="@string/typeLine"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="?android:attr/textColorSecondary" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:background="?colorSecondaryVariant" />
 
                         <TextView
                             android:id="@+id/tx_card_oracle_text"
@@ -143,27 +154,84 @@
                             android:textColor="?android:attr/textColorSecondary" />
 
                         <TextView
-                            android:id="@+id/tx_card_loyalty"
+                            android:id="@+id/bt_carddetail_oracle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/loyalty"
+                            android:textColor="?colorPrimaryVariant"
+                            android:text="@string/oracleText"
+                            android:autoLink="web"
+                            android:linksClickable="true"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/bt_carddetail_printed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="?colorPrimaryVariant"
+                            android:text="@string/printedText"
+                            android:autoLink="web"
+                            android:linksClickable="true"
+                            android:visibility="gone"/>
+
+                        <View
+                            android:id="@+id/line_carddetail_oracle_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:background="?colorSecondaryVariant" />
+
+                        <TextView
+                            android:id="@+id/tx_card_detail_flavor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textAppearance="?attr/textAppearanceBody2"
+                            android:textColor="?android:attr/textColorSecondary" />
+
+                        <View
+                            android:id="@+id/line_carddetail_flavor"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:background="?colorSecondaryVariant" />
+
+                        <TextView
+                            android:id="@+id/tx_card_detail_subline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/subline"
                             android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                        <View
+                            android:id="@+id/line_carddetail_subline"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:background="?colorSecondaryVariant" />
 
                         <TextView
                             android:id="@+id/tx_card_artist"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
                             android:text="@string/cardArtist"
                             android:textAppearance="?attr/textAppearanceBody2"
                             android:textColor="?android:attr/textColorSecondary" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:background="?colorSecondaryVariant" />
 
                         <TextView
                             android:id="@+id/tx_set_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
                             android:text="@string/setName"
                             android:textAppearance="?attr/textAppearanceHeadline6" />
 
@@ -172,10 +240,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:layout_marginBottom="16dp"
                             android:text="@string/setLine"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="?android:attr/textColorSecondary" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="?colorSecondaryVariant" />
 
                     </LinearLayout>
                 </LinearLayout>

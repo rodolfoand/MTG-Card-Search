@@ -80,6 +80,15 @@ public class Card {
     @SerializedName("oracle_id")
     private String oracle_id;
 
+    @SerializedName("power")
+    private String power;
+
+    @SerializedName("toughness")
+    private String toughness;
+
+    @SerializedName("flavor_text")
+    private String flavor_text;
+
 
 
 
@@ -291,6 +300,30 @@ public class Card {
 
     public void setOracle_id(String oracle_id) {
         this.oracle_id = oracle_id;
+    }
+
+    public String getPower() {
+        return power;
+    }
+
+    public void setPower(String power) {
+        this.power = power;
+    }
+
+    public String getToughness() {
+        return toughness;
+    }
+
+    public void setToughness(String toughness) {
+        this.toughness = toughness;
+    }
+
+    public String getFlavor_text() {
+        return flavor_text;
+    }
+
+    public void setFlavor_text(String flavor_text) {
+        this.flavor_text = flavor_text;
     }
 
     @Override

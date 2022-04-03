@@ -57,19 +57,6 @@ public class ListRepository {
                     mld_cardSearchResult.setValue(response.body());
                 else {
                     mld_cardSearchResult.setValue(new CardSearchResult("error", response.message()));
-//                    if (mld_cardSearchResult.getValue().getObject().equals("error")
-//                            && query.indexOf("lang:") >= 0){
-//                        Log.d("MagicQueury", query);
-//                        String q = query.substring(0, query.indexOf("lang:"));
-//                        Log.d("MagicQueury", q);
-//                        getCards(include_extras
-//                                , include_multilingual
-//                                , order
-//                                , page
-//                                , unique
-//                                , dir
-//                                , q);
-//                    }
                 }
             }
 
@@ -116,8 +103,27 @@ public class ListRepository {
             public void onResponse(Call<Card> call, Response<Card> response) {
                 if (response.isSuccessful())
                     mld_card.setValue(response.body());
-//                else
-//                    mld_setSearchResult.setValue(new SetSearchResult("error", response.message()));
+            }
+
+            @Override
+            public void onFailure(Call<Card> call, Throwable t) {
+                Log.d("MTG_CARD", t.getMessage());
+            }
+        });
+
+        return mld_card;
+    }
+
+    public MutableLiveData<Card> getCardbyName(String fuzzy){
+        scryfallService = RetrofitService.getInterface();
+
+        Call<Card> call = scryfallService.getCardbyName(fuzzy);
+
+        call.enqueue(new Callback<Card>() {
+            @Override
+            public void onResponse(Call<Card> call, Response<Card> response) {
+                if (response.isSuccessful())
+                    mld_card.setValue(response.body());
             }
 
             @Override

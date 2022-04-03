@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mtgcardsearch.data.ListRepository;
+import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.data.PrefDataStore;
 
@@ -41,5 +42,9 @@ public class CardlistViewModel extends ViewModel {
 
     public void setPrefLayout(int layout){
         prefDataStore.setPrefLayout(prefDataStore.PREF_CARDLIST_LAYOUT.getName(), layout);
+    }
+
+    public MutableLiveData<Card> getCardbyName(String fuzzy){
+        return listRepository.getCardbyName(fuzzy);
     }
 }

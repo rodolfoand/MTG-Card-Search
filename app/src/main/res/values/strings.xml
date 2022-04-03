@@ -880,4 +880,6 @@
     <string name="under_construction">Under construction</string>
     <string name="en">EN</string>
     <string name="prints">Prints</string>
+    <string name="subline">Subline</string>
+    <string name="printedText">Printed text</string>
 </resources>

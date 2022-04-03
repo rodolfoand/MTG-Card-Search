@@ -108,7 +108,7 @@ public class MainActivity
             public boolean onSuggestionClick(int position) {
                 searchView.setQuery(suggestions.get(position), false);
                 searchView.clearFocus();
-                doSearch(suggestions.get(position));
+                doSearchbyName(suggestions.get(position));
                 return true;
             }
         });
@@ -188,10 +188,14 @@ public class MainActivity
     }
 
     private void doSearch(String query){
-        query += " lang:" + mainViewModel.getPrefUserLang();
-
         Bundle bundle = new Bundle();
         bundle.putString("query", query);
+        navController.navigate(R.id.nav_cardlist, bundle);
+    }
+
+    private void doSearchbyName(String name){
+        Bundle bundle = new Bundle();
+        bundle.putString("fuzzy", name);
         navController.navigate(R.id.nav_cardlist, bundle);
     }
 }

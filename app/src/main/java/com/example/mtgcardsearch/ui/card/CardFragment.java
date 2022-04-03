@@ -60,16 +60,35 @@ public class CardFragment extends Fragment {
                 else
                     binding.txCardTypeLine.setText(card.getPrinted_type_line());
 
-                if (card.getPrinted_text() == null)
-                    binding.txCardOracleText.setText(card.getOracle_text());
-                else
+                if (card.getPrinted_text() != null) {
                     binding.txCardOracleText.setText(card.getPrinted_text());
-
-                if (card.getLoyalty() != null){
-                    String s_loyalty = "Loyalty: " + card.getLoyalty();
-                    binding.txCardLoyalty.setText(s_loyalty);
+                    binding.btCarddetailOracle.setVisibility(View.VISIBLE);
+                } else if (card.getOracle_text() != null) {
+                    binding.txCardOracleText.setText(card.getOracle_text());
                 } else {
-                    binding.txCardLoyalty.setVisibility(View.GONE);
+                    binding.txCardOracleText.setVisibility(View.GONE);
+                    binding.lineCarddetailOracleText.setVisibility(View.GONE);
+                }
+
+                if (card.getFlavor_text() != null)
+                    binding.txCardDetailFlavor.setText(card.getFlavor_text());
+                else {
+                    binding.txCardDetailFlavor.setVisibility(View.GONE);
+                    binding.lineCarddetailFlavor.setVisibility(View.GONE);
+                }
+
+                String s_subline = "";
+                if (card.getLoyalty() != null){
+                    s_subline = "Loyalty: " + card.getLoyalty();
+                } else if (card.getPower() != null && card.getToughness() != null){
+                    s_subline = card.getPower() + "/" + card.getToughness();
+                }
+
+                if (!s_subline.isEmpty()) {
+                    binding.txCardDetailSubline.setText(s_subline);
+                } else {
+                    binding.txCardDetailSubline.setVisibility(View.GONE);
+                    binding.lineCarddetailSubline.setVisibility(View.GONE);
                 }
 
                 String s_artist = "Illustrated by " + card.getArtist();
@@ -155,6 +174,24 @@ public class CardFragment extends Fragment {
                         Navigation.findNavController(view).navigate(R.id.nav_cardlist, bundle);
                     }
                 });
+
+                binding.btCarddetailOracle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        binding.txCardOracleText.setText(card.getOracle_text());
+                        binding.btCarddetailPrinted.setVisibility(View.VISIBLE);
+                        binding.btCarddetailOracle.setVisibility(View.GONE);
+                    }
+                });
+                binding.btCarddetailPrinted.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        binding.txCardOracleText.setText(card.getPrinted_text());
+                        binding.btCarddetailPrinted.setVisibility(View.GONE);
+                        binding.btCarddetailOracle.setVisibility(View.VISIBLE);
+                    }
+                });
+
                 setLoading(false);
             }
         });

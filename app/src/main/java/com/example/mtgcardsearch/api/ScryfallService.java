@@ -17,6 +17,10 @@ public interface ScryfallService {
     Call<Card> getCard(
             @Path("id")String id);
 
+    @GET("/cards/named")
+    Call<Card> getCardbyName(
+            @Query("fuzzy")String fuzzy);
+
     @GET("/cards/search?json")
     Call<CardSearchResult> getCards(
             @Query("include_extras")String include_extras

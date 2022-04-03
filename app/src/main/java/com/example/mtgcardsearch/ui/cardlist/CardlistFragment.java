@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.mtgcardsearch.R;
 import com.example.mtgcardsearch.databinding.FragmentCardlistBinding;
+import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.OnBottomReachedListener;
 
@@ -47,6 +48,7 @@ public class CardlistFragment extends Fragment {
     private String parm_page;
     private String parm_include_multilingual;
     private String parm_include_extras;
+    private String parm_fuzzy;
 
     private final int LAYOUT_LINEAR = 0;
     private final int LAYOUT_GRID = 1;
@@ -64,11 +66,18 @@ public class CardlistFragment extends Fragment {
         parm_query = getArguments().getString("query");
         parm_unique = getArguments().getString("unique");
         parm_dir = getArguments().getString("dir");
+        parm_fuzzy = getArguments().getString("fuzzy");
 
         this.setSpinner();
         this.setParms();
         this.setListAdapter();
-        this.setDataList();
+
+        if (parm_query != null)
+            this.setDataList();
+
+        if (parm_fuzzy != null)
+            this.setDataCard();
+
         this.setLoading(true);
         this.setLayoutRecycler(cardlistViewModel.getPrefLayout());
 
@@ -242,12 +251,12 @@ public class CardlistFragment extends Fragment {
     }
 
     private void setParms(){
-        parm_order = "name";
+        if (parm_order == null) parm_order = "name";
         if (parm_unique == null) parm_unique = "cards";
         if (parm_dir == null) parm_dir = "auto";
-        parm_page = "1";
-        parm_include_multilingual = "false";
-        parm_include_extras = "false";
+        if (parm_page == null) parm_page = "1";
+        if (parm_include_multilingual == null) parm_include_multilingual = "true";
+        if (parm_include_extras == null) parm_include_extras = "false";
     }
 
     private void setDataList() {
@@ -265,11 +274,7 @@ public class CardlistFragment extends Fragment {
                         if (cardSearchResult.getObject().equals("list")) {
                             dataList = cardSearchResult;
                             if (dataList.getData().size() == 1){
-                                Navigation.findNavController(getView()).popBackStack();
-                                Bundle bundle = new Bundle();
-                                bundle.putString("id", dataList.getData().get(0).getId());
-                                Navigation.findNavController(getView()).navigate(R.id.nav_card, bundle);
-
+                                toCardNavigation(dataList.getData().get(0).getId());
                             } else {
                                 binding.btSearchMore.setVisibility(View.GONE);
 
@@ -287,16 +292,19 @@ public class CardlistFragment extends Fragment {
                             }
                         }
                         if (cardSearchResult.getObject().equals("error")) {
-                            if (parm_query.indexOf("lang:") >= 0) {
-                                String q = parm_query;
-                                parm_query = q.substring(0, q.indexOf("lang:"));
-                                setDataList();
-                            } else {
                                 setNotFound();
-                            }
                         }
                     }
                 });
+    }
+
+    private void setDataCard() {
+        cardlistViewModel.getCardbyName(parm_fuzzy).observe(getViewLifecycleOwner(), new Observer<Card>() {
+            @Override
+            public void onChanged(Card card) {
+                toCardNavigation(card.getId());
+            }
+        });
     }
 
     private void setLoading(boolean loading){
@@ -336,6 +344,13 @@ public class CardlistFragment extends Fragment {
             cardlistViewModel.setPrefLayout(LAYOUT_GRID);
             setLayoutRecycler(LAYOUT_GRID);
         }
+    }
+
+    private void toCardNavigation(String id){
+        Navigation.findNavController(getView()).popBackStack();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        Navigation.findNavController(getView()).navigate(R.id.nav_card, bundle);
     }
 
 }
