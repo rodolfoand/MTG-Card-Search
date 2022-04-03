@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.mtgcardsearch.R;
 import com.example.mtgcardsearch.databinding.FragmentCardBinding;
 import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
@@ -40,15 +42,28 @@ public class CardFragment extends Fragment {
         binding = FragmentCardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        setLoading(true);
+
         cardViewModel.getCard(getArguments().getString("id")).observe(getViewLifecycleOwner(), new Observer<Card>() {
             @Override
             public void onChanged(Card card) {
                 card.setImage_url();
                 setCardImage(binding.ivCardImage, card.getImage_url());
 
-                binding.txCardName.setText(card.getName());
-                binding.txCardTypeLine.setText(card.getType_line());
-                binding.txCardOracleText.setText(card.getOracle_text());
+                if (card.getPrinted_name() == null)
+                    binding.txCardName.setText(card.getName());
+                else
+                    binding.txCardName.setText(card.getPrinted_name());
+
+                if (card.getPrinted_type_line() == null)
+                    binding.txCardTypeLine.setText(card.getType_line());
+                else
+                    binding.txCardTypeLine.setText(card.getPrinted_type_line());
+
+                if (card.getPrinted_text() == null)
+                    binding.txCardOracleText.setText(card.getOracle_text());
+                else
+                    binding.txCardOracleText.setText(card.getPrinted_text());
 
                 if (card.getLoyalty() != null){
                     String s_loyalty = "Loyalty: " + card.getLoyalty();
@@ -93,10 +108,25 @@ public class CardFragment extends Fragment {
                         + card.getLang().toUpperCase();
                 binding.txSetline.setText(labelSetLine);
 
+                if (card.getLang().equals("en"))
+                    binding.mbCardDetailEn.setVisibility(View.GONE);
+
                 Uri set_search_uri = Uri.parse(card.getPrints_search_uri());
                 String order = set_search_uri.getQueryParameter("order");
                 String unique = set_search_uri.getQueryParameter("unique");
+                String dir = set_search_uri.getQueryParameter("dir");
                 String q = set_search_uri.getQueryParameter("q");
+
+                binding.mcCardDetailPrints.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("query", q);
+                        bundle.putString("unique", unique);
+                        bundle.putString("dir", dir);
+                        Navigation.findNavController(view).navigate(R.id.nav_cardlist, bundle);
+                    }
+                });
 
                 cardViewModel.getCards("false", "false"
                         , order, "1", unique, "auto", q)
@@ -116,7 +146,16 @@ public class CardFragment extends Fragment {
                                 }
                             }
                         });
-
+                binding.mbCardDetailEn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String query = card.getName() + " set:" + card.getSet() + " rarity:" + card.getRarity();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("query", query);
+                        Navigation.findNavController(view).navigate(R.id.nav_cardlist, bundle);
+                    }
+                });
+                setLoading(false);
             }
         });
 
@@ -127,6 +166,16 @@ public class CardFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    private void setLoading(boolean loading){
+        if (loading){
+            binding.svCardDetail.setVisibility(View.GONE);
+            binding.pbCardDetail.setVisibility(View.VISIBLE);
+        } else {
+            binding.svCardDetail.setVisibility(View.VISIBLE);
+            binding.pbCardDetail.setVisibility(View.GONE);
+        }
     }
 
     public void setCardImage(ImageView iv_cardimage, String url_image){

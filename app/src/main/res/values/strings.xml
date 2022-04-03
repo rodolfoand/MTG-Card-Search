@@ -877,4 +877,7 @@
     <string name="cardArtist">Card Artist</string>
     <string name="setName">Set Name</string>
     <string name="setLine">Set Line</string>
+    <string name="under_construction">Under construction</string>
+    <string name="en">EN</string>
+    <string name="prints">Prints</string>
 </resources>

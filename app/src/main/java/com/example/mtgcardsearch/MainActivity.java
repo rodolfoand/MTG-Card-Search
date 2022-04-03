@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.example.mtgcardsearch.databinding.ActivityMainBinding;
 import com.example.mtgcardsearch.data.PrefDataStore;
@@ -13,6 +14,7 @@ import com.example.mtgcardsearch.model.AutocompSearchResult;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
@@ -47,6 +49,9 @@ public class MainActivity
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        if (PrefDataStore.prefDataStore.dataStore == null)
+            PrefDataStore.prefDataStore.setContext(getApplicationContext());
+
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         lifecycleOwner = this;
 
@@ -73,8 +78,6 @@ public class MainActivity
 
         binding.appBarMain.fab.setOnClickListener(view -> searchMenuItem.expandActionView());
 
-        if (PrefDataStore.prefDataStore.dataStore == null)
-            PrefDataStore.prefDataStore.setContext(getApplicationContext());
     }
 
     @Override
@@ -126,7 +129,6 @@ public class MainActivity
                         suggestions.clear();
                         suggestions.addAll(autocompSearchResult.getData());
 
-
                         String[] columns = {
                                 BaseColumns._ID,
                                 SearchManager.SUGGEST_COLUMN_TEXT_1,
@@ -143,9 +145,7 @@ public class MainActivity
                 });
                 return false;
             }
-
         });
-
 
         searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
@@ -175,10 +175,23 @@ public class MainActivity
         super.onBackPressed();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                Toast.makeText(this, getResources().getString(R.string.under_construction), Toast.LENGTH_SHORT).show();
+            default:
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void doSearch(String query){
+        query += " lang:" + mainViewModel.getPrefUserLang();
+
         Bundle bundle = new Bundle();
         bundle.putString("query", query);
-
         navController.navigate(R.id.nav_cardlist, bundle);
     }
 }

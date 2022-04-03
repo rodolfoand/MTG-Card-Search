@@ -25,6 +25,7 @@ import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.OnBottomReachedListener;
 
 
+import java.util.Arrays;
 import java.util.Locale;
 
 
@@ -61,6 +62,8 @@ public class CardlistFragment extends Fragment {
         mCtx = container.getContext();
 
         parm_query = getArguments().getString("query");
+        parm_unique = getArguments().getString("unique");
+        parm_dir = getArguments().getString("dir");
 
         this.setSpinner();
         this.setParms();
@@ -162,6 +165,8 @@ public class CardlistFragment extends Fragment {
                 R.array.array_unique, android.R.layout.simple_spinner_item);
         adapter_sp_unique.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerUnique.setAdapter(adapter_sp_unique);
+        if (parm_unique != null)
+            binding.spinnerUnique.setSelection(Arrays.asList(getResources().getStringArray(R.array.array_unique)).indexOf(parm_unique));
 
         binding.spinnerUnique.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -187,6 +192,8 @@ public class CardlistFragment extends Fragment {
                 R.array.array_order, android.R.layout.simple_spinner_item);
         adapter_sp_order.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerOrder.setAdapter(adapter_sp_order);
+        if (parm_order != null)
+            binding.spinnerOrder.setSelection(Arrays.asList(getResources().getStringArray(R.array.array_order)).indexOf(parm_order));
 
         binding.spinnerOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -211,6 +218,8 @@ public class CardlistFragment extends Fragment {
                 R.array.array_dir, android.R.layout.simple_spinner_item);
         adapter_sp_dir.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerDir.setAdapter(adapter_sp_dir);
+        if (parm_dir != null)
+            binding.spinnerDir.setSelection(Arrays.asList(getResources().getStringArray(R.array.array_dir)).indexOf(parm_dir));
 
         binding.spinnerDir.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -234,8 +243,8 @@ public class CardlistFragment extends Fragment {
 
     private void setParms(){
         parm_order = "name";
-        parm_unique = "cards";
-        parm_dir = "auto";
+        if (parm_unique == null) parm_unique = "cards";
+        if (parm_dir == null) parm_dir = "auto";
         parm_page = "1";
         parm_include_multilingual = "false";
         parm_include_extras = "false";
@@ -278,7 +287,13 @@ public class CardlistFragment extends Fragment {
                             }
                         }
                         if (cardSearchResult.getObject().equals("error")) {
-                            setNotFound();
+                            if (parm_query.indexOf("lang:") >= 0) {
+                                String q = parm_query;
+                                parm_query = q.substring(0, q.indexOf("lang:"));
+                                setDataList();
+                            } else {
+                                setNotFound();
+                            }
                         }
                     }
                 });

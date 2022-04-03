@@ -68,6 +68,18 @@ public class Card {
     @SerializedName("prints_search_uri")
     private String prints_search_uri;
 
+    @SerializedName("printed_name")
+    private String printed_name;
+
+    @SerializedName("printed_type_line")
+    private String printed_type_line;
+
+    @SerializedName("printed_text")
+    private String printed_text;
+
+    @SerializedName("oracle_id")
+    private String oracle_id;
+
 
 
 
@@ -247,6 +259,38 @@ public class Card {
 
     public void setSet_search_uri(String set_search_uri) {
         this.set_search_uri = set_search_uri;
+    }
+
+    public String getPrinted_name() {
+        return printed_name;
+    }
+
+    public void setPrinted_name(String printed_name) {
+        this.printed_name = printed_name;
+    }
+
+    public String getPrinted_type_line() {
+        return printed_type_line;
+    }
+
+    public void setPrinted_type_line(String printed_type_line) {
+        this.printed_type_line = printed_type_line;
+    }
+
+    public String getPrinted_text() {
+        return printed_text;
+    }
+
+    public void setPrinted_text(String printed_text) {
+        this.printed_text = printed_text;
+    }
+
+    public String getOracle_id() {
+        return oracle_id;
+    }
+
+    public void setOracle_id(String oracle_id) {
+        this.oracle_id = oracle_id;
     }
 
     @Override

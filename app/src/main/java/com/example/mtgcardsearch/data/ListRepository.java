@@ -55,8 +55,22 @@ public class ListRepository {
             public void onResponse(Call<CardSearchResult> call, Response<CardSearchResult> response) {
                 if (response.isSuccessful())
                     mld_cardSearchResult.setValue(response.body());
-                else
+                else {
                     mld_cardSearchResult.setValue(new CardSearchResult("error", response.message()));
+//                    if (mld_cardSearchResult.getValue().getObject().equals("error")
+//                            && query.indexOf("lang:") >= 0){
+//                        Log.d("MagicQueury", query);
+//                        String q = query.substring(0, query.indexOf("lang:"));
+//                        Log.d("MagicQueury", q);
+//                        getCards(include_extras
+//                                , include_multilingual
+//                                , order
+//                                , page
+//                                , unique
+//                                , dir
+//                                , q);
+//                    }
+                }
             }
 
             @Override
@@ -65,6 +79,7 @@ public class ListRepository {
             }
         });
         Log.d("MagicQueury", call.request().url().toString());
+
         return mld_cardSearchResult;
     }
 
@@ -113,7 +128,6 @@ public class ListRepository {
 
         return mld_card;
     }
-
 
     public MutableLiveData<AutocompSearchResult> getNames(String query){
         scryfallService = RetrofitService.getInterface();

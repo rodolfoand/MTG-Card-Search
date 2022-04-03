@@ -186,10 +186,6 @@ public class AdvsearchFragment extends Fragment {
         if (!binding.etAdvName.getText().toString().isEmpty())
             q += binding.etAdvName.getText().toString();
 
-        if (binding.spAdvLang.getSelectedItemPosition() > 0){
-            q += " lang:" + getResources().getStringArray(R.array.array_language)[binding.spAdvLang.getSelectedItemPosition()];
-        }
-
         if (!binding.etAdvText.getText().toString().isEmpty())
             q += " oracle:" + binding.etAdvText.getText().toString();
 
@@ -279,6 +275,10 @@ public class AdvsearchFragment extends Fragment {
 
         if (!binding.etAdvArtist.getText().toString().isEmpty())
             q += " artist:" + binding.etAdvArtist.getText().toString();
+
+        if (binding.spAdvLang.getSelectedItemPosition() > 0){
+            q += " lang:" + getResources().getStringArray(R.array.array_language)[binding.spAdvLang.getSelectedItemPosition()];
+        }
 
         return q;
     }
