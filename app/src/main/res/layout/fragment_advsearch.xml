@@ -592,13 +592,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="?actionBarSize"
                 android:autofillHints=""
                 android:hint="@string/hint_artist"
                 android:inputType="textPersonName"
                 android:textColorHint="#78909C"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_adv_artist" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_adv_artist"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

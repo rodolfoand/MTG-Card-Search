@@ -51,11 +51,6 @@ public class AdvsearchFragment extends Fragment {
         this.setSpinner();
         this.setMultiAutoComplete();
 
-        List<String> langList= Arrays.stream(getResources().getStringArray(R.array.array_language)).collect(Collectors.toList());
-        int langPos = langList.indexOf(advsearchViewModel.getPrefUserLang());
-
-        if (langPos >= 0) binding.spAdvLang.setSelection(langPos);
-
         binding.btAdvSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

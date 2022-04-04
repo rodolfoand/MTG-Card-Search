@@ -62,6 +62,7 @@
     </string-array>
 
     <string-array name="array_language">
+        <item>Any</item>
         <item>en</item>
         <item>es</item>
         <item>fr</item>
