@@ -3,6 +3,9 @@ package com.example.mtgcardsearch.ui.card;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +27,7 @@ import com.example.mtgcardsearch.databinding.FragmentCardBinding;
 import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -189,6 +194,24 @@ public class CardFragment extends Fragment {
                         binding.txCardOracleText.setText(card.getPrinted_text());
                         binding.btCarddetailPrinted.setVisibility(View.GONE);
                         binding.btCarddetailOracle.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                binding.mbCardDetailShare.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Bitmap image = ((BitmapDrawable) binding.ivCardImage.getDrawable()).getBitmap();
+                        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                        image.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                        String path = MediaStore.Images.Media.insertImage(getContext().getContentResolver(), image, card.getName(), card.getType_line());
+
+
+                        Intent shareIntent = new Intent();
+                        shareIntent.setAction(Intent.ACTION_SEND);
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
+                        shareIntent.setType("image/jpeg");
+                        startActivity(Intent.createChooser(shareIntent, null));
                     }
                 });
 

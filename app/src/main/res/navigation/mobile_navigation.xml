@@ -46,4 +46,10 @@
         android:name="com.example.mtgcardsearch.ui.card.CardFragment"
         android:label="@string/card"
         tools:layout="@layout/fragment_card" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.example.mtgcardsearch.ui.about.AboutFragment"
+        android:label="@string/about"
+        tools:layout="@layout/fragment_about" />
 </navigation>

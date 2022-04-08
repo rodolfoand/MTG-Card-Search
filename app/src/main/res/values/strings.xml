@@ -883,4 +883,10 @@
     <string name="prints">Prints</string>
     <string name="subline">Subline</string>
     <string name="printedText">Printed text</string>
+    <string name="versionDetails">Version Details</string>
+    <string name="version">0.0001</string>
+    <string name="disclaimer_text">Magic Search is unofficial Fan Content permitted under the Wizards of the Coast Fan Content Policy. The literal and graphical information presented on this site about Magic: The Gathering, including card images, the mana symbols, and Oracle text, is copyright Wizards of the Coast, LLC, a subsidiary of Hasbro, Inc. Magic Search is not produced by, endorsed by, supported by, or affiliated with Wizards of the Coast.</string>
+    <string name="disclaimer">Disclaimer</string>
+    <string name="action_about">About</string>
+    <string name="about">About</string>
 </resources>
