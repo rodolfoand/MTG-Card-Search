@@ -102,6 +102,7 @@
                     app:iconPadding="0dp" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mb_cardlist_wish"
                     style="?attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

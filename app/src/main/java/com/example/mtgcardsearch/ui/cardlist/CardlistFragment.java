@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,11 +25,13 @@ import com.example.mtgcardsearch.databinding.FragmentCardlistBinding;
 import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.OnBottomReachedListener;
+import com.example.mtgcardsearch.model.OnSetWishListener;
 
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
-
+import java.util.stream.Collectors;
 
 
 public class CardlistFragment extends Fragment {
@@ -55,8 +58,11 @@ public class CardlistFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        cardlistViewModel =
-                new ViewModelProvider(this).get(CardlistViewModel.class);
+//        cardlistViewModel =
+//                new ViewModelProvider(this).get(CardlistViewModel.class);
+
+        CardlistViewModelFactory factory = new CardlistViewModelFactory(getActivity().getApplication());
+        cardlistViewModel = new ViewModelProvider(this, factory).get(CardlistViewModel.class);
 
         binding = FragmentCardlistBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -80,6 +86,16 @@ public class CardlistFragment extends Fragment {
 
         this.setLoading(true);
         this.setLayoutRecycler(cardlistViewModel.getPrefLayout());
+
+        cardlistViewModel.getAllCardIDs().observe(getViewLifecycleOwner(), new Observer<List<Card>>() {
+            @Override
+            public void onChanged(List<Card> cards) {
+                List<String> wishList = cards.stream().map(card -> card.getId()).collect(Collectors.toList());
+
+                adapter_cardlist.setWishList(wishList);
+//                adapter_cardlist.notifyDataSetChanged();
+            }
+        });
 
         binding.btSearchMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,6 +300,21 @@ public class CardlistFragment extends Fragment {
 
                                 adapter_cardlist.setCardSearchResult(dataList);
                                 adapter_cardlist.notifyDataSetChanged();
+
+                                adapter_cardlist.setOnSetWishListener(new OnSetWishListener() {
+                                    @Override
+                                    public void onSetWish(Card card) {
+                                        if (card.isWhish()){
+                                            cardlistViewModel.deleteWish(card);
+                                            Toast.makeText(mCtx, "Removed from wishlist.", Toast.LENGTH_SHORT).show();
+
+                                        } else {
+                                            cardlistViewModel.insertWish(card);
+                                            Toast.makeText(mCtx, R.string.addedtowishlist, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
                                 binding.rvCardlist.scrollToPosition(0);
 
                                 binding.txSearchResult.setText(getStringResult(cardSearchResult.getData().size()));

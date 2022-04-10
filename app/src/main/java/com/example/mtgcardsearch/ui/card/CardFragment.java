@@ -1,5 +1,6 @@
 package com.example.mtgcardsearch.ui.card;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mtgcardsearch.R;
@@ -28,6 +30,7 @@ import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -41,8 +44,9 @@ public class CardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        cardViewModel =
-                new ViewModelProvider(this).get(CardViewModel.class);
+
+        CardViewModelFactory factory = new CardViewModelFactory(getActivity().getApplication());
+        cardViewModel = new ViewModelProvider(this, factory).get(CardViewModel.class);
 
         binding = FragmentCardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -152,6 +156,20 @@ public class CardFragment extends Fragment {
                     }
                 });
 
+
+                cardViewModel.getWishCard(card.getId()).observe(getViewLifecycleOwner(), new Observer<Card>() {
+                    @Override
+                    public void onChanged(Card wishCard) {
+                        if (wishCard != null) {
+                            card.setWhish(true);
+                            binding.mbCardDetailWishlist.setIcon(
+                                    ContextCompat
+                                            .getDrawable(getContext(), R.drawable.ic_baseline_favorite_24));
+                        }
+                    }
+                });
+
+
                 cardViewModel.getCards("false", "false"
                         , order, "1", unique, "auto", q)
                         .observe(getViewLifecycleOwner(), new Observer<CardSearchResult>() {
@@ -212,6 +230,27 @@ public class CardFragment extends Fragment {
                         shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
                         shareIntent.setType("image/jpeg");
                         startActivity(Intent.createChooser(shareIntent, null));
+                    }
+                });
+
+                binding.mbCardDetailWishlist.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (card.isWhish()){
+                            cardViewModel.delete(card);
+                            Toast.makeText(container.getContext(), "Removed from wishlist.", Toast.LENGTH_SHORT).show();
+                            card.setWhish(false);
+                            binding.mbCardDetailWishlist.setIcon(
+                                    ContextCompat
+                                            .getDrawable(getContext(), R.drawable.ic_baseline_favorite_border_24));
+                        } else {
+                            cardViewModel.insert(card);
+                            Toast.makeText(container.getContext(), R.string.addedtowishlist, Toast.LENGTH_SHORT).show();
+                            card.setWhish(true);
+                            binding.mbCardDetailWishlist.setIcon(
+                                    ContextCompat
+                                            .getDrawable(getContext(), R.drawable.ic_baseline_favorite_24));
+                        }
                     }
                 });
 

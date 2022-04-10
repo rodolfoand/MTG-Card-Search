@@ -28,11 +28,12 @@
         <entry key="app/src/main/res/layout/fragment_mydecks.xml" value="0.17617753623188406" />
         <entry key="app/src/main/res/layout/fragment_setlist.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_wishlist.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_wishlist.xml" value="0.22" />
         <entry key="app/src/main/res/layout/item_cardlist.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_cardslist.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_list_suggestion.xml" value="0.1621376811594203" />
         <entry key="app/src/main/res/layout/item_setlist.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/item_wishlist.xml" value="0.1" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.17617753623188406" />
         <entry key="app/src/main/res/layout/recyclerview_cardslist.xml" value="0.17617753623188406" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.19791666666666666" />

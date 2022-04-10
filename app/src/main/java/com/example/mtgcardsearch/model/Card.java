@@ -1,6 +1,10 @@
 package com.example.mtgcardsearch.model;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,86 +12,119 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
+@Entity(tableName = "card_table")
 public class Card {
 
+    @Ignore
     @SerializedName("name")
     private String name;
 
+    @Ignore
     @SerializedName("layout")
     private String layout;
 
+    @Ignore
     @SerializedName("image_uris")
     private ImageUris image_uris;
 
+    @Ignore
     private int face_position;
 
+    @Ignore
     private String image_url;
 
+    @Ignore
     @SerializedName("card_faces")
     private ArrayList<CardFace> card_faces;
 
+    @Ignore
     @SerializedName("uri")
     private String uri;
 
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "id")
     @SerializedName("id")
     private String id;
 
+    @Ignore
     @SerializedName("type_line")
     private String type_line;
 
+    @Ignore
     @SerializedName("oracle_text")
     private String oracle_text;
 
+    @Ignore
     @SerializedName("loyalty")
     private String loyalty;
 
+    @Ignore
     @SerializedName("artist")
     private String artist;
 
+    @Ignore
     @SerializedName("legalities")
     private Map<String, String> legalities;
 
+    @Ignore
     @SerializedName("set_name")
     private String set_name;
 
+    @Ignore
     @SerializedName("set")
     private String set;
 
+    @Ignore
     @SerializedName("collector_number")
     private String collector_number;
 
+    @Ignore
     @SerializedName("rarity")
     private String rarity;
 
+    @Ignore
     @SerializedName("lang")
     private String lang;
 
+    @Ignore
     @SerializedName("set_search_uri")
     private String set_search_uri;
 
+    @Ignore
     @SerializedName("prints_search_uri")
     private String prints_search_uri;
 
+    @Ignore
     @SerializedName("printed_name")
     private String printed_name;
 
+    @Ignore
     @SerializedName("printed_type_line")
     private String printed_type_line;
 
+    @Ignore
     @SerializedName("printed_text")
     private String printed_text;
 
+    @Ignore
     @SerializedName("oracle_id")
     private String oracle_id;
 
+    @Ignore
     @SerializedName("power")
     private String power;
 
+    @Ignore
     @SerializedName("toughness")
     private String toughness;
 
+    @Ignore
     @SerializedName("flavor_text")
     private String flavor_text;
+
+    @Ignore
+    private boolean whish;
 
 
 
@@ -324,6 +361,14 @@ public class Card {
 
     public void setFlavor_text(String flavor_text) {
         this.flavor_text = flavor_text;
+    }
+
+    public boolean isWhish() {
+        return whish;
+    }
+
+    public void setWhish(boolean whish) {
+        this.whish = whish;
     }
 
     @Override

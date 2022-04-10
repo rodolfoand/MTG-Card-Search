@@ -2,6 +2,7 @@ package com.example.mtgcardsearch.data;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mtgcardsearch.api.RetrofitService;
@@ -11,6 +12,8 @@ import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.SetSearchResult;
 
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

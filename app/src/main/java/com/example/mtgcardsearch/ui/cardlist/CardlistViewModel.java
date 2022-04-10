@@ -1,21 +1,29 @@
 package com.example.mtgcardsearch.ui.cardlist;
 
+import android.app.Application;
+
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mtgcardsearch.data.ListRepository;
+import com.example.mtgcardsearch.data.RoomRepository;
 import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.data.PrefDataStore;
+
+import java.util.List;
 
 public class CardlistViewModel extends ViewModel {
 
     private ListRepository listRepository;
     private PrefDataStore prefDataStore;
+    private RoomRepository roomRepository;
 
-    public CardlistViewModel() {
+    public CardlistViewModel(Application application) {
         listRepository = new ListRepository();
         prefDataStore = PrefDataStore.prefDataStore;
+        roomRepository = new RoomRepository(application);
     }
 
     public MutableLiveData<CardSearchResult> getCards(
@@ -46,5 +54,17 @@ public class CardlistViewModel extends ViewModel {
 
     public MutableLiveData<Card> getCardbyName(String fuzzy){
         return listRepository.getCardbyName(fuzzy);
+    }
+
+    public LiveData<List<Card>> getAllCardIDs(){
+        return roomRepository.getAllCards();
+    }
+
+    public void insertWish(Card card){
+        roomRepository.insert(card);
+    }
+
+    public void deleteWish(Card card){
+        roomRepository.delete(card);
     }
 }
