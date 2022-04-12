@@ -12,12 +12,6 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_wishlist"
-        android:name="com.example.mtgcardsearch.ui.wishlist.WishlistFragment"
-        android:label="@string/wishlist"
-        tools:layout="@layout/fragment_wishlist" />
-
-    <fragment
         android:id="@+id/nav_mydecks"
         android:name="com.example.mtgcardsearch.ui.mydecks.MydecksFragment"
         android:label="@string/mydecks"
@@ -52,4 +46,10 @@
         android:name="com.example.mtgcardsearch.ui.about.AboutFragment"
         android:label="@string/about"
         tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/nav_wishlist"
+        android:name="com.example.mtgcardsearch.ui.wishlist.WishlistFragment"
+        android:label="@string/wishlist"
+        tools:layout="@layout/fragment_wishlist" />
 </navigation>

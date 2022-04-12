@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.mtgcardsearch.databinding.ActivityMainBinding;
 import com.example.mtgcardsearch.data.PrefDataStore;
 import com.example.mtgcardsearch.model.AutocompSearchResult;
+import com.example.mtgcardsearch.ui.cardlist.CardlistFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -64,8 +65,7 @@ public class MainActivity
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home
                 , R.id.nav_mydecks
-                , R.id.nav_wishlist
-                , R.id.nav_setlist)
+                , R.id.nav_wishlist)
                 .setOpenableLayout(drawer)
                 .build();
 
@@ -193,6 +193,7 @@ public class MainActivity
         Bundle bundle = new Bundle();
         bundle.putString("query", query);
         navController.navigate(R.id.nav_cardlist, bundle);
+
     }
 
     private void doSearchbyName(String name){

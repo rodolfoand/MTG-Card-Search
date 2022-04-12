@@ -35,35 +35,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinner_unique"
+    <LinearLayout
+        android:id="@+id/ll_cardlist_search_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/unique"
-        android:minHeight="48dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/rv_cardlist"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tx_search_result" />
+        app:layout_constraintTop_toBottomOf="@+id/tx_search_result">
 
-    <Spinner
-        android:id="@+id/spinner_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/order"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/rv_cardlist"
-        app:layout_constraintStart_toEndOf="@+id/spinner_unique"
-        app:layout_constraintTop_toBottomOf="@+id/tx_search_result" />
+        <Spinner
+            android:id="@+id/spinner_unique"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/unique"
+            android:minHeight="48dp" />
 
-    <Spinner
-        android:id="@+id/spinner_dir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/dir"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/rv_cardlist"
-        app:layout_constraintStart_toEndOf="@+id/spinner_order"
-        app:layout_constraintTop_toBottomOf="@+id/tx_search_result" />
+        <Spinner
+            android:id="@+id/spinner_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/order"
+            android:minHeight="48dp" />
+
+        <Spinner
+            android:id="@+id/spinner_dir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/dir"
+            android:minHeight="48dp"/>
 <!--
     <Spinner
         android:id="@+id/spinner_grid"
@@ -75,6 +75,24 @@
         app:layout_constraintStart_toEndOf="@+id/spinner_dir"
         app:layout_constraintTop_toBottomOf="@id/tx_search_result" />
 -->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_cardlist_wish_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/rv_cardlist"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tx_search_result">
+
+    <Spinner
+        android:id="@+id/sp_wish_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/order"
+        android:minHeight="48dp" />
+    </LinearLayout>
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/pb_cardlist"
@@ -107,7 +125,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bt_search_more"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_unique" />
+        app:layout_constraintTop_toBottomOf="@id/ll_cardlist_search_spinner" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_search_more"

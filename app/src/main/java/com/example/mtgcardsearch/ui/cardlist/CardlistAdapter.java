@@ -27,7 +27,6 @@ import java.util.List;
 public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.CardlistViewHolder> {
 
     Context mCtx;
-    CardSearchResult cardSearchResult;
     List<Card> cardList;
     OnBottomReachedListener onBottomReachedListener;
     List<String> wishList;
@@ -38,9 +37,8 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         this.wishList = new ArrayList<>();
     }
 
-    public void setCardSearchResult(CardSearchResult cardSearchResult){
-        this.cardList = cardSearchResult.getData();
-        this.cardSearchResult = cardSearchResult;
+    public void setCardList(List<Card> list){
+        this.cardList = list;
     }
 
     public void setWishList(List<String> wishList) {

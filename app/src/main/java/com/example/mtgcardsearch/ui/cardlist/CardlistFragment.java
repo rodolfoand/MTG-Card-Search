@@ -5,15 +5,17 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,11 +26,16 @@ import com.example.mtgcardsearch.R;
 import com.example.mtgcardsearch.databinding.FragmentCardlistBinding;
 import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
+import com.example.mtgcardsearch.model.CardComparator;
 import com.example.mtgcardsearch.model.OnBottomReachedListener;
 import com.example.mtgcardsearch.model.OnSetWishListener;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.internal.NavigationMenuItemView;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -43,6 +50,8 @@ public class CardlistFragment extends Fragment {
     private CardSearchResult dataList;
     private CardlistAdapter adapter_cardlist;
     private int count_cards;
+    private MutableLiveData<List<Card>> cardList;
+    private int wishSize;
 
     private String parm_unique;
     private String parm_order;
@@ -52,37 +61,35 @@ public class CardlistFragment extends Fragment {
     private String parm_include_multilingual;
     private String parm_include_extras;
     private String parm_fuzzy;
+    private boolean wishlist;
 
     private final int LAYOUT_LINEAR = 0;
     private final int LAYOUT_GRID = 1;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//        cardlistViewModel =
-//                new ViewModelProvider(this).get(CardlistViewModel.class);
-
-        CardlistViewModelFactory factory = new CardlistViewModelFactory(getActivity().getApplication());
-        cardlistViewModel = new ViewModelProvider(this, factory).get(CardlistViewModel.class);
 
         binding = FragmentCardlistBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        CardlistViewModelFactory factory = new CardlistViewModelFactory(getActivity().getApplication());
+        cardlistViewModel = new ViewModelProvider(this, factory).get(CardlistViewModel.class);
+
         mCtx = container.getContext();
+        cardList = new MutableLiveData<>();
+        cardList.setValue(new ArrayList<>());
+        wishSize = -1;
 
-        parm_query = getArguments().getString("query");
-        parm_unique = getArguments().getString("unique");
-        parm_dir = getArguments().getString("dir");
-        parm_fuzzy = getArguments().getString("fuzzy");
-
-        this.setSpinner();
         this.setParms();
+        this.setSpinner();
         this.setListAdapter();
 
         if (parm_query != null)
             this.setDataList();
-
-        if (parm_fuzzy != null)
+        else if (parm_fuzzy != null)
             this.setDataCard();
+        else
+            this.setDataWish();
 
         this.setLoading(true);
         this.setLayoutRecycler(cardlistViewModel.getPrefLayout());
@@ -93,7 +100,6 @@ public class CardlistFragment extends Fragment {
                 List<String> wishList = cards.stream().map(card -> card.getId()).collect(Collectors.toList());
 
                 adapter_cardlist.setWishList(wishList);
-//                adapter_cardlist.notifyDataSetChanged();
             }
         });
 
@@ -134,58 +140,39 @@ public class CardlistFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if ((Navigation.findNavController(getView()).getPreviousBackStackEntry().getDestination().getId() == R.id.nav_wishlist))
+            wishlist = true;
+        else
+            wishlist = false;
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
-    public String getStringResult(int qtd){
-        return getString(R.string.result).toUpperCase(Locale.ROOT) + ": "
-                + (count_cards - ((qtd < 175) ? --qtd : 174))
-                + " - "
-                + count_cards
-                + " " + getString(R.string.of) + " "
-                + dataList.getTotal_cards();
-    }
+    private void setParms(){
 
-    private void setLayoutRecycler(int layout){
-        binding.rvCardlist.setHasFixedSize(true);
-
-        if (layout == this.LAYOUT_GRID) {
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-            binding.rvCardlist.setLayoutManager(gridLayoutManager);
-
-            if (binding.imCardlistCol.getVisibility() == View.VISIBLE) {
-                binding.imCardlistCol.setVisibility(View.GONE);
-                binding.imCardlistRow.setVisibility(View.VISIBLE);
-            }
+        if (getArguments() != null) {
+            parm_query = getArguments().getString("query");
+            parm_unique = getArguments().getString("unique");
+            parm_dir = getArguments().getString("dir");
+            parm_fuzzy = getArguments().getString("fuzzy");
         }
-        if (layout == this.LAYOUT_LINEAR) {
-            binding.rvCardlist.setLayoutManager(new LinearLayoutManager(getContext()));
 
-            if (binding.imCardlistRow.getVisibility() == View.VISIBLE) {
-                binding.imCardlistCol.setVisibility(View.VISIBLE);
-                binding.imCardlistRow.setVisibility(View.GONE);
-            }
-        }
-        if (adapter_cardlist != null) binding.rvCardlist.setAdapter(adapter_cardlist);
-    }
-
-    private void setListAdapter(){
-
-        adapter_cardlist = new CardlistAdapter(mCtx);
-        binding.rvCardlist.setAdapter(adapter_cardlist);
-
-        adapter_cardlist.setOnBottomReachedListener(new OnBottomReachedListener() {
-            @Override
-            public void onBottomReached(int position) {
-                if (dataList.isHas_more())
-                    binding.btSearchMore.setVisibility(View.VISIBLE);
-            }
-        });
+        if (parm_order == null) parm_order = "name";
+        if (parm_unique == null) parm_unique = "cards";
+        if (parm_dir == null) parm_dir = "auto";
+        if (parm_page == null) parm_page = "1";
+        if (parm_include_multilingual == null) parm_include_multilingual = "true";
+        if (parm_include_extras == null) parm_include_extras = "false";
     }
 
     private void setSpinner(){
+
         ArrayAdapter<CharSequence> adapter_sp_unique = ArrayAdapter.createFromResource(mCtx,
                 R.array.array_unique, android.R.layout.simple_spinner_item);
         adapter_sp_unique.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -264,15 +251,78 @@ public class CardlistFragment extends Fragment {
 
             }
         });
+
+        ArrayAdapter<CharSequence> adapter_sp_wish_order = ArrayAdapter.createFromResource(mCtx,
+                R.array.array_wish_order, android.R.layout.simple_spinner_item);
+        adapter_sp_wish_order.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spWishOrder.setAdapter(adapter_sp_wish_order);
+
+        binding.spWishOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String new_order = getResources().getStringArray(R.array.array_wish_order)[i];
+
+                List<Card> newList = cardList.getValue();
+                if (newList.size() > 0) {
+                    Collections.sort(newList, new CardComparator(new_order));
+                    adapter_cardlist.setCardList(newList);
+                    adapter_cardlist.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
-    private void setParms(){
-        if (parm_order == null) parm_order = "name";
-        if (parm_unique == null) parm_unique = "cards";
-        if (parm_dir == null) parm_dir = "auto";
-        if (parm_page == null) parm_page = "1";
-        if (parm_include_multilingual == null) parm_include_multilingual = "true";
-        if (parm_include_extras == null) parm_include_extras = "false";
+    public String getStringResult(int qtd){
+        return getString(R.string.result).toUpperCase(Locale.ROOT) + ": "
+                + (count_cards - ((qtd < 175) ? --qtd : 174))
+                + " - "
+                + count_cards
+                + " " + getString(R.string.of) + " "
+                + dataList.getTotal_cards();
+    }
+
+    private void setLayoutRecycler(int layout){
+        binding.rvCardlist.setHasFixedSize(true);
+
+        if (layout == this.LAYOUT_GRID) {
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+            binding.rvCardlist.setLayoutManager(gridLayoutManager);
+
+            if (binding.imCardlistCol.getVisibility() == View.VISIBLE) {
+                binding.imCardlistCol.setVisibility(View.GONE);
+                binding.imCardlistRow.setVisibility(View.VISIBLE);
+            }
+        }
+        if (layout == this.LAYOUT_LINEAR) {
+            binding.rvCardlist.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            if (binding.imCardlistRow.getVisibility() == View.VISIBLE) {
+                binding.imCardlistCol.setVisibility(View.VISIBLE);
+                binding.imCardlistRow.setVisibility(View.GONE);
+            }
+        }
+        if (adapter_cardlist != null) binding.rvCardlist.setAdapter(adapter_cardlist);
+    }
+
+    private void setListAdapter(){
+
+        adapter_cardlist = new CardlistAdapter(mCtx);
+        binding.rvCardlist.setAdapter(adapter_cardlist);
+
+        adapter_cardlist.setOnBottomReachedListener(new OnBottomReachedListener() {
+            @Override
+            public void onBottomReached(int position) {
+                if (dataList != null && dataList.isHas_more())
+                    binding.btSearchMore.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void setDataList() {
@@ -298,7 +348,7 @@ public class CardlistFragment extends Fragment {
                                         + (Integer.parseInt(parm_page) - 1)
                                         * 175;
 
-                                adapter_cardlist.setCardSearchResult(dataList);
+                                adapter_cardlist.setCardList(dataList.getData());
                                 adapter_cardlist.notifyDataSetChanged();
 
                                 adapter_cardlist.setOnSetWishListener(new OnSetWishListener() {
@@ -320,6 +370,7 @@ public class CardlistFragment extends Fragment {
                                 binding.txSearchResult.setText(getStringResult(cardSearchResult.getData().size()));
 
                                 setLoading(false);
+                                binding.llCardlistSearchSpinner.setVisibility(View.VISIBLE);
                             }
                         }
                         if (cardSearchResult.getObject().equals("error")) {
@@ -338,20 +389,77 @@ public class CardlistFragment extends Fragment {
         });
     }
 
+    private void setDataWish(){
+        cardlistViewModel.getAllCardIDs().observe(getViewLifecycleOwner(), new Observer<List<Card>>() {
+            @Override
+            public void onChanged(List<Card> cards) {
+                wishSize = cards.size();
+                for (Card c : cards) {
+                    cardlistViewModel.getCard(c.getId()).observe(getViewLifecycleOwner(), new Observer<Card>() {
+                        @Override
+                        public void onChanged(Card card) {
+                            card.setWhish(true);
+                            List<Card> newCardList = cardList.getValue();
+                            if (newCardList.indexOf(card) < 0)
+                                newCardList.add(card);
+                            cardList.setValue(newCardList);
+                        }
+                    });
+                }
+            }
+        });
+        cardList.observe(getViewLifecycleOwner(), new Observer<List<Card>>() {
+            @Override
+            public void onChanged(List<Card> cards) {
+                if (cards.size() == wishSize) {
+                    Collections.sort(cards, new CardComparator());
+                    adapter_cardlist.setCardList(cards);
+                    adapter_cardlist.notifyDataSetChanged();
+
+                    cardList.removeObservers(getViewLifecycleOwner());
+
+                    count_cards = cards.size();
+                    String count = "Count: " + count_cards;
+                    binding.txSearchResult.setText(count);
+
+                    setLoading(false);
+                    binding.llCardlistWishSpinner.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        adapter_cardlist.setOnSetWishListener(new OnSetWishListener() {
+            @Override
+            public void onSetWish(Card card) {
+                if (card.isWhish()){
+                    cardlistViewModel.deleteWish(card);
+
+                    adapter_cardlist.notifyItemRemoved(adapter_cardlist.cardList.indexOf(card));
+                    adapter_cardlist.cardList.remove(card);
+
+                    Toast.makeText(mCtx, "Removed from wishlist.", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    cardlistViewModel.insertWish(card);
+                    Toast.makeText(mCtx, R.string.addedtowishlist, Toast.LENGTH_SHORT).show();
+                }
+
+                count_cards = adapter_cardlist.cardList.size();
+                String count = "Count: " + count_cards;
+                binding.txSearchResult.setText(count);
+            }
+        });
+    }
+
     private void setLoading(boolean loading){
         if (loading){
             binding.pbCardlist.setVisibility(View.VISIBLE);
-            binding.spinnerDir.setVisibility(View.GONE);
-            binding.spinnerOrder.setVisibility(View.GONE);
-            binding.spinnerUnique.setVisibility(View.GONE);
+            binding.llCardlistSearchSpinner.setVisibility(View.GONE);
+            binding.llCardlistWishSpinner.setVisibility(View.GONE);
             binding.rvCardlist.setVisibility(View.GONE);
             binding.imCardlistCol.setVisibility(View.GONE);
             binding.imCardlistRow.setVisibility(View.GONE);
         } else {
             binding.pbCardlist.setVisibility(View.GONE);
-            binding.spinnerDir.setVisibility(View.VISIBLE);
-            binding.spinnerOrder.setVisibility(View.VISIBLE);
-            binding.spinnerUnique.setVisibility(View.VISIBLE);
             binding.rvCardlist.setVisibility(View.VISIBLE);
             if (cardlistViewModel.getPrefLayout() == LAYOUT_GRID){
                 binding.imCardlistRow.setVisibility(View.VISIBLE);
@@ -378,6 +486,7 @@ public class CardlistFragment extends Fragment {
     }
 
     private void toCardNavigation(String id){
+        wishlist = false;
         Navigation.findNavController(getView()).popBackStack();
         Bundle bundle = new Bundle();
         bundle.putString("id", id);

@@ -50,6 +50,14 @@
         <item>review</item>
     </string-array>
 
+    <string-array name="array_wish_order">
+        <item>name</item>
+        <item>rarity</item>
+        <item>cmc</item>
+        <item>power</item>
+        <item>toughness</item>
+    </string-array>
+
     <string-array name="array_dir">
         <item>auto</item>
         <item>asc</item>

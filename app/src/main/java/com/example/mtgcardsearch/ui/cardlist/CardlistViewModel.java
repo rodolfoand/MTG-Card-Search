@@ -67,4 +67,8 @@ public class CardlistViewModel extends ViewModel {
     public void deleteWish(Card card){
         roomRepository.delete(card);
     }
+
+    public MutableLiveData<Card> getCard(String id){
+        return listRepository.getCard(id);
+    }
 }

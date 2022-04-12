@@ -9,6 +9,8 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -125,6 +127,15 @@ public class Card {
 
     @Ignore
     private boolean whish;
+
+    @Ignore
+    @SerializedName("cmc")
+    private Integer cmc;
+
+    @Ignore
+    @SerializedName("released_at")
+    private Date released_at;
+
 
 
 
@@ -369,6 +380,22 @@ public class Card {
 
     public void setWhish(boolean whish) {
         this.whish = whish;
+    }
+
+    public Integer getCmc() {
+        return cmc;
+    }
+
+    public void setCmc(Integer cmc) {
+        this.cmc = cmc;
+    }
+
+    public Date getReleased_at() {
+        return released_at;
+    }
+
+    public void setReleased_at(Date released_at) {
+        this.released_at = released_at;
     }
 
     @Override
