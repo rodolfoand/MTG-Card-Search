@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModel;
 import com.example.mtgcardsearch.data.ListRepository;
 import com.example.mtgcardsearch.data.RoomRepository;
 import com.example.mtgcardsearch.model.Card;
+import com.example.mtgcardsearch.model.CardFace;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.data.PrefDataStore;
+import com.example.mtgcardsearch.model.CardWithCardfaces;
 
 import java.util.List;
 
@@ -62,6 +64,7 @@ public class CardlistViewModel extends ViewModel {
 
     public void insertWish(Card card){
         roomRepository.insert(card);
+
     }
 
     public void deleteWish(Card card){
@@ -70,5 +73,9 @@ public class CardlistViewModel extends ViewModel {
 
     public MutableLiveData<Card> getCard(String id){
         return listRepository.getCard(id);
+    }
+
+    public LiveData<List<CardWithCardfaces>> getAllCardWithCardfaces(){
+        return roomRepository.getAllCardWithCardfaces();
     }
 }

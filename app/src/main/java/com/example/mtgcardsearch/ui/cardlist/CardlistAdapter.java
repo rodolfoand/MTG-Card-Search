@@ -65,7 +65,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
     @Override
     public void onBindViewHolder(@NonNull CardlistViewHolder holder, int position) {
         Card card = cardList.get(position);
-        card.setImage_url();
+        card.initialize();
 
         setCardImage(holder.iv_cardimage, card.getImage_url());
         holder.fab_flip.setAlpha(0.60f);

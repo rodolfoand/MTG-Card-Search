@@ -7,11 +7,12 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.mtgcardsearch.model.Card;
+import com.example.mtgcardsearch.model.CardFace;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Card.class}, version = 1, exportSchema = false)
+@Database(entities = {Card.class, CardFace.class}, version = 1, exportSchema = false)
 public abstract class CardRoomDatabase extends RoomDatabase {
 
     public abstract CardDao cardDao();

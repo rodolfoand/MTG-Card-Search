@@ -2,9 +2,11 @@ package com.example.mtgcardsearch.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,7 +19,13 @@ import java.util.Objects;
 @Entity(tableName = "card_table")
 public class Card {
 
-    @Ignore
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "id")
+    @SerializedName("id")
+    private String id;
+
+    @ColumnInfo(name = "name")
     @SerializedName("name")
     private String name;
 
@@ -25,11 +33,11 @@ public class Card {
     @SerializedName("layout")
     private String layout;
 
-    @Ignore
+    @Embedded
     @SerializedName("image_uris")
     private ImageUris image_uris;
 
-    @Ignore
+    @ColumnInfo(name = "face_position")
     private int face_position;
 
     @Ignore
@@ -42,12 +50,6 @@ public class Card {
     @Ignore
     @SerializedName("uri")
     private String uri;
-
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "id")
-    @SerializedName("id")
-    private String id;
 
     @Ignore
     @SerializedName("type_line")
@@ -81,7 +83,7 @@ public class Card {
     @SerializedName("collector_number")
     private String collector_number;
 
-    @Ignore
+
     @SerializedName("rarity")
     private String rarity;
 
@@ -113,11 +115,11 @@ public class Card {
     @SerializedName("oracle_id")
     private String oracle_id;
 
-    @Ignore
+
     @SerializedName("power")
     private String power;
 
-    @Ignore
+
     @SerializedName("toughness")
     private String toughness;
 
@@ -128,7 +130,7 @@ public class Card {
     @Ignore
     private boolean whish;
 
-    @Ignore
+
     @SerializedName("cmc")
     private Integer cmc;
 
@@ -139,6 +141,15 @@ public class Card {
 
 
 
+
+    public void initialize(){
+        if (this.getCard_faces() != null){
+            for (CardFace cardface : card_faces) {
+                cardface.setCard_id(this.getId());
+            }
+        }
+        this.setImage_url();
+    }
 
     public String getName() {
         return name;
@@ -289,6 +300,7 @@ public class Card {
 
     public boolean hasImageInCardFaces() {
         return (this.getCard_faces() != null
+                && this.getCard_faces().size() > 0
                 && this.getCard_faces()
                 .get(this.getFace_position())
                 .getImage_uris() != null);
@@ -396,6 +408,10 @@ public class Card {
 
     public void setReleased_at(Date released_at) {
         this.released_at = released_at;
+    }
+
+    public void setFace_position(int face_position) {
+        this.face_position = face_position;
     }
 
     @Override
