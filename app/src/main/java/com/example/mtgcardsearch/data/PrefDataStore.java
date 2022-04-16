@@ -20,42 +20,52 @@ public class PrefDataStore {
     public RxDataStore<Preferences> dataStore;
     public Preferences.Key<Integer> PREF_CARDLIST_LAYOUT;
     public Preferences.Key<String> PREF_USER_LANGUAGE;
+    public Preferences.Key<String> PREF_WISHLIST_ORDER;
+    public Preferences.Key<String> PREF_SETLIST_FILTER;
 
     public PrefDataStore() {}
 
     public void setContext(Context context) {
         this.dataStore = new RxPreferenceDataStoreBuilder(context, /*name=*/ "settings").build();
         PREF_CARDLIST_LAYOUT = PreferencesKeys.intKey("cardlistLayoutKey");
-        setPrefLayout(PREF_CARDLIST_LAYOUT.getName(), 1);
         PREF_USER_LANGUAGE = PreferencesKeys.stringKey("userLanguageKey");
-        setPrefLanguage(PREF_USER_LANGUAGE.getName(), Locale.getDefault().getLanguage().toString());
+        PREF_WISHLIST_ORDER = PreferencesKeys.stringKey("wishlistOrderKey");
+        PREF_SETLIST_FILTER = PreferencesKeys.stringKey("setlistFilterKey");
     }
 
-    public void setPrefLayout(String keyName, Integer value){
-        PREF_CARDLIST_LAYOUT = PreferencesKeys.intKey(keyName);
+    public Flowable<String> getPrefString(Preferences.Key<String> keyPref, String def_value){
+        return dataStore.data()
+                .map(prefs -> (prefs.get(keyPref) == null)
+                        ? def_value
+                        : prefs.get(keyPref));
+    }
 
+    public void setPrefString(Preferences.Key<String> keyPref, String value){
+        keyPref = PreferencesKeys.stringKey(keyPref.getName());
+
+        Preferences.Key<String> finalKeyPref = keyPref;
         Single<Preferences> updateResult =  dataStore.updateDataAsync(prefsIn -> {
             MutablePreferences mutablePreferences = prefsIn.toMutablePreferences();
-            mutablePreferences.set(PREF_CARDLIST_LAYOUT, value);
+            mutablePreferences.set(finalKeyPref, value);
             return Single.just(mutablePreferences);
         });
     }
 
-    public Flowable<Integer> getPrefLayout() {
-        return dataStore.data().map(prefs -> prefs.get(PREF_CARDLIST_LAYOUT));
+    public Flowable<Integer> getPrefInteger(Preferences.Key<Integer> keyPref, Integer def_value){
+        return dataStore.data()
+                .map(prefs -> (prefs.get(keyPref) == null)
+                        ? def_value
+                        : prefs.get(keyPref));
     }
 
-    public void setPrefLanguage(String keyName, String value){
-        PREF_USER_LANGUAGE = PreferencesKeys.stringKey(keyName);
+    public void setPrefInteger(Preferences.Key<Integer> keyPref, Integer value){
+        keyPref = PreferencesKeys.intKey(keyPref.getName());
 
+        Preferences.Key<Integer> finalKeyPref = keyPref;
         Single<Preferences> updateResult =  dataStore.updateDataAsync(prefsIn -> {
             MutablePreferences mutablePreferences = prefsIn.toMutablePreferences();
-            mutablePreferences.set(PREF_USER_LANGUAGE, value);
+            mutablePreferences.set(finalKeyPref, value);
             return Single.just(mutablePreferences);
         });
-    }
-
-    public Flowable<String> getPrefLanguage() {
-        return dataStore.data().map(prefs -> prefs.get(PREF_USER_LANGUAGE));
     }
 }

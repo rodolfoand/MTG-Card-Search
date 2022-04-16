@@ -26,7 +26,7 @@ public interface CardDao {
 
     @Transaction
     @Query("SELECT * FROM card_table")
-    public LiveData<List<CardWithCardfaces>> getCardWithCardfaces();
+    LiveData<List<CardWithCardfaces>> getCardWithCardfaces();
 
     @Delete
     void delete(Card card);

@@ -22,8 +22,4 @@ public class MainViewModel extends ViewModel {
     public MutableLiveData<AutocompSearchResult> getNames(String query){
         return listRepository.getNames(query);
     }
-
-    public String getPrefUserLang(){
-        return prefDataStore.getPrefLanguage().blockingFirst();
-    }
 }

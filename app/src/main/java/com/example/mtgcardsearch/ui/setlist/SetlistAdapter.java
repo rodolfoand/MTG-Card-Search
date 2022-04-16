@@ -45,6 +45,10 @@ public class SetlistAdapter extends RecyclerView.Adapter<SetlistAdapter.SetlistV
         this.listSearchResult = setSearchResult;
     }
 
+    public void setList(List<Set> setList) {
+        this.setList = setList;
+    }
+
     public void setOnBottomReachedListener(OnBottomReachedListener onBottomReachedListener){
         this.onBottomReachedListener = onBottomReachedListener;
     }

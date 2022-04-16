@@ -15,16 +15,14 @@ import java.util.List;
 public class RoomRepository {
 
     private CardDao mCardDao;
-    private LiveData<List<Card>> mAllCards;
 
     public RoomRepository(Application application) {
         CardRoomDatabase db = CardRoomDatabase.getDatabase(application);
         mCardDao = db.cardDao();
-        mAllCards = mCardDao.getAlphabetizedCards();
     }
 
     public LiveData<List<Card>> getAllCards() {
-        return mAllCards;
+        return mCardDao.getAlphabetizedCards();
     }
 
     public void insert(Card card) {
@@ -42,12 +40,6 @@ public class RoomRepository {
 
     public LiveData<Card> getCard(String id){
         return mCardDao.getCard(id);
-    }
-
-    public void insertCardfaces(List<CardFace> cardfaces) {
-        CardRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mCardDao.insert(cardfaces);
-        });
     }
 
     public LiveData<List<CardWithCardfaces>> getAllCardWithCardfaces(){

@@ -181,12 +181,22 @@ public class AdvsearchFragment extends Fragment {
         if (!binding.etAdvName.getText().toString().isEmpty())
             q += binding.etAdvName.getText().toString();
 
-        if (!binding.etAdvText.getText().toString().isEmpty())
-            q += " oracle:" + binding.etAdvText.getText().toString();
+        List<String> oracle = new ArrayList<>();
+        if (!binding.etAdvText.getText().toString().isEmpty()) {
+            String s_oracle = binding.etAdvText.getText().toString();
+            if (s_oracle.indexOf("\"") >= 0)
+                oracle = Arrays.asList(s_oracle.split("\""));
+            else
+                oracle = Arrays.asList(s_oracle.split(" "));
+        }
+        for (String o : oracle){
+            if (!o.isEmpty()) q += " oracle:\"" + o + "\"";
+        }
+
 
         List<String> types = Arrays.stream(binding.mactvAdvType.getText().toString()
-                        .replaceAll("\\s", "")
-                        .split(","))
+                .replaceAll("\\s", "")
+                .split(","))
                 .collect(Collectors.toList());
         for (String type : types) {
             if (!type.isEmpty()) q += " type:" + type.toLowerCase();

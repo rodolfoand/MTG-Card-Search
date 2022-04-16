@@ -26,6 +26,9 @@ public class Set {
     @SerializedName("code")
     private String code;
 
+    @SerializedName("set_type")
+    private String set_type;
+
     public String getName() {
         return name;
     }
@@ -80,5 +83,13 @@ public class Set {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getSet_type() {
+        return set_type;
+    }
+
+    public void setSet_type(String set_type) {
+        this.set_type = set_type;
     }
 }

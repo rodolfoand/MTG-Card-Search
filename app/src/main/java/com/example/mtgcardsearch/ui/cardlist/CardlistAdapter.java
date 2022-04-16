@@ -86,13 +86,15 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         if (position == cardList.size() - 1)
             onBottomReachedListener.onBottomReached(position);
 
-        if (wishList.indexOf(card.getId()) >= 0) {
-            card.setWhish(true);
+        if (wishList.indexOf(card.getId()) >= 0) card.setWhish(true);
+        else card.setWhish(false);
+
+
+        if (card.isWhish())
             holder.mb_cardlist_wish.setIcon(ContextCompat.getDrawable(mCtx, R.drawable.ic_baseline_favorite_24));
-        } else {
-            card.setWhish(false);
+        else
             holder.mb_cardlist_wish.setIcon(ContextCompat.getDrawable(mCtx, R.drawable.ic_baseline_favorite_border_24));
-        }
+
 
         holder.iv_cardimage.setOnClickListener(new View.OnClickListener() {
             @Override

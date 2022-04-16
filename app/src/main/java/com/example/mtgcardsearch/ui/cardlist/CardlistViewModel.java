@@ -47,19 +47,17 @@ public class CardlistViewModel extends ViewModel {
     }
 
     public int getPrefLayout(){
-        return prefDataStore.getPrefLayout().blockingFirst();
+//        return prefDataStore.getPrefLayout().blockingFirst();
+        return prefDataStore.getPrefInteger(prefDataStore.PREF_CARDLIST_LAYOUT, 1).blockingFirst();
     }
 
     public void setPrefLayout(int layout){
-        prefDataStore.setPrefLayout(prefDataStore.PREF_CARDLIST_LAYOUT.getName(), layout);
+//        prefDataStore.setPrefLayout(prefDataStore.PREF_CARDLIST_LAYOUT.getName(), layout);
+        prefDataStore.setPrefInteger(prefDataStore.PREF_CARDLIST_LAYOUT, layout);
     }
 
     public MutableLiveData<Card> getCardbyName(String fuzzy){
         return listRepository.getCardbyName(fuzzy);
-    }
-
-    public LiveData<List<Card>> getAllCardIDs(){
-        return roomRepository.getAllCards();
     }
 
     public void insertWish(Card card){
@@ -71,11 +69,19 @@ public class CardlistViewModel extends ViewModel {
         roomRepository.delete(card);
     }
 
-    public MutableLiveData<Card> getCard(String id){
-        return listRepository.getCard(id);
-    }
-
     public LiveData<List<CardWithCardfaces>> getAllCardWithCardfaces(){
         return roomRepository.getAllCardWithCardfaces();
+    }
+
+    public String getPrefWishlistOrder(){
+        return prefDataStore.getPrefString(prefDataStore.PREF_WISHLIST_ORDER, "name").blockingFirst();
+    }
+
+    public void setPrefWishlistOrder(String order){
+        prefDataStore.setPrefString(prefDataStore.PREF_WISHLIST_ORDER, order);
+    }
+
+    public LiveData<List<Card>> getAllCardIDs(){
+        return roomRepository.getAllCards();
     }
 }

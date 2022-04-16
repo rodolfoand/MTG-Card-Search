@@ -20,8 +20,4 @@ public class AdvsearchViewModel extends ViewModel {
     public MutableLiveData<SetSearchResult> getSets(String set){
         return listRepository.getSets(set);
     }
-
-    public String getPrefUserLang(){
-        return prefDataStore.getPrefLanguage().blockingFirst();
-    }
 }

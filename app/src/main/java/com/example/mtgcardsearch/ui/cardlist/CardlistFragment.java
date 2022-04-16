@@ -29,6 +29,7 @@ import com.example.mtgcardsearch.model.CardComparator;
 import com.example.mtgcardsearch.model.CardWithCardfaces;
 import com.example.mtgcardsearch.model.OnBottomReachedListener;
 import com.example.mtgcardsearch.model.OnSetWishListener;
+import com.google.android.material.snackbar.Snackbar;
 
 
 import java.util.ArrayList;
@@ -48,8 +49,6 @@ public class CardlistFragment extends Fragment {
     private CardSearchResult dataList;
     private CardlistAdapter adapter_cardlist;
     private int count_cards;
-    private MutableLiveData<List<Card>> cardList;
-    private int wishSize;
 
     private String parm_unique;
     private String parm_order;
@@ -73,9 +72,6 @@ public class CardlistFragment extends Fragment {
         cardlistViewModel = new ViewModelProvider(this, factory).get(CardlistViewModel.class);
 
         mCtx = container.getContext();
-        cardList = new MutableLiveData<>();
-        cardList.setValue(new ArrayList<>());
-        wishSize = -1;
 
         this.setParms();
         this.setSpinner();
@@ -90,15 +86,6 @@ public class CardlistFragment extends Fragment {
 
         this.setLoading(true);
         this.setLayoutRecycler(cardlistViewModel.getPrefLayout());
-
-        cardlistViewModel.getAllCardIDs().observe(getViewLifecycleOwner(), new Observer<List<Card>>() {
-            @Override
-            public void onChanged(List<Card> cards) {
-                List<String> wishList = cards.stream().map(card -> card.getId()).collect(Collectors.toList());
-
-                adapter_cardlist.setWishList(wishList);
-            }
-        });
 
         binding.btSearchMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +117,34 @@ public class CardlistFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setDataSourceLayout();
+            }
+        });
+
+        adapter_cardlist.setOnBottomReachedListener(new OnBottomReachedListener() {
+            @Override
+            public void onBottomReached(int position) {
+                if (dataList != null && dataList.isHas_more())
+                    binding.btSearchMore.setVisibility(View.VISIBLE);
+            }
+        });
+
+        adapter_cardlist.setOnSetWishListener(new OnSetWishListener() {
+            @Override
+            public void onSetWish(Card card) {
+                if (card.isWhish()){
+                    cardlistViewModel.deleteWish(card);
+                    adapter_cardlist.notifyItemRemoved(adapter_cardlist.cardList.indexOf(card));
+                    adapter_cardlist.cardList.remove(card);
+
+                    Toast.makeText(mCtx, R.string.removedfromwishlist, Toast.LENGTH_SHORT).show();
+                } else {
+                    cardlistViewModel.insertWish(card);
+                    Toast.makeText(mCtx, R.string.addedtowishlist, Toast.LENGTH_SHORT).show();
+                }
+
+                count_cards = adapter_cardlist.cardList.size();
+                String count = getString(R.string.countlabel) + ": " + count_cards;
+                binding.txSearchResult.setText(count);
             }
         });
 
@@ -245,14 +260,18 @@ public class CardlistFragment extends Fragment {
         adapter_sp_wish_order.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spWishOrder.setAdapter(adapter_sp_wish_order);
 
+        binding.spWishOrder.setSelection(Arrays.asList(getResources()
+                .getStringArray(R.array.array_wish_order))
+                .indexOf(cardlistViewModel.getPrefWishlistOrder()));
+
         binding.spWishOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
                 String new_order = getResources().getStringArray(R.array.array_wish_order)[i];
 
                 List<Card> newList = adapter_cardlist.cardList;
                 if (newList.size() > 0) {
+                    cardlistViewModel.setPrefWishlistOrder(new_order);
                     Collections.sort(newList, new CardComparator(new_order));
                     adapter_cardlist.setCardList(newList);
                     adapter_cardlist.notifyDataSetChanged();
@@ -290,7 +309,6 @@ public class CardlistFragment extends Fragment {
         }
         if (layout == this.LAYOUT_LINEAR) {
             binding.rvCardlist.setLayoutManager(new LinearLayoutManager(getContext()));
-
             if (binding.imCardlistRow.getVisibility() == View.VISIBLE) {
                 binding.imCardlistCol.setVisibility(View.VISIBLE);
                 binding.imCardlistRow.setVisibility(View.GONE);
@@ -300,17 +318,8 @@ public class CardlistFragment extends Fragment {
     }
 
     private void setListAdapter(){
-
         adapter_cardlist = new CardlistAdapter(mCtx);
         binding.rvCardlist.setAdapter(adapter_cardlist);
-
-        adapter_cardlist.setOnBottomReachedListener(new OnBottomReachedListener() {
-            @Override
-            public void onBottomReached(int position) {
-                if (dataList != null && dataList.isHas_more())
-                    binding.btSearchMore.setVisibility(View.VISIBLE);
-            }
-        });
     }
 
     private void setDataList() {
@@ -342,14 +351,9 @@ public class CardlistFragment extends Fragment {
                                 adapter_cardlist.setOnSetWishListener(new OnSetWishListener() {
                                     @Override
                                     public void onSetWish(Card card) {
-                                        if (card.isWhish()){
-                                            cardlistViewModel.deleteWish(card);
-                                            Toast.makeText(mCtx, "Removed from wishlist.", Toast.LENGTH_SHORT).show();
 
-                                        } else {
-                                            cardlistViewModel.insertWish(card);
-                                            Toast.makeText(mCtx, R.string.addedtowishlist, Toast.LENGTH_SHORT).show();
-                                        }
+                                        setWish(card);
+
                                     }
                                 });
 
@@ -362,10 +366,19 @@ public class CardlistFragment extends Fragment {
                             }
                         }
                         if (cardSearchResult.getObject().equals("error")) {
-                                setNotFound();
+                            setNotFound();
                         }
                     }
                 });
+
+        cardlistViewModel.getAllCardIDs().observe(getViewLifecycleOwner(), new Observer<List<Card>>() {
+            @Override
+            public void onChanged(List<Card> cards) {
+                List<String> wishList = cards.stream().map(card -> card.getId()).collect(Collectors.toList());
+
+                adapter_cardlist.setWishList(wishList);
+            }
+        });
     }
 
     private void setDataCard() {
@@ -384,19 +397,19 @@ public class CardlistFragment extends Fragment {
             public void onChanged(List<CardWithCardfaces> cardWithCardfaces) {
 
                 List<Card> newList = new ArrayList<>();
-
                 for (CardWithCardfaces cardwith : cardWithCardfaces) {
                     Card card = cardwith.card;
                     card.setCard_faces((ArrayList<CardFace>) cardwith.cardfaces);
                     newList.add(card);
                 }
 
-                Collections.sort(newList, new CardComparator());
+                Collections.sort(newList, new CardComparator(cardlistViewModel.getPrefWishlistOrder()));
                 adapter_cardlist.setCardList(newList);
+                adapter_cardlist.setWishList(newList.stream().map(card -> card.getId()).collect(Collectors.toList()));
                 adapter_cardlist.notifyDataSetChanged();
 
                 count_cards = newList.size();
-                String count = "Count: " + count_cards;
+                String count = getString(R.string.countlabel) + ": " + count_cards;
                 binding.txSearchResult.setText(count);
 
                 setLoading(false);
@@ -404,64 +417,6 @@ public class CardlistFragment extends Fragment {
             }
         });
 
-//        cardlistViewModel.getAllCardIDs().observe(getViewLifecycleOwner(), new Observer<List<Card>>() {
-//            @Override
-//            public void onChanged(List<Card> cards) {
-//                wishSize = cards.size();
-//                for (Card c : cards) {
-//                    cardlistViewModel.getCard(c.getId()).observe(getViewLifecycleOwner(), new Observer<Card>() {
-//                        @Override
-//                        public void onChanged(Card card) {
-//                            card.setWhish(true);
-//                            List<Card> newCardList = cardList.getValue();
-//                            if (newCardList.indexOf(card) < 0)
-//                                newCardList.add(card);
-//                            cardList.setValue(newCardList);
-//                        }
-//                    });
-//                }
-//            }
-//        });
-//        cardList.observe(getViewLifecycleOwner(), new Observer<List<Card>>() {
-//            @Override
-//            public void onChanged(List<Card> cards) {
-//                if (cards.size() == wishSize) {
-//                    Collections.sort(cards, new CardComparator());
-//                    adapter_cardlist.setCardList(cards);
-//                    adapter_cardlist.notifyDataSetChanged();
-//
-//                    cardList.removeObservers(getViewLifecycleOwner());
-//
-//                    count_cards = cards.size();
-//                    String count = "Count: " + count_cards;
-//                    binding.txSearchResult.setText(count);
-//
-//                    setLoading(false);
-//                    binding.llCardlistWishSpinner.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-        adapter_cardlist.setOnSetWishListener(new OnSetWishListener() {
-            @Override
-            public void onSetWish(Card card) {
-                if (card.isWhish()){
-                    cardlistViewModel.deleteWish(card);
-
-                    adapter_cardlist.notifyItemRemoved(adapter_cardlist.cardList.indexOf(card));
-                    adapter_cardlist.cardList.remove(card);
-
-                    Toast.makeText(mCtx, "Removed from wishlist.", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    cardlistViewModel.insertWish(card);
-                    Toast.makeText(mCtx, R.string.addedtowishlist, Toast.LENGTH_SHORT).show();
-                }
-
-                count_cards = adapter_cardlist.cardList.size();
-                String count = "Count: " + count_cards;
-                binding.txSearchResult.setText(count);
-            }
-        });
     }
 
     private void setLoading(boolean loading){
@@ -506,4 +461,14 @@ public class CardlistFragment extends Fragment {
         Navigation.findNavController(getView()).navigate(R.id.nav_card, bundle);
     }
 
+    private void setWish(Card card){
+        if (card.isWhish()){
+            cardlistViewModel.deleteWish(card);
+            Toast.makeText(mCtx, R.string.removedfromwishlist, Toast.LENGTH_SHORT).show();
+
+        } else {
+            cardlistViewModel.insertWish(card);
+            Toast.makeText(mCtx, R.string.addedtowishlist, Toast.LENGTH_SHORT).show();
+        }
+    }
 }
