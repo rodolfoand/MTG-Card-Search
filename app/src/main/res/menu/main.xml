@@ -17,4 +17,9 @@
         android:icon="@android:drawable/ic_menu_search"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
+    <item
+        android:id="@+id/menu_actionmode"
+        android:orderInCategory="100"
+        android:title="@string/menu_actionmode"
+        app:showAsAction="never" />
 </menu>

@@ -927,4 +927,7 @@
     <string name="removedfromwishlist">Removed from wishlist.</string>
     <string name="addedtowishlist">Added to wishlist.</string>
     <string name="countlabel">Count</string>
+    <string name="cancel">Cancel</string>
+    <string name="menu_actionmode">Menu action mode</string>
+    <string name="actionmode_title">Action mode title</string>
 </resources>
