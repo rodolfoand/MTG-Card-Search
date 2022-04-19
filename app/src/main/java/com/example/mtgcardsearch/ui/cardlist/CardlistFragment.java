@@ -6,18 +6,23 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.ArraySet;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mtgcardsearch.R;
@@ -27,9 +32,9 @@ import com.example.mtgcardsearch.model.CardFace;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.CardComparator;
 import com.example.mtgcardsearch.model.CardWithCardfaces;
+import com.example.mtgcardsearch.model.OnActiveActionModeListener;
 import com.example.mtgcardsearch.model.OnBottomReachedListener;
 import com.example.mtgcardsearch.model.OnSetWishListener;
-import com.google.android.material.snackbar.Snackbar;
 
 
 import java.util.ArrayList;
@@ -37,6 +42,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -49,6 +55,8 @@ public class CardlistFragment extends Fragment {
     private CardSearchResult dataList;
     private CardlistAdapter adapter_cardlist;
     private int count_cards;
+    private ActionMode.Callback mCallback;
+    private ActionMode mActionMode;
 
     private String parm_unique;
     private String parm_order;
@@ -147,6 +155,66 @@ public class CardlistFragment extends Fragment {
                 binding.txSearchResult.setText(count);
             }
         });
+
+        mCallback = new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+                MenuInflater inflater = actionMode.getMenuInflater();
+                inflater.inflate( R.menu.actionmode, menu );
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+                boolean ret = false;
+//                if(menuItem.getItemId() == R.id.actionmode_cancel)
+//                {
+//                    actionMode.finish();
+//                    ret = true;
+//                }
+                return ret;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode actionMode) {
+                actionMode = null;
+                Set<Integer> setlist = new ArraySet<>();
+                setlist.addAll(adapter_cardlist.selectedItemPositionsSet);
+                adapter_cardlist.selectedItemPositionsSet.clear();
+
+                for (Integer pos : setlist) {
+                    adapter_cardlist.notifyItemChanged(pos);
+                }
+            }
+        };
+
+
+
+        adapter_cardlist.setOnActiveActionMode(new OnActiveActionModeListener() {
+            @Override
+            public void onActiveActionMode(boolean active) {
+                if (active){
+                    mActionMode = getActivity().startActionMode(mCallback);
+                    adapter_cardlist.selectedSetSize.observe(getViewLifecycleOwner(), new Observer<Integer>() {
+                        @Override
+                        public void onChanged(Integer integer) {
+                            mActionMode.setTitle(integer.toString());
+                        }
+                    });
+                } else {
+                    mActionMode.finish();
+                }
+            }
+        });
+
+
+
+
 
         return root;
     }

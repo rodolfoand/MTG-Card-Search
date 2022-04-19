@@ -86,12 +86,14 @@
     -->
             <!-- Buttons -->
             <LinearLayout
+                android:id="@+id/ll_itemcard_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mb_itemcard_share"
                     style="?attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
