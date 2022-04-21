@@ -143,11 +143,8 @@ public class CardlistFragment extends Fragment {
                     cardlistViewModel.deleteWish(card);
                     adapter_cardlist.notifyItemRemoved(adapter_cardlist.cardList.indexOf(card));
                     adapter_cardlist.cardList.remove(card);
-
-                    Toast.makeText(mCtx, R.string.removedfromwishlist, Toast.LENGTH_SHORT).show();
                 } else {
                     cardlistViewModel.insertWish(card);
-                    Toast.makeText(mCtx, R.string.addedtowishlist, Toast.LENGTH_SHORT).show();
                 }
 
                 count_cards = adapter_cardlist.cardList.size();
@@ -166,29 +163,37 @@ public class CardlistFragment extends Fragment {
 
             @Override
             public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-                return false;
+                if (parm_query == null)
+                    menu.findItem(R.id.actionmode_add_wish).setVisible(false);
+                return true;
             }
 
             @Override
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-                boolean ret = false;
-//                if(menuItem.getItemId() == R.id.actionmode_cancel)
-//                {
-//                    actionMode.finish();
-//                    ret = true;
-//                }
-                return ret;
+                switch (menuItem.getItemId()) {
+                    case (R.id.actionmode_add_wish):
+                        cardlistViewModel.insertWish(adapter_cardlist.selectedItemPositionsSet);
+                        break;
+                    case (R.id.actionmode_rem_wish):
+                        cardlistViewModel.deleteWish(adapter_cardlist.selectedItemPositionsSet);
+                        break;
+                    default:
+                }
+                return true;
             }
 
             @Override
             public void onDestroyActionMode(ActionMode actionMode) {
                 actionMode = null;
-                Set<Integer> setlist = new ArraySet<>();
+                Set<Card> setlist = new ArraySet<>();
                 setlist.addAll(adapter_cardlist.selectedItemPositionsSet);
                 adapter_cardlist.selectedItemPositionsSet.clear();
 
-                for (Integer pos : setlist) {
-                    adapter_cardlist.notifyItemChanged(pos);
+                adapter_cardlist.isAlwaysSelectable = false;
+                adapter_cardlist.isSelectableMode = false;
+
+                for (Card card : setlist) {
+                    adapter_cardlist.notifyItemChanged(adapter_cardlist.cardList.indexOf(card));
                 }
             }
         };
@@ -200,15 +205,16 @@ public class CardlistFragment extends Fragment {
             public void onActiveActionMode(boolean active) {
                 if (active){
                     mActionMode = getActivity().startActionMode(mCallback);
-                    adapter_cardlist.selectedSetSize.observe(getViewLifecycleOwner(), new Observer<Integer>() {
-                        @Override
-                        public void onChanged(Integer integer) {
-                            mActionMode.setTitle(integer.toString());
-                        }
-                    });
+
                 } else {
                     mActionMode.finish();
                 }
+            }
+        });
+        adapter_cardlist.selectedSetSize.observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                mActionMode.setTitle(integer.toString());
             }
         });
 
@@ -223,6 +229,7 @@ public class CardlistFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        if (mActionMode != null) mActionMode.finish();
     }
 
     private void setParms(){
@@ -444,7 +451,20 @@ public class CardlistFragment extends Fragment {
             public void onChanged(List<Card> cards) {
                 List<String> wishList = cards.stream().map(card -> card.getId()).collect(Collectors.toList());
 
+                if (mActionMode != null)
+                    showWishMessage(cards.size() - adapter_cardlist.wishList.size());
+
+//                if (mActionMode != null && cards.size() != adapter_cardlist.wishList.size()){
+//                    int dif = cards.size() - adapter_cardlist.wishList.size();
+//                    if (dif > 0)
+//                        Toast.makeText(mCtx, dif + " card(s) added.", Toast.LENGTH_SHORT).show();
+//                    if (dif < 0)
+//                        Toast.makeText(mCtx, dif*-1 + " card(s) removed.", Toast.LENGTH_SHORT).show();
+//                }
+
                 adapter_cardlist.setWishList(wishList);
+
+                if (mActionMode != null) mActionMode.finish();
             }
         });
     }
@@ -473,7 +493,14 @@ public class CardlistFragment extends Fragment {
 
                 Collections.sort(newList, new CardComparator(cardlistViewModel.getPrefWishlistOrder()));
                 adapter_cardlist.setCardList(newList);
-                adapter_cardlist.setWishList(newList.stream().map(card -> card.getId()).collect(Collectors.toList()));
+
+                List<String> newWishList = newList.stream().map(card -> card.getId()).collect(Collectors.toList());
+
+                if (mActionMode != null)
+                    showWishMessage(newWishList.size() - adapter_cardlist.wishList.size());
+
+                adapter_cardlist.setWishList(newWishList);
+                if (mActionMode != null) mActionMode.finish();
                 adapter_cardlist.notifyDataSetChanged();
 
                 count_cards = newList.size();
@@ -532,11 +559,17 @@ public class CardlistFragment extends Fragment {
     private void setWish(Card card){
         if (card.isWhish()){
             cardlistViewModel.deleteWish(card);
-            Toast.makeText(mCtx, R.string.removedfromwishlist, Toast.LENGTH_SHORT).show();
-
+            showWishMessage(-1);
         } else {
             cardlistViewModel.insertWish(card);
-            Toast.makeText(mCtx, R.string.addedtowishlist, Toast.LENGTH_SHORT).show();
+            showWishMessage(1);
         }
+    }
+
+    private void showWishMessage(int dif){
+        if (dif > 0)
+            Toast.makeText(mCtx, dif + " card(s) added.", Toast.LENGTH_SHORT).show();
+        if (dif < 0)
+            Toast.makeText(mCtx, dif*-1 + " card(s) removed.", Toast.LENGTH_SHORT).show();
     }
 }

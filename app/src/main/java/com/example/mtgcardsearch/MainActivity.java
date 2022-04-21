@@ -179,10 +179,9 @@ public class MainActivity
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.action_settings:
-                Toast.makeText(this, getResources().getString(R.string.under_construction), Toast.LENGTH_SHORT).show();
             case R.id.action_about:
                 navController.navigate(R.id.nav_about);
+                break;
             default:
         }
 

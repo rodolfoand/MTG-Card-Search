@@ -38,7 +38,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
     OnSetWishListener onSetWishListener;
     Boolean isSelectableMode;
     Boolean isAlwaysSelectable;
-    Set<Integer> selectedItemPositionsSet = new ArraySet<>();
+    List<Card> selectedItemPositionsSet = new ArrayList<>();
     MutableLiveData<Integer> selectedSetSize;
     OnActiveActionModeListener onActiveActionModeListener;
 
@@ -87,8 +87,10 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         setCardImage(holder.iv_cardimage, card.getImage_url());
         if (!card.hasImageInCardFaces()) {
             holder.fab_flip.setVisibility(View.INVISIBLE);
-
+        }else {
+            holder.fab_flip.setVisibility(View.VISIBLE);
             holder.fab_flip.setAlpha(0.60f);
+
             holder.fab_flip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -97,9 +99,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
                     setCardImage(holder.iv_cardimage, card.getImage_url());
                 }
             });
-        }else
-            holder.fab_flip.setVisibility(View.VISIBLE);
-
+        }
 
         if (wishList.indexOf(card.getId()) >= 0) card.setWhish(true);
         else card.setWhish(false);
@@ -110,6 +110,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         else
             holder.mb_cardlist_wish.setIcon(ContextCompat
                     .getDrawable(mCtx, R.drawable.ic_baseline_favorite_border_24));
+
 
 
         holder.mb_cardlist_wish.setOnClickListener(new View.OnClickListener() {
@@ -196,7 +197,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
     }
 
     private Boolean isSelectedItem(int position){
-        return selectedItemPositionsSet.contains(position);
+        return selectedItemPositionsSet.contains(cardList.get(position));
     }
 
     private void addSelectedItem(int position){
@@ -204,13 +205,13 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
             isSelectableMode = true;
             onActiveActionModeListener.onActiveActionMode(true);
         }
-        selectedItemPositionsSet.add(position);
+        selectedItemPositionsSet.add(cardList.get(position));
         selectedSetSize.setValue(selectedItemPositionsSet.size());
 
     }
 
     private void removeSelectedItem(int position){
-        selectedItemPositionsSet.remove(position);
+        selectedItemPositionsSet.remove(cardList.get(position));
         selectedSetSize.setValue(selectedItemPositionsSet.size());
         if(selectedItemPositionsSet.isEmpty() && !isAlwaysSelectable){
             isSelectableMode = false;

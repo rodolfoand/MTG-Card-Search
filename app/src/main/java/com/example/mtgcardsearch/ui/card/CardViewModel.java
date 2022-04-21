@@ -11,8 +11,6 @@ import com.example.mtgcardsearch.data.RoomRepository;
 import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardSearchResult;
 
-import java.util.List;
-
 public class CardViewModel extends ViewModel {
 
     private ListRepository listRepository;

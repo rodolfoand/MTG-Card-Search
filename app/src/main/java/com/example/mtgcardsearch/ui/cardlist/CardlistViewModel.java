@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel;
 import com.example.mtgcardsearch.data.ListRepository;
 import com.example.mtgcardsearch.data.RoomRepository;
 import com.example.mtgcardsearch.model.Card;
-import com.example.mtgcardsearch.model.CardFace;
 import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.data.PrefDataStore;
 import com.example.mtgcardsearch.model.CardWithCardfaces;
@@ -47,12 +46,10 @@ public class CardlistViewModel extends ViewModel {
     }
 
     public int getPrefLayout(){
-//        return prefDataStore.getPrefLayout().blockingFirst();
         return prefDataStore.getPrefInteger(prefDataStore.PREF_CARDLIST_LAYOUT, 1).blockingFirst();
     }
 
     public void setPrefLayout(int layout){
-//        prefDataStore.setPrefLayout(prefDataStore.PREF_CARDLIST_LAYOUT.getName(), layout);
         prefDataStore.setPrefInteger(prefDataStore.PREF_CARDLIST_LAYOUT, layout);
     }
 
@@ -65,7 +62,15 @@ public class CardlistViewModel extends ViewModel {
 
     }
 
+    public void insertWish(List<Card> cards){
+        roomRepository.insertCards(cards);
+    }
+
     public void deleteWish(Card card){
+        roomRepository.delete(card);
+    }
+
+    public void deleteWish(List<Card> card){
         roomRepository.delete(card);
     }
 
