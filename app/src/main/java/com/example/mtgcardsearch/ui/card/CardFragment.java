@@ -228,6 +228,7 @@ public class CardFragment extends Fragment {
                         Intent shareIntent = new Intent();
                         shareIntent.setAction(Intent.ACTION_SEND);
                         shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
+                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_text));
                         shareIntent.setType("image/jpeg");
                         startActivity(Intent.createChooser(shareIntent, null));
                     }
@@ -238,14 +239,14 @@ public class CardFragment extends Fragment {
                     public void onClick(View view) {
                         if (card.isWhish()){
                             cardViewModel.delete(card);
-                            Toast.makeText(container.getContext(), "Removed from wishlist.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "1 " + getString(R.string.cards_removed), Toast.LENGTH_SHORT).show();
                             card.setWhish(false);
                             binding.mbCardDetailWishlist.setIcon(
                                     ContextCompat
                                             .getDrawable(getContext(), R.drawable.ic_baseline_favorite_border_24));
                         } else {
                             cardViewModel.insert(card);
-                            Toast.makeText(container.getContext(), R.string.addedtowishlist, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "1 " + getString(R.string.cards_added), Toast.LENGTH_SHORT).show();
                             card.setWhish(true);
                             binding.mbCardDetailWishlist.setIcon(
                                     ContextCompat

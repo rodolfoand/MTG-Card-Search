@@ -930,4 +930,7 @@
     <string name="cancel">Cancel</string>
     <string name="menu_actionmode">Menu action mode</string>
     <string name="actionmode_title">Action mode title</string>
+    <string name="cards_added">card(s) added.</string>
+    <string name="cards_removed">card(s) removed.</string>
+    <string name="share_text">Share text</string>
 </resources>

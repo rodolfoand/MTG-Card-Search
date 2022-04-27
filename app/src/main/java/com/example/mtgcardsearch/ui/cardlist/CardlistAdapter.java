@@ -1,7 +1,11 @@
 package com.example.mtgcardsearch.ui.cardlist;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +29,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +46,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
     List<Card> selectedItemPositionsSet = new ArrayList<>();
     MutableLiveData<Integer> selectedSetSize;
     OnActiveActionModeListener onActiveActionModeListener;
+    ArrayList<Uri> urisToShare = new ArrayList<>();
 
     public CardlistAdapter(Context mCtx) {
         this.mCtx = mCtx;
@@ -145,7 +151,8 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
                         holder.ll_itemcard_button.setVisibility(View.VISIBLE);
                     }
                     else {
-                        addSelectedItem(holder.getAdapterPosition());
+                        Bitmap image = ((BitmapDrawable) holder.iv_cardimage.getDrawable()).getBitmap();
+                        addSelectedItem(holder.getAdapterPosition(), image);
                         holder.ll_itemcard_button.setVisibility(View.GONE);
                     }
                     holder.card_item_cardlist.setChecked(!holder.card_item_cardlist.isChecked());
@@ -161,7 +168,8 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
                     holder.ll_itemcard_button.setVisibility(View.VISIBLE);
                 }
                 else {
-                    addSelectedItem(holder.getAdapterPosition());
+                    Bitmap image = ((BitmapDrawable) holder.iv_cardimage.getDrawable()).getBitmap();
+                    addSelectedItem(holder.getAdapterPosition(), image);
                     holder.ll_itemcard_button.setVisibility(View.GONE);
                 }
 
@@ -200,7 +208,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         return selectedItemPositionsSet.contains(cardList.get(position));
     }
 
-    private void addSelectedItem(int position){
+    private void addSelectedItem(int position, Bitmap bitmap){
         if(selectedItemPositionsSet.isEmpty() && !isAlwaysSelectable) {
             isSelectableMode = true;
             onActiveActionModeListener.onActiveActionMode(true);
@@ -208,11 +216,21 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         selectedItemPositionsSet.add(cardList.get(position));
         selectedSetSize.setValue(selectedItemPositionsSet.size());
 
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(mCtx.getContentResolver()
+                , bitmap
+                , cardList.get(position).getName()
+                , cardList.get(position).getType_line());
+
+        urisToShare.add(Uri.parse(path));
+
     }
 
     private void removeSelectedItem(int position){
         selectedItemPositionsSet.remove(cardList.get(position));
         selectedSetSize.setValue(selectedItemPositionsSet.size());
+        urisToShare.remove(position);
         if(selectedItemPositionsSet.isEmpty() && !isAlwaysSelectable){
             isSelectableMode = false;
             onActiveActionModeListener.onActiveActionMode(false);

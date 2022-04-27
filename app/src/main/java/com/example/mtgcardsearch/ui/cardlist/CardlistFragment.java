@@ -1,6 +1,9 @@
 package com.example.mtgcardsearch.ui.cardlist;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.provider.MediaStore;
 import android.util.ArraySet;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -37,6 +41,8 @@ import com.example.mtgcardsearch.model.OnBottomReachedListener;
 import com.example.mtgcardsearch.model.OnSetWishListener;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -177,6 +183,18 @@ public class CardlistFragment extends Fragment {
                     case (R.id.actionmode_rem_wish):
                         cardlistViewModel.deleteWish(adapter_cardlist.selectedItemPositionsSet);
                         break;
+                    case (R.id.actionmode_share):
+
+                        Intent shareIntent = new Intent();
+                        shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+                        shareIntent.setType("*/*");
+                        shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, adapter_cardlist.urisToShare);
+                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_text));
+                        startActivity(Intent.createChooser(shareIntent, null));
+
+                        mActionMode.finish();
+
+                        break;
                     default:
                 }
                 return true;
@@ -198,8 +216,6 @@ public class CardlistFragment extends Fragment {
             }
         };
 
-
-
         adapter_cardlist.setOnActiveActionMode(new OnActiveActionModeListener() {
             @Override
             public void onActiveActionMode(boolean active) {
@@ -211,17 +227,13 @@ public class CardlistFragment extends Fragment {
                 }
             }
         });
+
         adapter_cardlist.selectedSetSize.observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 mActionMode.setTitle(integer.toString());
             }
         });
-
-
-
-
-
         return root;
     }
 
@@ -568,8 +580,8 @@ public class CardlistFragment extends Fragment {
 
     private void showWishMessage(int dif){
         if (dif > 0)
-            Toast.makeText(mCtx, dif + " card(s) added.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mCtx, dif + " " + getString(R.string.cards_added), Toast.LENGTH_SHORT).show();
         if (dif < 0)
-            Toast.makeText(mCtx, dif*-1 + " card(s) removed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mCtx, dif*-1 + " " + getString(R.string.cards_removed), Toast.LENGTH_SHORT).show();
     }
 }
