@@ -176,16 +176,15 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
                     }
                 }
             });
+        }
 
-
-            if(isSelectedItem(position)){
-                holder.card_item_cardlist.setChecked(true);
-                holder.ll_itemcard_button.setVisibility(View.GONE);
-            }
-            else {
-                holder.card_item_cardlist.setChecked(false);
-                holder.ll_itemcard_button.setVisibility(View.VISIBLE);
-            }
+        if(isSelectedItem(position)){
+            holder.card_item_cardlist.setChecked(true);
+            holder.ll_itemcard_button.setVisibility(View.GONE);
+        }
+        else {
+            holder.card_item_cardlist.setChecked(false);
+            holder.ll_itemcard_button.setVisibility(View.VISIBLE);
         }
 
         holder.card_item_cardlist.setOnClickListener(new View.OnClickListener() {
@@ -269,9 +268,11 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
     }
 
     private void removeSelectedItem(int position){
+        urisToShare.remove(selectedItemPositionsSet.indexOf(cardList.get(position)));
+
         selectedItemPositionsSet.remove(cardList.get(position));
         selectedSetSize.setValue(selectedItemPositionsSet.size());
-        urisToShare.remove(position);
+
         if(selectedItemPositionsSet.isEmpty() && !isAlwaysSelectable){
             isSelectableMode = false;
             onActiveActionModeListener.onActiveActionMode(false);

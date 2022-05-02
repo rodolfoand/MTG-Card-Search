@@ -430,8 +430,6 @@ public class CardlistFragment extends Fragment {
                             if (dataList.getData().size() == 1){
                                 toCardNavigation(dataList.getData().get(0).getId());
                             } else {
-                                binding.btSearchMore.setVisibility(View.GONE);
-
                                 count_cards = cardSearchResult.getData().size()
                                         + (Integer.parseInt(parm_page) - 1)
                                         * 175;
@@ -469,14 +467,6 @@ public class CardlistFragment extends Fragment {
 
                 if (mActionMode != null)
                     showWishMessage(cards.size() - adapter_cardlist.wishList.size());
-
-//                if (mActionMode != null && cards.size() != adapter_cardlist.wishList.size()){
-//                    int dif = cards.size() - adapter_cardlist.wishList.size();
-//                    if (dif > 0)
-//                        Toast.makeText(mCtx, dif + " card(s) added.", Toast.LENGTH_SHORT).show();
-//                    if (dif < 0)
-//                        Toast.makeText(mCtx, dif*-1 + " card(s) removed.", Toast.LENGTH_SHORT).show();
-//                }
 
                 adapter_cardlist.setWishList(wishList);
 
