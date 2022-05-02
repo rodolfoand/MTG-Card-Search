@@ -45,6 +45,37 @@ public class CardComparator implements Comparator<Card> {
             if (c2.getToughness() == null) return 1;
             return c1.getToughness().compareTo(c2.getToughness());
         }
+        if (comparator.equals("type")) {
+            if (c1.getType_line().contains("Creature"))
+                return -1;
+            if (c2.getType_line().contains("Creature"))
+                return 1;
+            if (c1.getType_line().contains("Planeswalker"))
+                return -1;
+            if (c2.getType_line().contains("Planeswalker"))
+                return 1;
+            if (c1.getType_line().contains("Instant"))
+                return -1;
+            if (c2.getType_line().contains("Instant"))
+                return 1;
+            if (c1.getType_line().contains("Sorcery"))
+                return -1;
+            if (c2.getType_line().contains("Sorcery"))
+                return 1;
+            if (c1.getType_line().contains("Artifact"))
+                return -1;
+            if (c2.getType_line().contains("Artifact"))
+                return 1;
+            if (c1.getType_line().contains("Enchantment"))
+                return -1;
+            if (c2.getType_line().contains("Enchantment"))
+                return 1;
+            if (c1.getType_line().contains("Land"))
+                return -1;
+            if (c2.getType_line().contains("Land"))
+                return 1;
+
+        }
 
         return c1.getName().compareTo(c2.getName());
     }

@@ -50,6 +50,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
     MutableLiveData<Integer> selectedSetSize;
     OnActiveActionModeListener onActiveActionModeListener;
     ArrayList<Uri> urisToShare = new ArrayList<>();
+    boolean typeOrder;
     int layout;
     private final int LAYOUT_LINEAR = 0;
     private final int LAYOUT_GRID = 1;
@@ -62,6 +63,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         this.isSelectableMode = false;
         this.selectedSetSize = new MutableLiveData<>();
         this.layout = layout;
+        typeOrder = false;
     }
 
     public void setCardList(List<Card> list){
@@ -86,6 +88,10 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
 
     public void setLayout(int layout) {
         this.layout = layout;
+    }
+
+    public void setTypeOrder(boolean typeOrder) {
+        this.typeOrder = typeOrder;
     }
 
     @NonNull
@@ -117,6 +123,17 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
                     ? card.getPrinted_name()
                     : card.getName();
             holder.tv_cardlist_name.setText(name);
+
+            if (typeOrder) {
+                String type = getCardType(card);
+                holder.tv_cardlist_type.setText(type);
+                if (position > 0) {
+                    String previousType = getCardType(cardList.get(position - 1));
+                    if (type.equals(previousType)) holder.tv_cardlist_type.setVisibility(View.GONE);
+                    else holder.tv_cardlist_type.setVisibility(View.VISIBLE);
+                } else holder.tv_cardlist_type.setVisibility(View.VISIBLE);
+            } else holder.tv_cardlist_type.setVisibility(View.GONE);
+
         } else {
 
             if (!card.hasImageInCardFaces()) {
@@ -261,6 +278,17 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         }
     }
 
+    private String getCardType(Card card){
+        if (card.getType_line().contains("Creature")) return "Creatures";
+        if (card.getType_line().contains("Planeswalker")) return "Planeswalkers";
+        if (card.getType_line().contains("Instant")
+                || card.getType_line().contains("Sorcery")) return "Spells";
+        if (card.getType_line().contains("Artifact")) return "Artifacts";
+        if (card.getType_line().contains("Enchantment")) return "Enchantments";
+        if (card.getType_line().contains("Land")) return "Lands";
+        return "";
+    }
+
     public class CardlistViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView iv_cardimage;
@@ -270,6 +298,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         private MaterialCardView card_item_cardlist;
         private LinearLayout ll_itemcard_button;
         private TextView tv_cardlist_name;
+        private TextView tv_cardlist_type;
 
         public CardlistViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -280,6 +309,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
             card_item_cardlist = itemView.findViewById(R.id.card_item_cardlist);
             ll_itemcard_button = itemView.findViewById(R.id.ll_itemcard_button);
             tv_cardlist_name = itemView.findViewById(R.id.tv_cardlist_name);
+            tv_cardlist_type = itemView.findViewById(R.id.tv_cardlist_type);
         }
     }
 }

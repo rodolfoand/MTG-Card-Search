@@ -51,7 +51,7 @@ public class Card {
     @SerializedName("uri")
     private String uri;
 
-    @Ignore
+    @ColumnInfo(name = "type_line")
     @SerializedName("type_line")
     private String type_line;
 

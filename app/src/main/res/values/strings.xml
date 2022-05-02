@@ -52,6 +52,7 @@
 
     <string-array name="array_wish_order">
         <item>name</item>
+        <item>type</item>
         <item>rarity</item>
         <item>cmc</item>
         <item>power</item>

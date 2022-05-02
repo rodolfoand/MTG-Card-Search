@@ -359,6 +359,8 @@ public class CardlistFragment extends Fragment {
                     cardlistViewModel.setPrefWishlistOrder(new_order);
                     Collections.sort(newList, new CardComparator(new_order));
                     adapter_cardlist.setCardList(newList);
+                    if (new_order.equals("type")) adapter_cardlist.setTypeOrder(true);
+                    else adapter_cardlist.setTypeOrder(false);
                     adapter_cardlist.notifyDataSetChanged();
                 }
 
