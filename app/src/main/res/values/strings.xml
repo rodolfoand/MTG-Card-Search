@@ -933,4 +933,6 @@
     <string name="cards_added">card(s) added.</string>
     <string name="cards_removed">card(s) removed.</string>
     <string name="share_text">Share text</string>
+    <string name="amount">amount</string>
+    <string name="type">Type</string>
 </resources>

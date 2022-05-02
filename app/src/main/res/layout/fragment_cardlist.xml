@@ -9,30 +9,23 @@
 
     <TextView
         android:id="@+id/tx_search_result"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/im_cardlist_col"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mb_cardlist_view"
+        style="?attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_baseline_grid_view_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/im_cardlist_row"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_baseline_table_rows_24"
+        android:contentDescription="@string/share"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        app:icon="@drawable/ic_baseline_crop_portrait_24"
+        app:iconPadding="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

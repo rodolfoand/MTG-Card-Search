@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -63,6 +64,7 @@ public class CardlistFragment extends Fragment {
     private int count_cards;
     private ActionMode.Callback mCallback;
     private ActionMode mActionMode;
+    private int layout;
 
     private String parm_unique;
     private String parm_order;
@@ -75,6 +77,7 @@ public class CardlistFragment extends Fragment {
 
     private final int LAYOUT_LINEAR = 0;
     private final int LAYOUT_GRID = 1;
+    private final int LAYOUT_LINEAR_TEXT = 2;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -99,7 +102,9 @@ public class CardlistFragment extends Fragment {
             this.setDataWish();
 
         this.setLoading(true);
-        this.setLayoutRecycler(cardlistViewModel.getPrefLayout());
+
+        layout = cardlistViewModel.getPrefLayout();
+        this.setLayoutRecycler(layout);
 
         binding.btSearchMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,14 +125,7 @@ public class CardlistFragment extends Fragment {
             }
         });
 
-        binding.imCardlistCol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDataSourceLayout();
-            }
-        });
-
-        binding.imCardlistRow.setOnClickListener(new View.OnClickListener() {
+        binding.mbCardlistView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setDataSourceLayout();
@@ -389,23 +387,27 @@ public class CardlistFragment extends Fragment {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
             binding.rvCardlist.setLayoutManager(gridLayoutManager);
 
-            if (binding.imCardlistCol.getVisibility() == View.VISIBLE) {
-                binding.imCardlistCol.setVisibility(View.GONE);
-                binding.imCardlistRow.setVisibility(View.VISIBLE);
-            }
+            binding.mbCardlistView.setIcon(ContextCompat
+                    .getDrawable(mCtx, R.drawable.ic_baseline_table_rows_24));
         }
         if (layout == this.LAYOUT_LINEAR) {
             binding.rvCardlist.setLayoutManager(new LinearLayoutManager(getContext()));
-            if (binding.imCardlistRow.getVisibility() == View.VISIBLE) {
-                binding.imCardlistCol.setVisibility(View.VISIBLE);
-                binding.imCardlistRow.setVisibility(View.GONE);
-            }
+
+            binding.mbCardlistView.setIcon(ContextCompat
+                    .getDrawable(mCtx, R.drawable.ic_baseline_grid_view_24));
         }
+        if (layout == this.LAYOUT_LINEAR_TEXT) {
+            binding.rvCardlist.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            binding.mbCardlistView.setIcon(ContextCompat
+                    .getDrawable(mCtx, R.drawable.ic_baseline_crop_portrait_24));
+        }
+        adapter_cardlist.setLayout(layout);
         if (adapter_cardlist != null) binding.rvCardlist.setAdapter(adapter_cardlist);
     }
 
     private void setListAdapter(){
-        adapter_cardlist = new CardlistAdapter(mCtx);
+        adapter_cardlist = new CardlistAdapter(mCtx, layout);
         binding.rvCardlist.setAdapter(adapter_cardlist);
     }
 
@@ -532,16 +534,11 @@ public class CardlistFragment extends Fragment {
             binding.llCardlistSearchSpinner.setVisibility(View.GONE);
             binding.llCardlistWishSpinner.setVisibility(View.GONE);
             binding.rvCardlist.setVisibility(View.GONE);
-            binding.imCardlistCol.setVisibility(View.GONE);
-            binding.imCardlistRow.setVisibility(View.GONE);
+            binding.mbCardlistView.setVisibility(View.GONE);
         } else {
             binding.pbCardlist.setVisibility(View.GONE);
             binding.rvCardlist.setVisibility(View.VISIBLE);
-            if (cardlistViewModel.getPrefLayout() == LAYOUT_GRID){
-                binding.imCardlistRow.setVisibility(View.VISIBLE);
-            } else {
-                binding.imCardlistCol.setVisibility(View.VISIBLE);
-            }
+            binding.mbCardlistView.setVisibility(View.VISIBLE);
         }
         binding.txSearchNotFound.setVisibility(View.GONE);
     }
@@ -552,13 +549,17 @@ public class CardlistFragment extends Fragment {
     }
 
     private void setDataSourceLayout(){
-        if (cardlistViewModel.getPrefLayout() == LAYOUT_GRID){
-            cardlistViewModel.setPrefLayout(LAYOUT_LINEAR);
-            setLayoutRecycler(LAYOUT_LINEAR);
-        } else {
-            cardlistViewModel.setPrefLayout(LAYOUT_GRID);
-            setLayoutRecycler(LAYOUT_GRID);
-        }
+        layout = cardlistViewModel.getPrefLayout();
+        layout = (layout > 1) ? 0 : ++layout;
+        cardlistViewModel.setPrefLayout(layout);
+        setLayoutRecycler(layout);
+//        if (layout == LAYOUT_GRID){
+//            cardlistViewModel.setPrefLayout(LAYOUT_LINEAR);
+//            setLayoutRecycler(LAYOUT_LINEAR);
+//        } else {
+//            cardlistViewModel.setPrefLayout(LAYOUT_GRID);
+//            setLayoutRecycler(LAYOUT_GRID);
+//        }
     }
 
     private void toCardNavigation(String id){

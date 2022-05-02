@@ -43,6 +43,7 @@
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_wishlist.xml" value="0.22" />
         <entry key="app/src/main/res/layout/item_cardlist.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_cardlist_name.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_cardslist.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_list_suggestion.xml" value="0.1621376811594203" />
         <entry key="app/src/main/res/layout/item_setlist.xml" value="0.22" />

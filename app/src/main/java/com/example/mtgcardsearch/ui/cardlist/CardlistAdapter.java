@@ -2,16 +2,19 @@ package com.example.mtgcardsearch.ui.cardlist;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.ArraySet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -47,13 +50,18 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
     MutableLiveData<Integer> selectedSetSize;
     OnActiveActionModeListener onActiveActionModeListener;
     ArrayList<Uri> urisToShare = new ArrayList<>();
+    int layout;
+    private final int LAYOUT_LINEAR = 0;
+    private final int LAYOUT_GRID = 1;
+    private final int LAYOUT_LINEAR_TEXT = 2;
 
-    public CardlistAdapter(Context mCtx) {
+    public CardlistAdapter(Context mCtx, int layout) {
         this.mCtx = mCtx;
         this.wishList = new ArrayList<>();
         this.isAlwaysSelectable = false;
         this.isSelectableMode = false;
         this.selectedSetSize = new MutableLiveData<>();
+        this.layout = layout;
     }
 
     public void setCardList(List<Card> list){
@@ -76,12 +84,21 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         this.onActiveActionModeListener = onActiveActionModeListener;
     }
 
+    public void setLayout(int layout) {
+        this.layout = layout;
+    }
+
     @NonNull
     @Override
     public CardlistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_cardlist, parent, false);
-
+        View view;
+        if (layout == LAYOUT_LINEAR_TEXT) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_cardlist_name, parent, false);
+        } else{
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_cardlist, parent, false);
+        }
         return new CardlistViewHolder(view);
     }
 
@@ -90,52 +107,69 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         Card card = cardList.get(position);
         card.initialize();
 
-        setCardImage(holder.iv_cardimage, card.getImage_url());
-        if (!card.hasImageInCardFaces()) {
-            holder.fab_flip.setVisibility(View.INVISIBLE);
-        }else {
-            holder.fab_flip.setVisibility(View.VISIBLE);
-            holder.fab_flip.setAlpha(0.60f);
-
-            holder.fab_flip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    card.setFace_position();
-                    card.setImage_url();
-                    setCardImage(holder.iv_cardimage, card.getImage_url());
-                }
-            });
-        }
-
         if (wishList.indexOf(card.getId()) >= 0) card.setWhish(true);
         else card.setWhish(false);
 
-        if (card.isWhish())
-            holder.mb_cardlist_wish.setIcon(ContextCompat
-                    .getDrawable(mCtx, R.drawable.ic_baseline_favorite_24));
-        else
-            holder.mb_cardlist_wish.setIcon(ContextCompat
-                    .getDrawable(mCtx, R.drawable.ic_baseline_favorite_border_24));
+        setCardImage(holder.iv_cardimage, card.getImage_url());
 
+        if (layout == LAYOUT_LINEAR_TEXT) {
+            String name = (card.getPrinted_name() != null)
+                    ? card.getPrinted_name()
+                    : card.getName();
+            holder.tv_cardlist_name.setText(name);
+        } else {
 
+            if (!card.hasImageInCardFaces()) {
+                holder.fab_flip.setVisibility(View.INVISIBLE);
+            }else {
+                holder.fab_flip.setVisibility(View.VISIBLE);
+                holder.fab_flip.setAlpha(0.60f);
 
-        holder.mb_cardlist_wish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onSetWishListener.onSetWish(card);
-                if (card.isWhish()){
-                    card.setWhish(false);
-                    holder.mb_cardlist_wish.setIcon(
-                            ContextCompat
-                                    .getDrawable(mCtx, R.drawable.ic_baseline_favorite_border_24));
-                } else {
-                    card.setWhish(true);
-                    holder.mb_cardlist_wish.setIcon(
-                            ContextCompat
-                                    .getDrawable(mCtx, R.drawable.ic_baseline_favorite_24));
-                }
+                holder.fab_flip.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        card.setFace_position();
+                        card.setImage_url();
+                        setCardImage(holder.iv_cardimage, card.getImage_url());
+                    }
+                });
             }
-        });
+
+            if (card.isWhish())
+                holder.mb_cardlist_wish.setIcon(ContextCompat
+                        .getDrawable(mCtx, R.drawable.ic_baseline_favorite_24));
+            else
+                holder.mb_cardlist_wish.setIcon(ContextCompat
+                        .getDrawable(mCtx, R.drawable.ic_baseline_favorite_border_24));
+
+            holder.mb_cardlist_wish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onSetWishListener.onSetWish(card);
+                    if (card.isWhish()){
+                        card.setWhish(false);
+                        holder.mb_cardlist_wish.setIcon(
+                                ContextCompat
+                                        .getDrawable(mCtx, R.drawable.ic_baseline_favorite_border_24));
+                    } else {
+                        card.setWhish(true);
+                        holder.mb_cardlist_wish.setIcon(
+                                ContextCompat
+                                        .getDrawable(mCtx, R.drawable.ic_baseline_favorite_24));
+                    }
+                }
+            });
+
+
+            if(isSelectedItem(position)){
+                holder.card_item_cardlist.setChecked(true);
+                holder.ll_itemcard_button.setVisibility(View.GONE);
+            }
+            else {
+                holder.card_item_cardlist.setChecked(false);
+                holder.ll_itemcard_button.setVisibility(View.VISIBLE);
+            }
+        }
 
         holder.card_item_cardlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,16 +212,6 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
                 return true;
             }
         });
-
-        if(isSelectedItem(position)){
-            holder.card_item_cardlist.setChecked(true);
-            holder.ll_itemcard_button.setVisibility(View.GONE);
-        }
-        else {
-            holder.card_item_cardlist.setChecked(false);
-            holder.ll_itemcard_button.setVisibility(View.VISIBLE);
-        }
-
 
         if (position == cardList.size() - 1)
             onBottomReachedListener.onBottomReached(position);
@@ -245,6 +269,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
         private MaterialButton mb_cardlist_wish;
         private MaterialCardView card_item_cardlist;
         private LinearLayout ll_itemcard_button;
+        private TextView tv_cardlist_name;
 
         public CardlistViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -254,6 +279,7 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
             mb_cardlist_wish = itemView.findViewById(R.id.mb_cardlist_wish);
             card_item_cardlist = itemView.findViewById(R.id.card_item_cardlist);
             ll_itemcard_button = itemView.findViewById(R.id.ll_itemcard_button);
+            tv_cardlist_name = itemView.findViewById(R.id.tv_cardlist_name);
         }
     }
 }

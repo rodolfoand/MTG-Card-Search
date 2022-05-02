@@ -99,7 +99,7 @@ public class Card {
     @SerializedName("prints_search_uri")
     private String prints_search_uri;
 
-    @Ignore
+    @ColumnInfo(name = "printed_name")
     @SerializedName("printed_name")
     private String printed_name;
 
