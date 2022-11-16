@@ -936,4 +936,13 @@
     <string name="share_text">Share text</string>
     <string name="amount">amount</string>
     <string name="type">Type</string>
+    <string name="deckName">Deck Name</string>
+    <string name="format">Format</string>
+    <string name="notes">Notes</string>
+    <string name="mainDeck">Main Deck</string>
+    <string name="sideboard">Sideboard</string>
+    <string name="maybeboard">Maybeboard</string>
+    <string name="_new">New</string>
+    <string name="deck">Deck</string>
+    <string name="hint_notes">Comments, tips or notes related to this deck.</string>
 </resources>

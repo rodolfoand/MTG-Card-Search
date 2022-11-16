@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_mydecks"
+        android:id="@+id/nav_decklist"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_filter_none_24"
         android:title="@string/mydecks"/>

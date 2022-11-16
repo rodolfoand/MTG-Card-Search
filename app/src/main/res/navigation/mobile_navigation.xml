@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_mydecks"
-        android:name="com.example.mtgcardsearch.ui.mydecks.MydecksFragment"
+        android:id="@+id/nav_decklist"
+        android:name="com.example.mtgcardsearch.ui.decklist.DecklistFragment"
         android:label="@string/mydecks"
-        tools:layout="@layout/fragment_mydecks" />
+        tools:layout="@layout/fragment_decklist" />
 
     <fragment
         android:id="@+id/nav_cardlist"
@@ -52,4 +52,10 @@
         android:name="com.example.mtgcardsearch.ui.wishlist.WishlistFragment"
         android:label="@string/wishlist"
         tools:layout="@layout/fragment_wishlist" />
+
+    <fragment
+        android:id="@+id/nav_deck"
+        android:name="com.example.mtgcardsearch.ui.deck.DeckFragment"
+        android:label="@string/deck"
+        tools:layout="@layout/fragment_deck" />
 </navigation>

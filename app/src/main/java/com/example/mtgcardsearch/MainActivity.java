@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.view.MenuItem;
 import android.view.Menu;
-import android.widget.Toast;
 
 import com.example.mtgcardsearch.databinding.ActivityMainBinding;
 import com.example.mtgcardsearch.data.PrefDataStore;
 import com.example.mtgcardsearch.model.AutocompSearchResult;
-import com.example.mtgcardsearch.ui.cardlist.CardlistFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -64,7 +62,7 @@ public class MainActivity
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home
-                , R.id.nav_mydecks
+                , R.id.nav_decklist
                 , R.id.nav_wishlist)
                 .setOpenableLayout(drawer)
                 .build();

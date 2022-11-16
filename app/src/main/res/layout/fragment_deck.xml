@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".ui.deck.DeckFragment">
+
+    <ScrollView
+        android:id="@+id/scrollView_deck"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_deck_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deckName"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/et_deck_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/deckName"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:textColorHint="#78909C" />
+
+            <TextView
+                android:id="@+id/tv_deck_format"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/format"
+                android:textAlignment="center" />
+
+            <Spinner
+                android:id="@+id/sp_deck_format"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/format"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/tv_deck_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notes"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/et_deck_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/hint_notes"
+                android:inputType="textMultiLine"
+                android:minHeight="144dp" />
+
+            <TextView
+                android:id="@+id/tv_deck_maindeck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainDeck"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/et_deck_maindeck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/mainDeck"
+                android:inputType="textMultiLine"
+                android:minHeight="144dp" />
+
+            <TextView
+                android:id="@+id/tv_deck_sideboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mainDeck"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/et_deck_sideboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/sideboard"
+                android:inputType="textMultiLine"
+                android:minHeight="144dp" />
+
+            <TextView
+                android:id="@+id/tv_deck_maybeboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/maybeboard"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/et_deck_maybeboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/maybeboard"
+                android:inputType="textMultiLine"
+                android:minHeight="144dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
