@@ -1,6 +1,7 @@
 package com.example.mtgcardsearch.ui.cardlist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -174,6 +175,26 @@ public class CardlistAdapter extends RecyclerView.Adapter<CardlistAdapter.Cardli
                                 ContextCompat
                                         .getDrawable(mCtx, R.drawable.ic_baseline_favorite_24));
                     }
+                }
+            });
+            holder.mb_itemcard_share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Bitmap image = ((BitmapDrawable) holder.iv_cardimage.getDrawable()).getBitmap();
+
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    image.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                    String path = MediaStore.Images.Media.insertImage(mCtx.getContentResolver(), image, card.getName(), card.getType_line());
+
+
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, mCtx.getString(R.string.share_text));
+                    shareIntent.setType("image/jpeg");
+                    mCtx.startActivity(Intent.createChooser(shareIntent, null));
+
                 }
             });
         }
