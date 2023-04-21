@@ -43,4 +43,6 @@ public interface CardDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertCardFaces(List<CardFace> cardfaces);
+
+
 }

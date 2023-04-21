@@ -138,10 +138,6 @@ public class Card {
     @SerializedName("released_at")
     private Date released_at;
 
-
-
-
-
     public void initialize(){
         if (this.getCard_faces() != null){
             for (CardFace cardface : card_faces) {
