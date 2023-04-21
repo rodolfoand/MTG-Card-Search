@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.CardWithCardfaces;
+import com.example.mtgcardsearch.model.Deck;
 import com.example.mtgcardsearch.model.ListSearchResult;
 
 import java.util.List;
@@ -14,10 +15,12 @@ import java.util.List;
 public class RoomRepository {
 
     private CardDao mCardDao;
+    private DeckDao mDeckDao;
 
     public RoomRepository(Application application) {
         CardRoomDatabase db = CardRoomDatabase.getDatabase(application);
         mCardDao = db.cardDao();
+        mDeckDao = db.deckDao();
     }
 
     public LiveData<List<Card>> getAllCards() {
@@ -60,4 +63,26 @@ public class RoomRepository {
     public LiveData<List<CardWithCardfaces>> getAllCardWithCardfaces(){
         return mCardDao.getCardWithCardfaces();
     }
+
+    public void insert(Deck deck) {
+        CardRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mDeckDao.insert(deck);
+        });
+    }
+
+    public void delete(Deck deck){
+        CardRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mDeckDao.delete(deck);
+        });
+    }
+
+    public LiveData<Deck> getDeck(String deck_id){
+        return mDeckDao.getDeck(deck_id);
+    }
+
+
+    public LiveData<List<Deck>> getAllDecks() {
+        return mDeckDao.getAlphabetizedDecks();
+    }
+
 }

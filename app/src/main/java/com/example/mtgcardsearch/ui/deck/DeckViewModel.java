@@ -1,4 +1,4 @@
-package com.example.mtgcardsearch.ui.decklist;
+package com.example.mtgcardsearch.ui.deck;
 
 import android.app.Application;
 
@@ -7,21 +7,24 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mtgcardsearch.data.RoomRepository;
-import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.Deck;
 
-import java.util.List;
+import java.util.Date;
 
-public class DecklistViewModel extends ViewModel {
+public class DeckViewModel extends ViewModel {
 
     private RoomRepository roomRepository;
 
-    public DecklistViewModel(Application application) {
+    public DeckViewModel(Application application) {
         roomRepository = new RoomRepository(application);
     }
 
-    public LiveData<List<Deck>> getAllDecks(){
-        return roomRepository.getAllDecks();
+    public void insert(Deck deck){
+        roomRepository.insert(deck);
+    }
+
+    public LiveData<Deck> getDeck(String id){
+        return roomRepository.getDeck(id);
     }
 
 }

@@ -945,4 +945,6 @@
     <string name="_new">New</string>
     <string name="deck">Deck</string>
     <string name="hint_notes">Comments, tips or notes related to this deck.</string>
+    <string name="create">Create</string>
+    <string name="archetype">Archetype</string>
 </resources>
