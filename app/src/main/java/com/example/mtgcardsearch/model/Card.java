@@ -194,7 +194,11 @@ public class Card {
                     .getImage_uris()
                     .getLarge();
         } else {
-            this.image_url = this.getImage_uris().getLarge();
+            try {
+                this.image_url = this.getImage_uris().getLarge();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
