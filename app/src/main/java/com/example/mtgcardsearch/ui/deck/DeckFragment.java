@@ -24,6 +24,7 @@ public class DeckFragment extends Fragment {
     private FragmentDeckBinding binding;
     private DeckViewModel deckViewModel;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,13 +37,17 @@ public class DeckFragment extends Fragment {
 
         this.setSpinner();
 
-        deckViewModel.getDeck(getArguments().getString("id")).observe(getViewLifecycleOwner(), new Observer<Deck>() {
-            @Override
-            public void onChanged(Deck deck) {
-                if (!deck.getName().isEmpty())
-                    binding.etDeckName.setText(deck.getName());
-            }
-        });
+        try {
+            deckViewModel.getDeck(getArguments().getString("id")).observe(getViewLifecycleOwner(), new Observer<Deck>() {
+                @Override
+                public void onChanged(Deck deck) {
+                    if (!deck.getName().isEmpty())
+                        binding.etDeckName.setText(deck.getName());
+                }
+            });
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
 
         binding.btDeckCreate.setOnClickListener(new View.OnClickListener() {
             @Override
