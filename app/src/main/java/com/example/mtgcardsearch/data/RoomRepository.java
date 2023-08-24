@@ -75,6 +75,11 @@ public class RoomRepository {
             mDeckDao.delete(deck);
         });
     }
+    public void update(Deck deck){
+        CardRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mDeckDao.update(deck);
+        });
+    }
 
     public LiveData<Deck> getDeck(String deck_id){
         return mDeckDao.getDeck(deck_id);
