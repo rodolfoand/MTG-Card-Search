@@ -23,6 +23,14 @@ public class DeckViewModel extends ViewModel {
         roomRepository.insert(deck);
     }
 
+    public void delete(Deck deck){
+        roomRepository.delete(deck);
+    }
+
+    public void update(Deck deck){
+        roomRepository.update(deck);
+    }
+
     public LiveData<Deck> getDeck(String id){
         return roomRepository.getDeck(id);
     }

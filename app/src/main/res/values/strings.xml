@@ -947,4 +947,7 @@
     <string name="hint_notes">Comments, tips or notes related to this deck.</string>
     <string name="create">Create</string>
     <string name="archetype">Archetype</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="confirmation_delete">Are you sure you want to delete?</string>
 </resources>

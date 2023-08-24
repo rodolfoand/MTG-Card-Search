@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.mtgcardsearch.model.Card;
 import com.example.mtgcardsearch.model.Deck;
@@ -21,6 +22,9 @@ public interface DeckDao {
 
     @Delete
     void delete(Deck deck);
+
+    @Update
+    void update(Deck deck);
 
 
     @Query("SELECT * FROM deck_table WHERE deck_id = :deck_id")
