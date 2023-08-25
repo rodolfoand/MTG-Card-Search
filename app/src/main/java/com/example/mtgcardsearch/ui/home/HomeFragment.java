@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import com.example.mtgcardsearch.R;
 import com.example.mtgcardsearch.databinding.FragmentHomeBinding;
 import com.example.mtgcardsearch.model.Card;
+import com.example.mtgcardsearch.model.Deck;
 
 import java.util.List;
 
@@ -51,10 +52,30 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        homeViewModel.getDecks().observe(getViewLifecycleOwner(), new Observer<List<Deck>>() {
+            @Override
+            public void onChanged(List<Deck> decks) {
+                String s_decklist;
+                if (decks.size() > 0){
+                    s_decklist = "You have " + decks.size() + " deck(s) on your collection.";
+                } else {
+                    s_decklist = "You don't have any decks on your collection.";
+                }
+                binding.tvHomeSubDecklist.setText(s_decklist);
+            }
+        });
+
         binding.homeCardWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.nav_wishlist);
+            }
+        });
+
+        binding.homeCardDecklist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.nav_decklist);
             }
         });
 

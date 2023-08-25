@@ -22,6 +22,8 @@ public interface DeckDao {
 
     @Delete
     void delete(Deck deck);
+    @Delete
+    void delete(List<Deck> decks);
 
     @Update
     void update(Deck deck);

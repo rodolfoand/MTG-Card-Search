@@ -59,6 +59,17 @@
         <item>toughness</item>
     </string-array>
 
+    <string-array name="array_deck_sort">
+        <item>date</item>
+        <item>name</item>
+        <item>format</item>
+    </string-array>
+
+    <string-array name="array_deck_order">
+        <item>desc</item>
+        <item>asc</item>
+    </string-array>
+
     <string-array name="array_dir">
         <item>auto</item>
         <item>asc</item>
@@ -950,4 +961,5 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="confirmation_delete">Are you sure you want to delete?</string>
+    <string name="sort">Sort</string>
 </resources>

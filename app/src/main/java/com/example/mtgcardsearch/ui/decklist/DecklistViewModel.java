@@ -24,4 +24,8 @@ public class DecklistViewModel extends ViewModel {
         return roomRepository.getAllDecks();
     }
 
+    public void deleteDecks(List<Deck> decks){
+        roomRepository.deleteDecks(decks);
+    }
+
 }

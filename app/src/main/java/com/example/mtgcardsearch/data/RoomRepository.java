@@ -75,6 +75,13 @@ public class RoomRepository {
             mDeckDao.delete(deck);
         });
     }
+
+
+    public void deleteDecks(List<Deck> decks){
+        CardRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mDeckDao.delete(decks);
+        });
+    }
     public void update(Deck deck){
         CardRoomDatabase.databaseWriteExecutor.execute(() -> {
             mDeckDao.update(deck);
