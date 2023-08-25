@@ -38,7 +38,21 @@ public class Deck {
     @ColumnInfo(name = "created_on")
     private Date created_on;
 
+    @ColumnInfo(name = "updated_on")
+    private Date updated_on;
+
     public Deck() {
+    }
+
+    public Deck(String name, String format, String notes, String maindeck, String sideboard, String maybeboard, Date created_on, Date updated_on) {
+        this.name = name;
+        this.format = format;
+        this.notes = notes;
+        this.maindeck = maindeck;
+        this.sideboard = sideboard;
+        this.maybeboard = maybeboard;
+        this.created_on = created_on;
+        this.updated_on = updated_on;
     }
 
     public int getDeck_id() {
@@ -103,6 +117,14 @@ public class Deck {
 
     public void setCreated_on(Date created_on) {
         this.created_on = created_on;
+    }
+
+    public Date getUpdated_on() {
+        return updated_on;
+    }
+
+    public void setUpdated_on(Date updated_on) {
+        this.updated_on = updated_on;
     }
 
     @Override

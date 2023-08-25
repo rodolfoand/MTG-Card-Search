@@ -85,7 +85,7 @@
 
                 <EditText
                     android:id="@+id/tv_deck_maindeck_line"
-                    android:layout_width="25dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:enabled="false"
                     android:gravity="start|top"
@@ -99,7 +99,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:hint="@string/mainDeck"
-                    android:inputType="textMultiLine|textCapSentences"
+                    android:inputType="textMultiLine|textCapWords"
                     android:minHeight="144dp" />
             </LinearLayout>
 
@@ -113,13 +113,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="start|top">
+
                 <EditText
                     android:id="@+id/tv_deck_side_line"
-                    android:layout_width="25dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:padding="10dp"
                     android:enabled="false"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
@@ -132,7 +132,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:hint="@string/sideboard"
-                    android:inputType="textMultiLine|textCapSentences"
+                    android:inputType="textMultiLine|textCapWords"
                     android:minHeight="144dp" />
             </LinearLayout>
 
@@ -147,13 +147,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="start|top">
                 <EditText
                     android:id="@+id/tv_deck_maybe_line"
-                    android:layout_width="25dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:padding="10dp"
                     android:enabled="false"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
@@ -167,7 +166,7 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:hint="@string/maybeboard"
-                    android:inputType="textMultiLine|textCapSentences"
+                    android:inputType="textMultiLine|textCapWords"
                     android:minHeight="144dp" />
             </LinearLayout>
 
