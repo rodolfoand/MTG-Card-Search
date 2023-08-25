@@ -32,7 +32,7 @@ public abstract class CardRoomDatabase extends RoomDatabase {
             synchronized (CardRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            CardRoomDatabase.class, "mg6_database")
+                            CardRoomDatabase.class, "magic_database")
                             .build();
                 }
             }
