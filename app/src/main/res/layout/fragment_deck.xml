@@ -10,7 +10,6 @@
         android:id="@+id/scrollView_deck"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/bt_adv_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:hint="@string/deckName"
-                android:inputType="textPersonName"
+                android:inputType="textCapWords"
                 android:minHeight="48dp"
                 android:textColorHint="#78909C" />
 
@@ -68,7 +67,7 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/hint_notes"
-                android:inputType="textMultiLine"
+                android:inputType="textMultiLine|textCapSentences"
                 android:minHeight="144dp" />
 
             <TextView
@@ -78,15 +77,31 @@
                 android:text="@string/mainDeck"
                 android:textAlignment="center" />
 
-            <EditText
-                android:id="@+id/et_deck_maindeck"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="@string/mainDeck"
-                android:inputType="textMultiLine"
-                android:minHeight="144dp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="start|top">
+
+                <EditText
+                    android:id="@+id/tv_deck_maindeck_line"
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    android:minHeight="144dp"
+                    android:text="1" />
+                <EditText
+                    android:id="@+id/et_deck_maindeck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="@string/mainDeck"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:minHeight="144dp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_deck_sideboard"
@@ -95,15 +110,32 @@
                 android:text="@string/mainDeck"
                 android:textAlignment="center" />
 
-            <EditText
-                android:id="@+id/et_deck_sideboard"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="@string/sideboard"
-                android:inputType="textMultiLine"
-                android:minHeight="144dp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/tv_deck_side_line"
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:padding="10dp"
+                    android:enabled="false"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    android:minHeight="144dp"
+                    android:text="1"/>
+                <EditText
+                    android:id="@+id/et_deck_sideboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="@string/sideboard"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:minHeight="144dp" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_deck_maybeboard"
@@ -112,16 +144,33 @@
                 android:text="@string/maybeboard"
                 android:textAlignment="center" />
 
-            <EditText
-                android:id="@+id/et_deck_maybeboard"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="?actionBarSize"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="@string/maybeboard"
-                android:inputType="textMultiLine"
-                android:minHeight="144dp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/tv_deck_maybe_line"
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:padding="10dp"
+                    android:enabled="false"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    android:minHeight="144dp"
+                    android:text="1"/>
+                <EditText
+                    android:id="@+id/et_deck_maybeboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?actionBarSize"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="@string/maybeboard"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:minHeight="144dp" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

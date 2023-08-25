@@ -11,10 +11,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,15 +29,21 @@ import android.widget.Toast;
 
 import com.example.mtgcardsearch.R;
 import com.example.mtgcardsearch.databinding.FragmentDeckBinding;
+import com.example.mtgcardsearch.model.CardSearchResult;
 import com.example.mtgcardsearch.model.Deck;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DeckFragment extends Fragment {
 
     private FragmentDeckBinding binding;
     private DeckViewModel deckViewModel;
+    private String parm_query;
+    private CardSearchResult dataList;
 
 
     @Override
@@ -84,10 +94,125 @@ public class DeckFragment extends Fragment {
 
                             deckViewModel.update(deck);
 
+
+
+                            parm_query = "name:\"colheita do altar\" or name:\"Busca pelo Senhor da Tumba\"";
+
+                            Log.d("query_card", "main: " + binding.etDeckMaindeck.getText());
+
+                            String s_maindeck = binding.etDeckMaindeck.getText().toString();
+
+                            List<String> myList = new ArrayList<String>(Arrays.asList(s_maindeck.split("\n")));
+                            Log.d("query_card", "myList: " + myList.size());
+
+                            String s = myList.stream()
+                                    .map(e -> "name:\"" + e.toString()
+                                            .substring(e.indexOf(" "), e.indexOf("(") > 0 ? e.indexOf("(") : e.length())
+                                            .trim() + "\" or ")
+                                    .reduce("", String::concat);
+                            Log.d("query_card", "s: " + s);
+
+
+                            String s2 = myList.stream()
+                                    .map(e -> "!\"" + e.toString()
+                                            .substring(e.indexOf(" "), e.indexOf("(") > 0 ? e.indexOf("(") : e.length())
+                                            .trim() + "\" or ")
+                                    .reduce("", String::concat);
+                            Log.d("query_card", "s2: " + s2);
+
+
+                            List<String> listCards = myList.stream()
+                                    .map(e -> e.toString()
+                                            .substring(e.indexOf(" "), e.indexOf("(") > 0 ? e.indexOf("(") : e.length())
+                                            .trim())
+                                    .collect(Collectors.toList());
+                            Log.d("query_card", "listCards: " + listCards.size() + ": " + listCards);
+
+                            try {
+                                List<Integer> listCount = myList.stream()
+                                        .map(e -> Integer.parseInt(e.toString()
+                                                .substring(0, e.indexOf(" "))))
+                                        .collect(Collectors.toList());
+                                Log.d("query_card", "listCount: " + listCount.size() + ": " + listCount);
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
+
+
+                            try {
+                                List<Integer> listCount2 = myList.stream()
+                                        .map(e -> isInteger(e.toString()
+                                                .substring(0, e.indexOf(" "))) ? Integer.parseInt(e.toString()
+                                                .substring(0, e.indexOf(" "))) : 0)
+                                        .collect(Collectors.toList());
+                                Log.d("query_card", "listCount2: " + listCount2.size() + ": " + listCount2);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            parm_query = s2;
+
+                            deckViewModel.getCards("false"
+                                    , "true"
+                                    , "name"
+                                    , "1"
+                                    , "cards"
+                                    , "auto"
+                                    , parm_query).observe(getViewLifecycleOwner(), new Observer<CardSearchResult>() {
+                                @Override
+                                public void onChanged(CardSearchResult cardSearchResult) {
+                                    Toast.makeText(getContext(), cardSearchResult.toString(), Toast.LENGTH_SHORT).show();
+                                    Log.d("query_card", "obj: " + cardSearchResult.getObject());
+                                    if (cardSearchResult.getObject().equals("list")) {
+                                        dataList = cardSearchResult;
+                                        Log.d("query_card", "datalist: " + dataList.getData().toString());
+                                        Log.d("query_card", "datalist size: " + dataList.getData().size());
+
+                                        List<String> listResultNames =
+                                                dataList.getData()
+                                                        .stream()
+                                                        .map(e -> TextUtils.isEmpty(e.getPrinted_name())
+                                                                ? e.getName().toUpperCase()
+                                                                : e.getPrinted_name().toUpperCase())
+                                                        .collect(Collectors.toList());
+                                        Log.d("query_card", "listResultNames: " + listResultNames);
+                                        if (!listResultNames.containsAll(listCards)){
+                                            Log.d("query_card", "listCards: " + listCards);
+                                            List<Integer> listError =
+                                                    listCards.stream()
+                                                            .filter(e -> listResultNames.indexOf(e.toUpperCase()) < 0)
+                                                            .map(e -> listCards.indexOf(e))
+                                                            .collect(Collectors.toList());
+                                            Log.d("query_card", "listError: " + listError);
+
+                                            String lines = listCards.stream()
+                                                    .map(e -> listCards.indexOf(e) + 1 + "\n")
+                                                    .reduce("", String::concat);
+                                            binding.tvDeckMaindeckLine.setText(lines);
+                                            Log.d("query_card", "lines: " + lines);
+
+                                            String s_error = listError
+                                                    .stream()
+                                                    .map(e -> (e + 1) + ", ")
+                                                    .reduce("", String::concat);
+
+                                            if (listError.size() > 0){
+                                                binding.tvDeckMaindeck.setError("Linha(s) " + s_error);
+                                                binding.etDeckMaindeck.setError("Linha(s) " + s_error);
+                                            }
+
+                                        }
+
+
+
+                                    }
+                                }
+                            });
+
                             Toast.makeText(getContext(), deck.getName() + " saved", Toast.LENGTH_SHORT).show();
-                            getActivity().onBackPressed();
-                            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//                            getActivity().onBackPressed();
+//                            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+//                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                         }
                     });
 
@@ -133,6 +258,7 @@ public class DeckFragment extends Fragment {
                 deck.setMaindeck(binding.etDeckMaindeck.getText().toString());
                 deck.setSideboard(binding.etDeckSideboard.getText().toString());
                 deck.setMaybeboard(binding.etDeckMaybeboard.getText().toString());
+                deck.setCreated_on(new Date());
 
                 deckViewModel.insert(deck);
 
@@ -141,9 +267,6 @@ public class DeckFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-
-
-
 
         return root;
     }
@@ -159,5 +282,8 @@ public class DeckFragment extends Fragment {
                 R.array.array_formats, android.R.layout.simple_spinner_item);
         adapter_sp_deck_format_value.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spDeckFormat.setAdapter(adapter_sp_deck_format_value);
+    }
+    private static boolean isInteger(String str){
+        return str != null && str.matches("[0-9.]+");
     }
 }

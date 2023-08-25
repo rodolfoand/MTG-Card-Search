@@ -2,8 +2,6 @@ package com.example.mtgcardsearch.ui.cardlist;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,7 +14,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.provider.MediaStore;
 import android.util.ArraySet;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -27,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mtgcardsearch.R;
@@ -42,8 +38,6 @@ import com.example.mtgcardsearch.model.OnBottomReachedListener;
 import com.example.mtgcardsearch.model.OnSetWishListener;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -161,7 +155,7 @@ public class CardlistFragment extends Fragment {
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
                 MenuInflater inflater = actionMode.getMenuInflater();
-                inflater.inflate( R.menu.actionmode, menu );
+                inflater.inflate( R.menu.actionmode_wish, menu );
                 return true;
             }
 
