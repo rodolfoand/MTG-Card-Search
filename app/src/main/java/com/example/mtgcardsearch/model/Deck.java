@@ -41,6 +41,24 @@ public class Deck {
     @ColumnInfo(name = "updated_on")
     private Date updated_on;
 
+    @ColumnInfo(name = "main_lines")
+    private String main_lines;
+
+    @ColumnInfo(name = "main_error")
+    private String main_error;
+
+    @ColumnInfo(name = "side_lines")
+    private String side_lines;
+
+    @ColumnInfo(name = "side_error")
+    private String side_error;
+
+    @ColumnInfo(name = "maybe_lines")
+    private String maybe_lines;
+
+    @ColumnInfo(name = "maybe_error")
+    private String maybe_error;
+
     public Deck() {
     }
 
@@ -125,6 +143,54 @@ public class Deck {
 
     public void setUpdated_on(Date updated_on) {
         this.updated_on = updated_on;
+    }
+
+    public String getMain_lines() {
+        return main_lines;
+    }
+
+    public void setMain_lines(String main_lines) {
+        this.main_lines = main_lines;
+    }
+
+    public String getMain_error() {
+        return main_error;
+    }
+
+    public void setMain_error(String main_error) {
+        this.main_error = main_error;
+    }
+
+    public String getSide_lines() {
+        return side_lines;
+    }
+
+    public void setSide_lines(String side_lines) {
+        this.side_lines = side_lines;
+    }
+
+    public String getSide_error() {
+        return side_error;
+    }
+
+    public void setSide_error(String side_error) {
+        this.side_error = side_error;
+    }
+
+    public String getMaybe_lines() {
+        return maybe_lines;
+    }
+
+    public void setMaybe_lines(String maybe_lines) {
+        this.maybe_lines = maybe_lines;
+    }
+
+    public String getMaybe_error() {
+        return maybe_error;
+    }
+
+    public void setMaybe_error(String maybe_error) {
+        this.maybe_error = maybe_error;
     }
 
     @Override
